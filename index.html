@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nadeen's Classroom Games</title>
+<title>Nadeen's Learning Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -94,6 +94,13 @@
   .card .play::after{ content:'→'; transition:transform .15s ease; }
   .card:hover .play::after{ transform:translateX(3px); }
 
+  .section{ margin-top:44px; }
+  .section:first-child{ margin-top:0; }
+  .section-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .section-head h2{ font-family:'Baloo 2', cursive; font-size:26px; margin:0; font-weight:800; }
+  .section-head p{ margin:0; color:var(--muted); font-weight:600; font-size:14.5px; }
+  .empty{ color:var(--muted); font-weight:700; background:var(--card); border:2px dashed var(--line);
+    border-radius:20px; padding:22px; text-align:center; }
   footer{
     margin-top:56px; text-align:center; color:var(--muted);
     font-size:13.5px; font-weight:600;
@@ -107,38 +114,34 @@
 <body>
 <div class="wrap">
   <header>
-    <span class="eyebrow">Classroom Games</span>
-    <h1>🎨 Nadeen's Game Library</h1>
-    <p>Browser games for warm-ups, icebreakers, and first-day fun — just tap a card to play, no downloads needed.</p>
+    <span class="eyebrow">English Classroom</span>
+    <h1>🎨 Nadeen's Learning Hub</h1>
+    <p>Stories, games and learning activities — just tap a card to start, no downloads needed.</p>
   </header>
 
-  <div class="grid">
-    <a class="card" href="5-seconds-challenge.html">
-      <div class="icon">⏰</div>
-      <h2>5 Seconds Challenge</h2>
-      <p>Fast-paced game-show style rounds across 7 levels — letters, memory, acting, and brain teasers, all against a 5-second timer.</p>
-      <div class="tags"><span class="tag">Warm-up</span><span class="tag">Whole class</span></div>
-      <span class="play">Play</span>
-    </a>
+  <div id="sections"></div>
 
-    <a class="card" href="mystery-box-game.html">
-      <div class="icon">🎁</div>
-      <h2>Mystery Box Game</h2>
-      <p>25 mystery boxes, each hiding a fun icebreaker question or dare — great for getting students talking on day one.</p>
-      <div class="tags"><span class="tag">Icebreaker</span><span class="tag">First day</span></div>
-      <span class="play">Play</span>
-    </a>
-
-    <a class="card" href="mystery-picture-game.html">
-      <div class="icon">🔍</div>
-      <h2>Mystery Picture</h2>
-      <p>Reveal a hidden picture tile by tile, use clues, and guess what it is — three difficulty levels plus a teacher mode.</p>
-      <div class="tags"><span class="tag">Vocabulary</span><span class="tag">3 levels</span></div>
-      <span class="play">Play</span>
-    </a>
-  </div>
-
-  <footer>New games get added here over time — bookmark this page.</footer>
+  <footer>New stories and activities get added here over time — bookmark this page.</footer>
 </div>
+<script>
+fetch('content.json').then(r=>r.json()).then(data=>{
+  const root=document.getElementById('sections');
+  const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  root.innerHTML=data.sections.map(sec=>{
+    const items=(sec.items||[]).map(it=>`
+      <a class="card" href="${esc(it.url)}">
+        <div class="icon">${esc(it.icon||'⭐')}</div>
+        <h2>${esc(it.title)}</h2>
+        <p>${esc(it.description)}</p>
+        <div class="tags">${(it.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+        <span class="play">Open</span>
+      </a>`).join('');
+    return `<section class="section" id="${esc(sec.id)}">
+      <div class="section-head"><h2>${esc(sec.emoji||'')} ${esc(sec.title)}</h2><p>${esc(sec.description||'')}</p></div>
+      ${items?`<div class="grid">${items}</div>`:`<div class="empty">Coming soon ✨</div>`}
+    </section>`;
+  }).join('');
+}).catch(()=>{ document.getElementById('sections').innerHTML='<div class="empty">Could not load content. Please refresh.</div>'; });
+</script>
 </body>
 </html>

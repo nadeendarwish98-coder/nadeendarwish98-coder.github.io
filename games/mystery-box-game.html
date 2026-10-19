@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mystery Box Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.2/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<style>
+  :root {
+    --sun: #FFC93C;
+    --sky: #4FC3F7;
+    --coral: #FF6F91;
+    --grass: #6BCB77;
+    --grape: #8E7CFF;
+    --cream: #FFF8E9;
+    --ink: #3A2E2C;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    background:
+      radial-gradient(circle at 10% 15%, rgba(255,201,60,0.35) 0%, transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(79,195,247,0.35) 0%, transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,111,145,0.3) 0%, transparent 40%),
+      radial-gradient(circle at 15% 85%, rgba(107,203,119,0.3) 0%, transparent 40%),
+      var(--cream);
+    background-size: 200% 200%;
+    animation: bgShift 18s ease-in-out infinite;
+    color: var(--ink);
+    padding: 24px 16px 60px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  @keyframes bgShift {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+  }
+
+  /* floating decorative stars */
+  .bg-star {
+    position: fixed;
+    font-size: 26px;
+    opacity: 0.55;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(15deg); }
+  }
+
+  /* gentle drifting particles across whole page */
+  .drift {
+    position: fixed;
+    top: -40px;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: drift linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes drift {
+    0% { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(105vh) translateX(40px) rotate(360deg); opacity: 0; }
+  }
+
+  /* sound toggle button */
+  .sound-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 40;
+    background: var(--white);
+    border: 3px solid var(--grape);
+    border-radius: 999px;
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+    transition: transform 0.15s ease;
+  }
+  .sound-btn:hover { transform: scale(1.08) rotate(-6deg); }
+  .sound-btn:active { transform: scale(0.94); }
+  .sound-btn.muted { opacity: 0.55; }
+
+  header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    margin: 6px 0 4px;
+    color: var(--grape);
+    text-shadow: 3px 3px 0 var(--sun);
+    letter-spacing: 1px;
+    animation: titleWiggle 3.2s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  @keyframes titleWiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(-1.5deg) scale(1.02); }
+  }
+
+  .subtitle {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: var(--coral);
+    margin: 0 0 14px;
+  }
+
+  .welcome {
+    display: inline-block;
+    background: var(--white);
+    border: 3px dashed var(--sky);
+    border-radius: 20px;
+    padding: 12px 22px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+    animation: pulseWelcome 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulseWelcome {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+
+  .progress-wrap {
+    max-width: 420px;
+    margin: 18px auto 0;
+    position: relative;
+    z-index: 1;
+  }
+  .progress-label {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--grape);
+    margin-bottom: 6px;
+  }
+  .progress-track {
+    background: var(--white);
+    border: 3px solid var(--grape);
+    border-radius: 999px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--sun), var(--coral));
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .board {
+    max-width: 980px;
+    margin: 32px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .box {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Baloo 2', cursive;
+    transition: transform 0.15s ease;
+    animation: bob 3.4s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.12s);
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .box:hover { transform: translateY(-8px) scale(1.08); animation-play-state: paused; }
+  .box:active { transform: translateY(-2px) scale(0.95); }
+  .box:focus-visible .box-graphic { outline: 4px solid var(--grape); outline-offset: 3px; }
+
+  .box-graphic {
+    width: 92px;
+    height: 78px;
+    border-radius: 14px;
+    position: relative;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.15), 0 10px 16px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s ease;
+  }
+  .box-graphic::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 26px;
+    border-radius: 10px;
+    background: inherit;
+    filter: brightness(1.12);
+  }
+  .box-graphic::after {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 100%;
+    background: rgba(255,255,255,0.85);
+  }
+
+  /* sparkle ring around box on hover */
+  .box::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100px; height: 100px;
+    transform: translate(-50%, -50%) scale(0.6);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .box:hover::before { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+  .box-num {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--white);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+
+  .box:nth-child(6n+1) .box-graphic { background: var(--coral); }
+  .box:nth-child(6n+2) .box-graphic { background: var(--sky); }
+  .box:nth-child(6n+3) .box-graphic { background: var(--sun); }
+  .box:nth-child(6n+4) .box-graphic { background: var(--grass); }
+  .box:nth-child(6n+5) .box-graphic { background: var(--grape); }
+  .box:nth-child(6n+0) .box-graphic { background: #FF9F5A; }
+
+  .box-jiggle .box-graphic { animation: jiggle 0.6s ease; }
+  @keyframes jiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    15% { transform: rotate(-10deg) scale(1.05); }
+    35% { transform: rotate(9deg) scale(1.08); }
+    55% { transform: rotate(-7deg) scale(1.05); }
+    75% { transform: rotate(5deg) scale(1.02); }
+  }
+
+  .box-pop .box-graphic {
+    animation: popOpen 0.55s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes popOpen {
+    0% { transform: scale(1) rotate(0deg); }
+    40% { transform: scale(1.35) rotate(-8deg); filter: brightness(1.4); }
+    70% { transform: scale(0.85) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .box.done {
+    animation: none;
+  }
+  .box.done .box-graphic {
+    opacity: 0.55;
+    filter: grayscale(35%);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+  }
+  .box.done .box-graphic::before,
+  .box.done .box-graphic::after { display: none; }
+  .box.done .box-graphic {
+    background: repeating-linear-gradient(135deg, #ddd, #ddd 8px, #e8e8e8 8px, #e8e8e8 16px) !important;
+  }
+  .checkmark {
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    background: var(--grass);
+    color: var(--white);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+    border: 3px solid var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transform: scale(0);
+  }
+  .box.done .checkmark {
+    display: flex;
+    animation: checkPop 0.4s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes checkPop {
+    to { transform: scale(1); }
+  }
+
+  .box-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* modal */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(58,46,44,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .overlay.show { display: flex; opacity: 1; }
+
+  .card {
+    background: var(--white);
+    border-radius: 28px;
+    max-width: 520px;
+    width: 100%;
+    padding: 34px 28px 28px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 0 rgba(0,0,0,0.08), 0 24px 40px rgba(0,0,0,0.25);
+    animation: pop 0.45s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes pop {
+    0% { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+    60% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .card-badge {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--sun);
+    color: var(--ink);
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 8px 22px;
+    border-radius: 999px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+  }
+
+  .card-icon {
+    font-size: 3rem;
+    margin: 10px 0 6px;
+    display: inline-block;
+    animation: iconSpin 0.7s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes iconSpin {
+    0% { transform: scale(0) rotate(-30deg); }
+    70% { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .card-question {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    color: var(--grape);
+    line-height: 1.35;
+    margin: 10px 0 26px;
+  }
+
+  .back-btn {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    background: linear-gradient(180deg, var(--coral), #E8567A);
+    border: none;
+    border-radius: 999px;
+    padding: 14px 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #C23F5E;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .back-btn:hover { transform: translateY(-2px); }
+  .back-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #C23F5E; }
+
+  .finished-banner {
+    max-width: 620px;
+    margin: 30px auto 0;
+    text-align: center;
+    background: var(--white);
+    border: 4px solid var(--grass);
+    border-radius: 22px;
+    padding: 20px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    color: var(--grass);
+    display: none;
+    position: relative;
+    z-index: 1;
+  }
+  .finished-banner.show {
+    display: block;
+    animation: bannerCelebrate 0.7s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes bannerCelebrate {
+    0% { transform: scale(0.5) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a href="../index.html" style="position:fixed;top:10px;left:10px;z-index:9999;background:#fff;color:#2B2140;font:700 14px Nunito,sans-serif;padding:7px 14px;border-radius:999px;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">🏠 Home</a>
+
+<button class="sound-btn" id="soundBtn" aria-label="Toggle music">🔊</button>
+
+<span class="bg-star" style="top:8%; left:4%;">⭐</span>
+<span class="bg-star" style="top:15%; right:6%; animation-delay:1s;">🎈</span>
+<span class="bg-star" style="bottom:12%; left:8%; animation-delay:2s;">✨</span>
+<span class="bg-star" style="bottom:20%; right:5%; animation-delay:1.5s;">🎉</span>
+
+<header>
+  <h1>🎁 Mystery Box Game</h1>
+  <p class="subtitle">First Day of School</p>
+  <div class="welcome">Pick a box and discover your challenge! ✨</div>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span id="progressCount">0</span> of 25 boxes opened</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</header>
+
+<div class="board" id="board"></div>
+
+<div class="finished-banner" id="finishedBanner">🌟 Amazing job! You opened every mystery box! 🌟</div>
+
+<div class="overlay" id="overlay">
+  <div class="card">
+    <div class="card-badge" id="cardBadge">Box #1</div>
+    <div class="card-icon">🎊</div>
+    <div class="card-question" id="cardQuestion">Question</div>
+    <button class="back-btn" id="backBtn">⬅ Back to the Boxes</button>
+  </div>
+</div>
+
+<script>
+const questions = {
+  1: "What is your favorite movie or cartoon character? 🎬",
+  2: "What is your favorite season: Summer or Winter? ☀️❄️",
+  3: "What is your favorite subject in school? 📚",
+  4: "What is your favorite snack to eat after school? 🍪",
+  5: "What did you do during the holiday? ☀️",
+  6: "Would you rather fly or be invisible? 🪽👻",
+  7: "Make a funny face! 😂",
+  8: "Show us something blue! 🔵",
+  9: "Would you rather have a giant pet dog or a tiny dragon? 🐕🐉",
+  10: "What is your favorite animal? 🐶",
+  11: "Would you rather live on the Moon or under the sea? 🌙🌊",
+  12: "What is something you are good at? ⭐",
+  13: "Say one interesting fact about yourself! 💡",
+  14: "Would you rather be able to talk to animals or speak all languages? 🐾🗣️",
+  15: "Would you rather travel to the past or to the future? ⏳",
+  16: "If you could invent anything, what would it be? 🛠️",
+  17: "Where is one place you would love to visit? 🌍",
+  18: "What is your favorite color? 🎨",
+  19: "Sing a line from your favorite song! 🎵",
+  20: "What superpower would you like to have? 🦸",
+  21: "Would you rather eat pizza or ice cream forever? 🍕🍦",
+  22: "What is your favorite game to play? 🎮",
+  23: "Do your best animal sound! 🐵",
+  24: "What makes you laugh the most? 😄",
+  25: "If you were an animal, which one would you be? 🦁"
+};
+
+const board = document.getElementById('board');
+const overlay = document.getElementById('overlay');
+const cardBadge = document.getElementById('cardBadge');
+const cardQuestion = document.getElementById('cardQuestion');
+const backBtn = document.getElementById('backBtn');
+const progressFill = document.getElementById('progressFill');
+const progressCount = document.getElementById('progressCount');
+const finishedBanner = document.getElementById('finishedBanner');
+const soundBtn = document.getElementById('soundBtn');
+
+const total = Object.keys(questions).length;
+const opened = new Set();
+
+/* ---------- drifting background particles ---------- */
+const driftEmojis = ['🎈','⭐','✨','🎉','🎊','🌟'];
+for (let i = 0; i < 10; i++) {
+  const el = document.createElement('span');
+  el.className = 'drift';
+  el.textContent = driftEmojis[i % driftEmojis.length];
+  el.style.left = Math.random() * 96 + 'vw';
+  el.style.animationDuration = (10 + Math.random() * 10) + 's';
+  el.style.animationDelay = (Math.random() * 10) + 's';
+  el.style.fontSize = (16 + Math.random() * 16) + 'px';
+  document.body.appendChild(el);
+}
+
+/* ---------- build boxes ---------- */
+Object.keys(questions).forEach((num, idx) => {
+  const btn = document.createElement('button');
+  btn.className = 'box';
+  btn.style.setProperty('--i', idx);
+  btn.dataset.num = num;
+  btn.setAttribute('aria-label', 'Mystery box ' + num);
+  btn.innerHTML = `
+    <div class="box-graphic">
+      <span class="box-num">${num}</span>
+      <span class="checkmark">✓</span>
+    </div>
+    <span class="box-label">Box ${num}</span>
+  `;
+  btn.addEventListener('click', () => openBox(num, btn));
+  board.appendChild(btn);
+});
+
+/* ---------- sound engine (Tone.js) ---------- */
+let audioReady = false;
+let musicOn = true;
+let musicLoop = null;
+let synth, plink;
+
+function setupAudio() {
+  if (audioReady || typeof Tone === 'undefined') return;
+  audioReady = true;
+
+  synth = new Tone.PolySynth(Tone.Synth, {
+    oscillator: { type: 'triangle' },
+    envelope: { attack: 0.01, decay: 0.15, sustain: 0.1, release: 0.3 }
+  }).toDestination();
+  synth.volume.value = -8;
+
+  plink = new Tone.Synth({
+    oscillator: { type: 'sine' },
+    envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.1 }
+  }).toDestination();
+  plink.volume.value = -6;
+
+  // cheerful looping background melody (xylophone-like, playful)
+  const melody = [
+    'C5','E5','G5','E5','C5','D5','F5','D5',
+    'E5','G5','B5','G5','E5','D5','C5','D5'
+  ];
+  let step = 0;
+  musicLoop = new Tone.Loop(time => {
+    const note = melody[step % melody.length];
+    synth.triggerAttackRelease(note, '8n', time, 0.5);
+    step++;
+  }, '4n');
+
+  Tone.Transport.bpm.value = 100;
+  musicLoop.start(0);
+  Tone.Transport.start();
+}
+
+function playClickSound() {
+  if (!audioReady) return;
+  plink.triggerAttackRelease('C6', '16n');
+}
+
+function playRevealSound() {
+  if (!audioReady) return;
+  const now = Tone.now();
+  synth.triggerAttackRelease('C5', '16n', now);
+  synth.triggerAttackRelease('E5', '16n', now + 0.08);
+  synth.triggerAttackRelease('G5', '16n', now + 0.16);
+  synth.triggerAttackRelease('C6', '8n', now + 0.24);
+}
+
+function playFinishSound() {
+  if (!audioReady) return;
+  const now = Tone.now();
+  ['C5','E5','G5','C6','G5','C6'].forEach((note, i) => {
+    synth.triggerAttackRelease(note, '8n', now + i * 0.15);
+  });
+}
+
+soundBtn.addEventListener('click', async () => {
+  if (typeof Tone !== 'undefined' && Tone.context.state !== 'running') {
+    await Tone.start();
+  }
+  setupAudio();
+  musicOn = !musicOn;
+  if (musicOn) {
+    Tone.Transport.start();
+    soundBtn.textContent = '🔊';
+    soundBtn.classList.remove('muted');
+  } else {
+    Tone.Transport.pause();
+    soundBtn.textContent = '🔈';
+    soundBtn.classList.add('muted');
+  }
+});
+
+/* ---------- game logic ---------- */
+async function openBox(num, btn) {
+  if (typeof Tone !== 'undefined' && Tone.context.state !== 'running') {
+    await Tone.start();
+  }
+  setupAudio();
+
+  btn.classList.add('box-jiggle', 'box-pop');
+  setTimeout(() => btn.classList.remove('box-jiggle', 'box-pop'), 600);
+
+  playClickSound();
+
+  cardBadge.textContent = 'Box #' + num;
+  cardQuestion.textContent = questions[num];
+  overlay.classList.add('show');
+
+  playRevealSound();
+
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 90,
+      spread: 70,
+      startVelocity: 32,
+      origin: { y: 0.5 }
+    });
+  }
+
+  if (!opened.has(num)) {
+    opened.add(num);
+    btn.classList.add('done');
+    updateProgress();
+  }
+}
+
+function updateProgress() {
+  progressCount.textContent = opened.size;
+  progressFill.style.width = Math.round((opened.size / total) * 100) + '%';
+  if (opened.size === total) {
+    finishedBanner.classList.add('show');
+    playFinishSound();
+    if (typeof confetti === 'function') {
+      confetti({ particleCount: 200, spread: 100, origin: { y: 0.4 } });
+      setTimeout(() => confetti({ particleCount: 150, spread: 120, origin: { y: 0.6 } }), 300);
+      setTimeout(() => confetti({ particleCount: 150, spread: 140, origin: { y: 0.3 } }), 600);
+    }
+  }
+}
+
+backBtn.addEventListener('click', () => overlay.classList.remove('show'));
+overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('show'); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.classList.remove('show'); });
+</script>
+
+</body>
+</html>

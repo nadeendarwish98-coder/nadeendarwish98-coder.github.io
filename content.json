@@ -1,0 +1,40 @@
+{
+  "sections": [
+    {
+      "id": "stories",
+      "title": "Stories",
+      "emoji": "📖",
+      "description": "Watch the story, learn the new words, then play and answer.",
+      "items": []
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "emoji": "🎮",
+      "description": "Browser games for warm-ups, icebreakers, and first-day fun.",
+      "items": [
+        {
+          "title": "5 Seconds Challenge",
+          "icon": "⏰",
+          "url": "games/5-seconds-challenge.html",
+          "description": "Fast-paced game-show style rounds across 7 levels — letters, memory, acting, and brain teasers, all against a 5-second timer.",
+          "tags": ["Warm-up", "Whole class"]
+        },
+        {
+          "title": "Mystery Box Game",
+          "icon": "🎁",
+          "url": "games/mystery-box-game.html",
+          "description": "25 mystery boxes, each hiding a fun icebreaker question or dare — great for getting students talking on day one.",
+          "tags": ["Icebreaker", "First day"]
+        },
+        {
+          "title": "Mystery Picture",
+          "icon": "🔍",
+          "url": "games/mystery-picture-game.html",
+          "description": "Reveal a hidden picture tile by tile, use clues, and guess what it is — three difficulty levels plus a teacher mode.",
+          "tags": ["Vocabulary", "3 levels"]
+        }
+      ]
+    }
+  ]
+}

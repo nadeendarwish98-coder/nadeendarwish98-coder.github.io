@@ -1,0 +1,15 @@
+{
+  "title": "Story title",
+  "subtitle": "Level / unit / chapter",
+  "youtube": "YOUTUBE_VIDEO_ID_ONLY",
+  "vocab": [
+    { "word": "frog", "meaning": "ضفدع", "emoji": "🐸" }
+  ],
+  "games": [
+    { "title": "Mystery Picture", "url": "games/mystery-picture-game.html" }
+  ],
+  "questions": [
+    { "type": "mcq", "q": "Who is the main character?", "options": ["A", "B", "C"], "answer": 0 },
+    { "type": "tf", "q": "The story happens at night.", "answer": true }
+  ]
+}
