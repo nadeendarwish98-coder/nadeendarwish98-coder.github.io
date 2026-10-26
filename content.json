@@ -33,6 +33,13 @@
           "url": "games/mystery-picture-game.html",
           "description": "Reveal a hidden picture tile by tile, use clues, and guess what it is — three difficulty levels plus a teacher mode.",
           "tags": ["Vocabulary", "3 levels"]
+        },
+        {
+          "title": "Might or Could? Detective Game",
+          "icon": "🕵️",
+          "url": "games/might-could-game.html",
+          "description": "12 detective mysteries to practise might, could and might not for possibilities — with happy background music and a score at the end.",
+          "tags": ["Grammar", "Year 5"]
         }
       ]
     }
