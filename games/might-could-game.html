@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Might or Could? Detective Game</title>
+<style>
+  :root{
+    --bg1:#6c5ce7; --bg2:#a29bfe; --card:#ffffff; --ink:#2d3436;
+    --good:#00b894; --bad:#e17055; --accent:#fdcb6e; --accent2:#0984e3;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2)); color:var(--ink);
+    display:flex; align-items:center; justify-content:center; padding:16px;
+  }
+  .app{width:100%; max-width:640px}
+  .card{background:var(--card); border-radius:24px; padding:24px; box-shadow:0 12px 32px rgba(0,0,0,.25); text-align:center}
+  h1{margin:0 0 6px; font-size:2rem; color:var(--bg1)}
+  h2{margin:0 0 10px}
+  .big-emoji{font-size:4.5rem; line-height:1.1; margin:6px 0}
+  p{font-size:1.15rem; line-height:1.5; margin:8px 0}
+  .rule{background:#f1f0ff; border-radius:16px; padding:12px; margin:14px 0; font-size:1.1rem}
+  .rule b{color:var(--bg1)}
+  button{
+    font-family:inherit; font-size:1.2rem; font-weight:bold; border:none; cursor:pointer;
+    border-radius:16px; padding:14px 18px; transition:transform .1s, background .2s;
+  }
+  button:active{transform:scale(.97)}
+  .primary{background:var(--accent2); color:#fff; padding:14px 34px; font-size:1.3rem}
+  .primary:hover{background:#0870c0}
+  .options{display:grid; gap:10px; margin-top:16px}
+  .opt{background:#f1f0ff; color:var(--ink); border:3px solid transparent; text-align:center; min-height:56px}
+  .opt:hover:not(:disabled){background:#e3e0ff}
+  .opt.correct{background:var(--good); color:#fff}
+  .opt.wrong{background:var(--bad); color:#fff}
+  .opt:disabled{cursor:default}
+  .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-weight:bold}
+  .progress{height:12px; background:#e8e6ff; border-radius:8px; overflow:hidden; margin-bottom:14px}
+  .progress div{height:100%; background:linear-gradient(90deg,var(--accent2),var(--good)); width:0; transition:width .4s}
+  .sentence{font-size:1.5rem; font-weight:bold; margin:10px 0}
+  .blank{display:inline-block; min-width:90px; border-bottom:4px dashed var(--bg1); color:var(--bg1)}
+  .feedback{min-height:64px; margin-top:14px; font-size:1.1rem; font-weight:bold}
+  .feedback.good{color:var(--good)} .feedback.bad{color:var(--bad)}
+  .stars{font-size:3rem; letter-spacing:6px; margin:8px 0}
+  .hidden{display:none}
+  .musicBtn{position:fixed; top:12px; right:12px; width:52px; height:52px; padding:0; border-radius:50%;
+    background:#fff; font-size:1.6rem; box-shadow:0 4px 12px rgba(0,0,0,.25); z-index:10}
+  .badge{display:inline-block; background:var(--accent); border-radius:999px; padding:6px 16px; font-weight:bold; margin-bottom:8px}
+  @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+  .pop{animation:pop .35s ease}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .shake{animation:shake .3s}
+</style>
+</head>
+<body>
+<button class="musicBtn" id="musicBtn" aria-label="Music on/off" title="Music on/off">🎵</button>
+<div class="app">
+
+  <!-- START -->
+  <div id="start" class="card">
+    <div class="big-emoji">🕵️‍♀️</div>
+    <h1>Might or Could?</h1>
+    <p><b>Detective Game</b></p>
+    <div class="rule">
+      When we are <b>not 100% sure</b>, we use <b>might</b> or <b>could</b>.<br><br>
+      ☁️ It <b>might</b> rain.<br>
+      🏠 She <b>could</b> be at home.<br>
+      🙅 He <b>might not</b> come.
+    </div>
+    <p>Help the detective solve <b>12 mysteries!</b></p>
+    <button class="primary" id="startBtn">Start 🔍</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="card hidden">
+    <div class="topbar">
+      <span id="qCount">Mystery 1 / 12</span>
+      <span id="score">⭐ 0</span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="big-emoji" id="emoji"></div>
+    <p id="clue"></p>
+    <div class="sentence" id="sentence"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="primary hidden" id="nextBtn">Next ➜</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="card hidden">
+    <div class="big-emoji" id="rEmoji">🏆</div>
+    <h1 id="rTitle">Great job!</h1>
+    <div class="stars" id="rStars"></div>
+    <p id="rText"></p>
+    <button class="primary" id="againBtn">Play again 🔄</button>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Questions ----------
+   s: sentence with ___ for the blank (or "" for pick-the-sentence questions)
+   o: options (first one is the correct one; they are shuffled automatically)
+   why: short explanation
+*/
+const QUESTIONS = [
+  {e:"☁️", clue:"Look at the dark clouds!", s:"It ___ rain today.", o:["might","is","are"], why:"We are not 100% sure, so we use might."},
+  {e:"📦", clue:"A mystery box is on the table.", s:"It ___ be a toy.", o:["could","can't to","is to"], why:"Could = maybe. After could we use the base verb: could be."},
+  {e:"🐱", clue:"The cookies are gone. Maybe the cat ate them.", s:"The cat ___ be the thief.", o:["might","does","will to"], why:"Maybe the cat did it. We are not sure. → might."},
+  {e:"🎒", clue:"Sara isn't at school today.", s:"She ___ be sick.", o:["could","is","are"], why:"We don't know why she is absent, so we say could."},
+  {e:"✅", clue:"Which sentence is correct?", s:"", o:["It might rain tomorrow.","It might to rain tomorrow.","It might rains tomorrow."], why:"might + base verb (no to, no s)."},
+  {e:"🙅", clue:"Ahmed isn't sure about the party.", s:"He ___ come to the party.", o:["might not","not might","don't might"], why:"The negative of might is might not."},
+  {e:"🌞", clue:"Which sentence is NOT sure (possibility)?", s:"", o:["Tomorrow might be sunny.","Tomorrow is Friday.","Today is Monday."], why:"might shows something possible, not 100% sure."},
+  {e:"🚌", clue:"The bus is late.", s:"We ___ be late for school.", o:["might","are going to to","did"], why:"Maybe we will be late. Might shows possibility."},
+  {e:"🎁", clue:"Mum is hiding a present.", s:"It ___ be a book or a game.", o:["could","can to","is"], why:"Two possibilities → could / might."},
+  {e:"🥶", clue:"Which sentence is correct?", s:"", o:["We could go to the park.","We could to go to the park.","We could goes to the park."], why:"could + base verb: could go."},
+  {e:"🐶", clue:"The dog is barking at the door.", s:"Someone ___ be outside.", o:["might","are","is to"], why:"We hear the dog, but we can't see. Maybe someone is outside → might."},
+  {e:"🌧️", clue:"The sky is clear and blue.", s:"It ___ rain today.", o:["might not","might","is"], why:"Clear sky = rain is not likely. We say might not."}
+];
+
+/* ---------- Helpers ---------- */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
+
+let idx = 0, score = 0, locked = false, order = [];
+
+/* little sound effects (no files needed) */
+let ctx;
+function getCtx(){
+  ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state === "suspended") ctx.resume();
+  return ctx;
+}
+
+/* ---------- Background music (original happy loop, made with code) ---------- */
+const NOTE = {C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,
+              C5:523.25,D5:587.33,E5:659.25,G3:196.00,F3:174.61,A3:220.00,C3:130.81,D3:146.83,G2:98.00,F2:87.31,A2:110.00,E3:164.81,
+              _:0};
+const TEMPO = 112;                 // beats per minute
+const STEP = 60 / TEMPO / 2;       // one eighth note, in seconds
+// 32 eighth-notes = 4 bars (C - Am - F - G)
+const MELODY = ["E5","_","D5","C5","E5","_","G4","_",   "C5","_","B4","A4","C5","_","E4","_",
+                "A4","_","C5","A4","F4","_","A4","_",   "G4","B4","D5","B4","G4","_","_","_"];
+const BASS   = ["C3","G3","E3","G3","A2","E3","A2","E3","F2","C3","F2","C3","G2","D3","G2","D3"]; // every quarter note
+let music = {on:true, started:false, timer:null, step:0, next:0};
+
+function tone(freq, when, dur, type, vol){
+  const c = getCtx();
+  const o = c.createOscillator(), g = c.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(vol, when + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+  o.connect(g); g.connect(c.destination);
+  o.start(when); o.stop(when + dur + 0.05);
+}
+function scheduleMusic(){
+  const c = getCtx();
+  while(music.next < c.currentTime + 0.3){
+    const i = music.step % 32;
+    const m = MELODY[i];
+    if(m !== "_") tone(NOTE[m], music.next, STEP * 1.8, "triangle", 0.07);
+    if(i % 2 === 0){
+      const b = BASS[(i/2) % 16];
+      tone(NOTE[b], music.next, STEP * 1.8, "sine", 0.09);
+    }
+    if(i % 4 === 2) tone(8000, music.next, 0.03, "square", 0.012); // soft tick
+    music.next += STEP;
+    music.step++;
+  }
+}
+function startMusic(){
+  if(!music.on || music.timer) return;
+  try{
+    const c = getCtx();
+    music.next = c.currentTime + 0.1;
+    music.timer = setInterval(scheduleMusic, 100);
+    music.started = true;
+  }catch(e){}
+}
+function stopMusic(){
+  clearInterval(music.timer); music.timer = null;
+}
+function toggleMusic(){
+  music.on = !music.on;
+  $("musicBtn").textContent = music.on ? "🎵" : "🔇";
+  if(music.on) startMusic(); else stopMusic();
+}
+document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden) stopMusic(); else if(music.on && music.started) startMusic();
+});
+
+function beep(freq, dur, type){
+  try{
+    getCtx();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type||"sine"; o.frequency.value = freq;
+    g.gain.value = .08; o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + dur);
+  }catch(e){}
+}
+const goodSound = ()=>{beep(660,.12); setTimeout(()=>beep(880,.18),120)};
+const badSound  = ()=>beep(200,.3,"square");
+
+/* ---------- Game flow ---------- */
+function start(){
+  startMusic();
+  idx = 0; score = 0;
+  order = shuffle(QUESTIONS);
+  $("start").classList.add("hidden");
+  $("result").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion(){
+  locked = false;
+  const q = order[idx];
+  $("qCount").textContent = `Mystery ${idx+1} / ${order.length}`;
+  $("score").textContent = `⭐ ${score}`;
+  $("bar").style.width = (idx/order.length*100)+"%";
+  $("emoji").textContent = q.e;
+  $("clue").textContent = q.clue;
+  $("sentence").innerHTML = q.s ? q.s.replace("___", '<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;</span>') : "";
+  $("feedback").textContent = ""; $("feedback").className = "feedback";
+  $("nextBtn").classList.add("hidden");
+
+  const box = $("options"); box.innerHTML = "";
+  shuffle(q.o).forEach(text=>{
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = text;
+    b.onclick = ()=>choose(b, text, q);
+    box.appendChild(b);
+  });
+  $("quiz").classList.remove("pop"); void $("quiz").offsetWidth; $("quiz").classList.add("pop");
+}
+
+function choose(btn, text, q){
+  if(locked) return;
+  locked = true;
+  const right = text === q.o[0];
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled = true;
+    if(b.textContent === q.o[0]) b.classList.add("correct");
+  });
+  const fb = $("feedback");
+  if(right){
+    score++; goodSound();
+    fb.textContent = "✅ Great! " + q.why; fb.classList.add("good");
+    $("score").textContent = `⭐ ${score}`;
+  }else{
+    badSound(); btn.classList.add("wrong","shake");
+    fb.textContent = "❌ Not quite. " + q.why; fb.classList.add("bad");
+  }
+  $("nextBtn").textContent = idx === order.length-1 ? "See results 🏆" : "Next ➜";
+  $("nextBtn").classList.remove("hidden");
+}
+
+function next(){
+  idx++;
+  if(idx >= order.length) return finish();
+  showQuestion();
+}
+
+function finish(){
+  $("quiz").classList.add("hidden");
+  $("result").classList.remove("hidden");
+  const total = order.length, pct = score/total;
+  const stars = pct >= .9 ? 3 : pct >= .6 ? 2 : 1;
+  $("rStars").textContent = "⭐".repeat(stars) + "☆".repeat(3-stars);
+  if(pct >= .9){ $("rEmoji").textContent="🏆"; $("rTitle").textContent="Super Detective!"; }
+  else if(pct >= .6){ $("rEmoji").textContent="🕵️‍♀️"; $("rTitle").textContent="Good Detective!"; }
+  else { $("rEmoji").textContent="🔍"; $("rTitle").textContent="Keep practising!"; }
+  $("rText").textContent = `You solved ${score} out of ${total} mysteries.`;
+  if(pct >= .6) { goodSound(); }
+}
+
+$("musicBtn").onclick = toggleMusic;
+$("startBtn").onclick = start;
+$("nextBtn").onclick = next;
+$("againBtn").onclick = start;
+</script>
+</body>
+</html>
