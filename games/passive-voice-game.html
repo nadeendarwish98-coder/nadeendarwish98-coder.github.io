@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Passive Voice Quest – Present Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --subj:#2563eb; --subj-l:#dbeafe;
+  --verb:#e11d48; --verb-l:#ffe4e6;
+  --obj:#16a34a;  --obj-l:#dcfce7;
+  --be:#7c3aed;   --be-l:#ede9fe;
+  --pp:#ea580c;   --pp-l:#ffedd5;
+  --by:#db2777;   --by-l:#fce7f3;
+  --ink:#1e1b4b;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0;min-height:100vh;color:var(--ink);
+  font-family:'Fredoka','Cairo',system-ui,sans-serif;
+  background:linear-gradient(180deg,#9fd6ff 0%,#cfeaff 38%,#fff1b8 100%);
+  overflow-x:hidden;
+}
+/* decorations */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.cloud{position:absolute;font-size:64px;opacity:.9;animation:drift linear infinite}
+.cloud:nth-child(1){top:6%;animation-duration:70s;left:-10%}
+.cloud:nth-child(2){top:22%;animation-duration:95s;left:-20%;font-size:48px;animation-delay:-30s}
+.cloud:nth-child(3){top:12%;animation-duration:80s;left:-15%;font-size:80px;animation-delay:-55s}
+@keyframes drift{to{transform:translateX(130vw)}}
+.hills{position:fixed;left:0;right:0;bottom:0;height:90px;z-index:0;pointer-events:none;
+  background:radial-gradient(120px 60px at 10% 100%,#86efac 98%,transparent 100%),
+             radial-gradient(160px 80px at 40% 100%,#4ade80 98%,transparent 100%),
+             radial-gradient(130px 65px at 72% 100%,#86efac 98%,transparent 100%),
+             radial-gradient(150px 75px at 95% 100%,#4ade80 98%,transparent 100%)}
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:14px 14px 110px}
+
+.title{font-size:clamp(1.9rem,6vw,3rem);margin:4px 0 0;text-align:center;font-weight:700;color:#3730a3;text-shadow:0 3px 0 #fff,0 6px 0 rgba(55,48,163,.15)}
+.sub{text-align:center;font-weight:500;margin:0 0 10px;color:#4338ca}
+
+.panel{background:#fff;border-radius:26px;padding:16px;box-shadow:0 7px 0 rgba(30,27,75,.14);margin:12px 0}
+.pill{background:#fff;border-radius:999px;padding:6px 14px;font-weight:600;box-shadow:0 4px 0 rgba(30,27,75,.14);display:inline-flex;gap:6px;align-items:center}
+
+/* role colours */
+.c-subj{--c:var(--subj);--d:#1e40af;--l:var(--subj-l)}
+.c-verb{--c:var(--verb);--d:#9f1239;--l:var(--verb-l)}
+.c-obj {--c:var(--obj); --d:#166534;--l:var(--obj-l)}
+.c-be  {--c:var(--be);  --d:#5b21b6;--l:var(--be-l)}
+.c-pp  {--c:var(--pp);  --d:#9a3412;--l:var(--pp-l)}
+.c-by  {--c:var(--by);  --d:#9d174d;--l:var(--by-l)}
+
+.tag,.mini{display:inline-block;border-radius:12px;padding:3px 12px;font-weight:600;background:var(--c);color:#fff;box-shadow:0 3px 0 var(--d)}
+
+/* formula bar */
+.formula{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;font-size:.95rem}
+.formula .plus{font-weight:700;color:#6366f1}
+
+/* start */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}
+.lvl{font:inherit;border:0;border-radius:22px;padding:16px 12px;cursor:pointer;color:#fff;text-align:center;
+  box-shadow:0 7px 0 rgba(0,0,0,.22);transition:transform .12s}
+.lvl:hover{transform:translateY(-3px)}
+.lvl:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(0,0,0,.22)}
+.lvl .em{font-size:2.4rem;display:block}
+.lvl b{font-size:1.25rem;display:block}
+.lvl small{opacity:.95;font-size:.9rem}
+.lvl.l1{background:linear-gradient(135deg,#34d399,#16a34a)}
+.lvl.l2{background:linear-gradient(135deg,#60a5fa,#2563eb)}
+.lvl.l3{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
+.lvl.l4{background:linear-gradient(135deg,#fb923c,#e11d48)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:8px}
+.how div{background:#f8fafc;border-radius:16px;padding:10px 12px;font-size:.95rem;line-height:1.4}
+.how b{display:block;margin-bottom:2px}
+
+/* hud */
+.hud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.bar{flex:1 1 100%;height:14px;background:#fff;border-radius:99px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.15)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#facc15,#fb923c,#ec4899);border-radius:99px;transition:width .4s}
+
+/* owl */
+.owlrow{display:flex;gap:10px;align-items:flex-start}
+.owl{font-size:58px;line-height:1;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.bubble{position:relative;background:#fff;border-radius:20px;padding:10px 16px;box-shadow:0 5px 0 rgba(30,27,75,.14);flex:1;font-size:1.1rem;line-height:1.35}
+.bubble:before{content:"";position:absolute;left:-10px;top:22px;border:10px solid transparent;border-right-color:#fff;border-left:0}
+.bubble .ar{display:block;font-family:'Cairo',sans-serif;direction:rtl;text-align:right;font-size:.98rem;color:#4c4a8a;margin-top:2px}
+.bubble.bad{background:#fff1f2}
+.bubble.bad:before{border-right-color:#fff1f2}
+.bubble.good{background:#f0fdf4}
+.bubble.good:before{border-right-color:#f0fdf4}
+
+/* sentence */
+.stage{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.pic{font-size:3rem;line-height:1;background:linear-gradient(135deg,#fef9c3,#fde68a);border-radius:22px;padding:10px 12px;box-shadow:0 4px 0 #f59e0b55}
+.sentence{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:flex-start}
+.chunk{display:flex;flex-direction:column;align-items:center;gap:4px}
+.lab{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;min-height:1em;color:#94a3b8}
+.lab.on{color:var(--d)}
+.extra{display:inline-block;padding:10px 12px;font-size:1.3rem;color:#64748b;font-weight:500;background:#f1f5f9;border-radius:14px}
+.dot{font-size:1.8rem;font-weight:700;align-self:flex-start;margin-top:6px}
+.k{font-size:.8rem;font-weight:700;color:#64748b;letter-spacing:.08em}
+
+button.card,button.big{font:inherit;font-weight:600;border:3px solid #cbd5e1;background:#fff;color:var(--ink);border-radius:16px;
+  cursor:pointer;box-shadow:0 5px 0 #cbd5e1;transition:transform .1s}
+button.card{font-size:clamp(1.15rem,3.6vw,1.6rem);padding:8px 16px}
+button.big{font-size:clamp(1.4rem,5vw,2rem);padding:12px 26px;min-width:100px}
+button.card:active,button.big:active{transform:translateY(3px);box-shadow:0 2px 0 #cbd5e1}
+button.card[class*="c-"],button.big[class*="c-"]{background:var(--c);border-color:var(--c);color:#fff;box-shadow:0 5px 0 var(--d)}
+button.card[class*="c-"]:active,button.big[class*="c-"]:active{box-shadow:0 2px 0 var(--d)}
+button.card:disabled{cursor:default}
+button.card.sel{border-color:#facc15;box-shadow:0 5px 0 #eab308,0 0 0 5px #fef08a;transform:translateY(-4px)}
+button.card:not(:disabled):not([class*="c-"]):hover{transform:translateY(-2px)}
+
+/* label boxes */
+.boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+button.box{font:inherit;text-align:center;border:3px dashed var(--c);background:var(--l);border-radius:20px;padding:10px 8px;cursor:pointer;color:var(--ink);transition:transform .12s}
+button.box:hover{transform:translateY(-2px)}
+button.box.sel{border-style:solid;box-shadow:0 0 0 5px #fef08a;transform:translateY(-3px)}
+button.box.filled{border-style:solid;cursor:default}
+.bname{font-weight:700;font-size:1.2rem;color:var(--d)}
+.bdef{font-size:.82rem;color:#475569;margin-bottom:6px}
+.bfill{min-height:38px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#94a3b8;font-weight:700}
+.bfill .mini{font-size:1.15rem}
+
+/* passive board */
+.board{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.slot{min-width:92px;min-height:60px;display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 12px;border:3px dashed #94a3b8;border-radius:16px;
+  font-size:clamp(1.15rem,3.6vw,1.6rem);font-weight:600;background:#f8fafc}
+.slot.on{min-width:0;border-style:solid;border-color:transparent;background:transparent;padding:0}
+.slot.on .mini{font-size:inherit;padding:8px 16px;border-radius:16px}
+.slot .ph{font-size:.85rem;color:#94a3b8;font-weight:600}
+.slot.hot{border-color:#f59e0b;background:#fffbeb;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(245,158,11,.25)}}
+.slot .mini + .mini{margin-left:2px}
+
+.pool,.opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.ask{text-align:center;font-size:1.2rem;font-weight:500;margin:0 0 12px}
+.cheat{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;font-size:.92rem}
+.cheat span{background:var(--be-l);border-radius:12px;padding:5px 10px}
+.family{display:flex;justify-content:center;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;font-size:1.1rem}
+.family .f{background:#f1f5f9;border-radius:12px;padding:4px 12px}
+
+.act{font:inherit;font-weight:700;font-size:1.1rem;border:0;color:#fff;border-radius:16px;padding:10px 20px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.act:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.act.next{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.act.listen{background:linear-gradient(135deg,#38bdf8,#2563eb)}
+.act.home{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
+.act.again{background:linear-gradient(135deg,#fb923c,#e11d48)}
+.rowc{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.starsrow{text-align:center;font-size:2.4rem;letter-spacing:6px}
+.cmp{margin:6px 0}
+.cmp .k{display:block;margin-bottom:2px}
+.cmp .line{font-size:clamp(1.15rem,3.8vw,1.6rem);font-weight:600;line-height:1.9}
+.cmp .line span.w{padding:1px 8px;border-radius:10px;color:var(--d);background:var(--l);margin-right:2px}
+
+/* end */
+.trophy{font-size:5rem;text-align:center;animation:bob 2s infinite}
+.big-score{text-align:center;font-size:1.4rem;font-weight:600}
+
+/* animation */
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.pop{animation:pop .45s}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:50;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.mute{font:inherit;border:0;background:#fff;border-radius:99px;padding:6px 12px;cursor:pointer;box-shadow:0 4px 0 rgba(30,27,75,.14);font-size:1.1rem}
+@media (max-width:520px){.owl{font-size:44px}.pic{font-size:2.3rem}}
+</style>
+</head>
+<body>
+<div class="sky"><span class="cloud">☁️</span><span class="cloud">☁️</span><span class="cloud">☁️</span></div>
+<div class="hills"></div>
+
+<div class="wrap">
+  <h1 class="title">🚀 Passive Voice Quest</h1>
+  <p class="sub">Present Simple &nbsp;•&nbsp; Active ➜ Passive</p>
+
+  <!-- START -->
+  <section id="start">
+    <div class="panel">
+      <div class="formula">
+        <span class="tag c-obj">Object</span><span class="plus">+</span>
+        <span class="tag c-be">am / is / are</span><span class="plus">+</span>
+        <span class="tag c-pp">PP (V3)</span><span class="plus">+</span>
+        <span class="tag c-by">by</span><span class="plus">+</span>
+        <span class="tag c-subj">Subject</span>
+      </div>
+      <div class="how">
+        <div><b>① Find S – V – O</b>Tap a word, then tap its coloured box.</div>
+        <div><b>② Flip the sentence</b>Object goes <u>first</u>, Subject goes <u>last</u> after <i>by</i>.</div>
+        <div><b>③ Choose “to be”</b>am / is / are — depends on the new first word.</div>
+        <div><b>④ Verb → PP</b>Change the verb to its 3rd form.</div>
+      </div>
+    </div>
+    <div class="panel" style="text-align:center">
+      <b style="font-size:1.3rem">Choose your level</b>
+      <div class="levels">
+        <button class="lvl l1" data-act="level:1"><span class="em">🌱</span><b>Level 1</b><small>One thing → <b style="display:inline">is</b></small></button>
+        <button class="lvl l2" data-act="level:2"><span class="em">🌳</span><b>Level 2</b><small>Many things → <b style="display:inline">are</b></small></button>
+        <button class="lvl l3" data-act="level:3"><span class="em">🚀</span><b>Level 3</b><small>Pronoun Power (me, him, us…)</small></button>
+        <button class="lvl l4" data-act="level:4"><span class="em">🏆</span><b>Mix Challenge</b><small>Everything together!</small></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" hidden>
+    <div class="hud" id="hud"></div>
+    <div class="panel owlrow" id="owl"></div>
+    <div class="panel" id="active"></div>
+    <div class="panel" id="board" hidden></div>
+    <div class="panel" id="action"></div>
+  </section>
+
+  <!-- END -->
+  <section id="end" hidden></section>
+</div>
+
+<script>
+/* ================== DATA ================== */
+const VERBS = {
+  drink:{v1:'drink',v2:'drank',pp:'drunk',ing:'drinking'},
+  make:{v1:'make',v2:'made',pp:'made',ing:'making'},
+  open:{v1:'open',v2:'opened',pp:'opened',ing:'opening'},
+  write:{v1:'write',v2:'wrote',pp:'written',ing:'writing'},
+  kick:{v1:'kick',v2:'kicked',pp:'kicked',ing:'kicking'},
+  paint:{v1:'paint',v2:'painted',pp:'painted',ing:'painting'},
+  chase:{v1:'chase',v2:'chased',pp:'chased',ing:'chasing'},
+  drive:{v1:'drive',v2:'drove',pp:'driven',ing:'driving'},
+  sing:{v1:'sing',v2:'sang',pp:'sung',ing:'singing'},
+  grow:{v1:'grow',v2:'grew',pp:'grown',ing:'growing'},
+  cook:{v1:'cook',v2:'cooked',pp:'cooked',ing:'cooking'},
+  break:{v1:'break',v2:'broke',pp:'broken',ing:'breaking'},
+  wash:{v1:'wash',v2:'washed',pp:'washed',ing:'washing'},
+  eat:{v1:'eat',v2:'ate',pp:'eaten',ing:'eating'},
+  check:{v1:'check',v2:'checked',pp:'checked',ing:'checking'},
+  build:{v1:'build',v2:'built',pp:'built',ing:'building'},
+  clean:{v1:'clean',v2:'cleaned',pp:'cleaned',ing:'cleaning'},
+  bake:{v1:'bake',v2:'baked',pp:'baked',ing:'baking'},
+  love:{v1:'love',v2:'loved',pp:'loved',ing:'loving'},
+  draw:{v1:'draw',v2:'drew',pp:'drawn',ing:'drawing'},
+  sew:{v1:'sew',v2:'sewed',pp:'sewn',ing:'sewing'},
+  watch:{v1:'watch',v2:'watched',pp:'watched',ing:'watching'},
+  help:{v1:'help',v2:'helped',pp:'helped',ing:'helping'},
+  call:{v1:'call',v2:'called',pp:'called',ing:'calling'},
+  follow:{v1:'follow',v2:'followed',pp:'followed',ing:'following'},
+  see:{v1:'see',v2:'saw',pp:'seen',ing:'seeing'},
+  visit:{v1:'visit',v2:'visited',pp:'visited',ing:'visiting'}
+};
+// I(pic, subject, verb as written, verb key, object, extra, object-in-front, subject-after-by, be)
+const I=(pic,s,v,k,o,x,f,b,be)=>({pic,s,v,k,o,x,f,b,be});
+
+const L1=[ // one thing → is
+ I('🐱🥛','The cat','drinks','drink','milk','','Milk','the cat','is'),
+ I('👩‍🍳🎂','Mom','makes','make','a cake','every Friday','A cake','Mom','is'),
+ I('👩‍🏫🚪','The teacher','opens','open','the door','','The door','the teacher','is'),
+ I('👦✉️','Ali','writes','write','a letter','','A letter','Ali','is'),
+ I('👦⚽','The boy','kicks','kick','the ball','','The ball','the boy','is'),
+ I('👧🖼️','Sara','paints','paint','a picture','','A picture','Sara','is'),
+ I('🐶🐱','The dog','chases','chase','the cat','','The cat','the dog','is'),
+ I('👨🚗','Dad','drives','drive','the car','every day','The car','Dad','is'),
+ I('👧🎵','The girl','sings','sing','a song','','A song','the girl','is'),
+ I('👨‍🌾🌽','The farmer','grows','grow','corn','','Corn','the farmer','is'),
+ I('👨‍🍳🍚','The chef','cooks','cook','rice','every day','Rice','the chef','is'),
+ I('👶🍵','The baby','breaks','break','a cup','','A cup','the baby','is')
+];
+const L2=[ // many things → are
+ I('👨‍🌾🍅','The farmer','grows','grow','tomatoes','every year','Tomatoes','the farmer','are'),
+ I('👩🍽️','Mom','washes','wash','the dishes','','The dishes','Mom','are'),
+ I('🧒🍎','The kids','eat','eat','apples','','Apples','the kids','are'),
+ I('👩‍🏫📚','The teacher','checks','check','the notebooks','','The notebooks','the teacher','are'),
+ I('🐦🪺','Birds','build','build','nests','','Nests','birds','are'),
+ I('👦🪟','Ahmed','cleans','clean','the windows','','The windows','Ahmed','are'),
+ I('🧁🔥','The cook','bakes','bake','cookies','every morning','Cookies','the cook','are'),
+ I('🧒🧸','Children','love','love','toys','','Toys','children','are'),
+ I('🧑‍🎓📖','The students','write','write','stories','','Stories','the students','are'),
+ I('👷🏠','The workers','build','build','houses','','Houses','the workers','are'),
+ I('👧🌸','My sister','draws','draw','flowers','','Flowers','my sister','are'),
+ I('🧵👕','The tailor','sews','sew','clothes','','Clothes','the tailor','are')
+];
+const L3=[ // pronouns
+ I('👧🧹','She','cleans','clean','the room','','The room','her','is'),
+ I('👦🪟','He','opens','open','the window','','The window','him','is'),
+ I('👫📺','They','watch','watch','cartoons','','Cartoons','them','are'),
+ I('👨‍👩‍👧🍕','We','eat','eat','pizza','','Pizza','us','is'),
+ I('✍️💌','I','write','write','letters','','Letters','me','are'),
+ I('👦🤝','Tom','helps','help','me','','I','Tom','am'),
+ I('👩❤️','Mom','loves','love','us','','We','Mom','are'),
+ I('👩‍🏫📣','The teacher','calls','call','you','','You','the teacher','are'),
+ I('🐕🏃','The dog','follows','follow','him','','He','the dog','is'),
+ I('🐦👀','The bird','sees','see','her','','She','the bird','is'),
+ I('👭🏠','My friends','visit','visit','me','every week','I','my friends','am'),
+ I('👦👦🤝','The boys','help','help','them','','They','the boys','are')
+];
+const LEVELS={1:L1,2:L2,3:L3};
+
+/* ================== HELPERS ================== */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=(a,n)=>shuffle(a).slice(0,n);
+const ROLE={s:'subj',v:'verb',o:'obj'};
+const NAME={s:'Subject',v:'Verb',o:'Object'};
+const DEF={s:'who DOES the action',v:'the ACTION word',o:'RECEIVES the action'};
+const DEF_AR={s:'السابجكت = اللي بيعمل الفعل',v:'الفيرب = الفعل نفسه',o:'الأوبجكت = اللي بيقع عليه الفعل'};
+const BE_RULE={am:'I → am',is:'one thing / he / she / it → is',are:'many things / you / we / they → are'};
+const PRAISE=['Awesome!','Super!','Brilliant!','Perfect!','You rock!','Great job!'];
+
+/* sound */
+let actx;
+function beep(f,d,type='sine',vol=.14,when=0){
+  if(S.mute)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+when;
+    o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d);
+  }catch(e){}
+}
+const sfx={ok(){beep(660,.12);beep(880,.18,'sine',.14,.1)},no(){beep(170,.28,'sawtooth',.07)},
+  win(){[523,659,784,1047].forEach((f,i)=>beep(f,.22,'triangle',.15,i*.12))}};
+function speak(t){
+  if(S.mute||!('speechSynthesis' in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u)}catch(e){}
+}
+function confetti(){
+  const cols=['#2563eb','#e11d48','#16a34a','#7c3aed','#ea580c','#db2777','#facc15'];
+  for(let i=0;i<70;i++){
+    const e=document.createElement('i');e.className='confetti';
+    e.style.left=Math.random()*100+'vw';e.style.background=cols[i%cols.length];
+    e.style.animationDuration=(2+Math.random()*2)+'s';e.style.animationDelay=Math.random()*.5+'s';
+    e.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(e);setTimeout(()=>e.remove(),4800);
+  }
+}
+
+/* ================== STATE ================== */
+const S={mute:false,level:1,queue:[],qi:0,score:0,stars:0,streak:0,cur:null,step:1,mistakes:0,
+  placed:{},sel:{},boardN:0,pool:[],ppOpts:[],ppWrong:0,fx:'',msg:null,tone:''};
+
+function startGame(level){
+  S.level=level;
+  S.queue = level===4 ? shuffle([...pick(L1,3),...pick(L2,3),...pick(L3,4)]) : pick(LEVELS[level],10);
+  S.qi=0;S.score=0;S.stars=0;S.streak=0;
+  $('#start').hidden=true;$('#end').hidden=true;$('#game').hidden=false;
+  loadQ();
+}
+function loadQ(){
+  const q=S.cur=S.queue[S.qi],V=VERBS[q.k];
+  S.step=1;S.mistakes=0;S.placed={};S.sel={};S.boardN=0;S.ppWrong=0;S.fx='';
+  S.pool=shuffle(['f','by','bs','vt']);
+  const wrong = V.v2!==V.pp ? [V.v2,V.ing] : [V.v1,V.ing];
+  S.ppOpts=shuffle([V.pp,...wrong]);
+  say('Who does the action? Tap a word, then tap its coloured box!','اضغط على الكلمة وبعدين على الصندوق بتاعها');
+  render();
+}
+function say(en,ar='',tone=''){S.msg={en,ar};S.tone=tone}
+function passiveText(q){return `${q.f} ${q.be} ${VERBS[q.k].pp} by ${q.b}${q.x?' '+q.x:''}.`}
+function activeText(q){return `${q.s} ${q.v} ${q.o}${q.x?' '+q.x:''}.`}
+function wrong(en,ar,fx){S.mistakes++;S.fx=fx;sfx.no();say(en,ar,'bad')}
+function sh(k){return S.fx===k?' shake':''}
+
+/* ================== RENDER ================== */
+function render(){
+  const q=S.cur,V=VERBS[q.k];
+  /* HUD */
+  $('#hud').innerHTML=`
+    <span class="pill">📘 Question ${S.qi+1} / ${S.queue.length}</span>
+    <span class="pill">⭐ ${S.score}</span>
+    <span class="pill">🔥 ${S.streak}</span>
+    <button class="mute" data-act="mute" aria-label="sound">${S.mute?'🔇':'🔊'}</button>
+    <div class="bar"><i style="width:${(S.qi+(S.step===5?1:0))/S.queue.length*100}%"></i></div>`;
+  /* OWL */
+  $('#owl').innerHTML=`<div class="owl">🦉</div>
+    <div class="bubble ${S.tone}"><span>${S.msg.en}</span>${S.msg.ar?`<span class="ar">${S.msg.ar}</span>`:''}</div>`;
+  /* ACTIVE SENTENCE */
+  const chunks=['s','v','o'].map(id=>{
+    const done=!!S.placed[id];
+    return `<div class="chunk"><button class="card${done?' c-'+ROLE[id]+' pop':''}${S.sel.card===id?' sel':''}${sh('card-'+id)}" data-card="${id}" ${done||S.step>1?'disabled':''}>${q[id]}</button>
+      <small class="lab c-${ROLE[id]}${done?' on':''}">${done?NAME[id]:'&nbsp;'}</small></div>`;
+  }).join('');
+  $('#active').innerHTML=`<span class="k">ACTIVE</span>
+    <div class="stage"><div class="pic">${q.pic}</div><div class="sentence">${chunks}
+    ${q.x?`<div class="chunk"><span class="extra">${q.x}</span><small class="lab">extra</small></div>`:''}<span class="dot">.</span></div></div>`;
+  /* BOARD */
+  const board=$('#board');
+  if(S.step>=2){
+    board.hidden=false;
+    const n=S.boardN,st=S.step;
+    const slot=(on,content,ph,hot)=>`<div class="slot${on?' on':''}${hot?' hot':''}">${on?content:`<span class="ph">${ph}</span>`}</div>`;
+    let verbSlot;
+    if(st<=2)verbSlot=slot(false,'', 'be + PP',false);
+    else if(st===3)verbSlot=`<div class="slot hot"><span class="ph">be</span><span class="ph">+ PP</span></div>`;
+    else if(st===4)verbSlot=`<div class="slot on hot"><span class="mini c-be">${q.be}</span><span class="ph" style="font-size:1rem">+ ?</span></div>`;
+    else verbSlot=`<div class="slot on"><span class="mini c-be">${q.be}</span><span class="mini c-pp pop">${V.pp}</span></div>`;
+    board.innerHTML=`<span class="k">PASSIVE</span><div class="board" style="margin-top:6px">
+      ${slot(n>=1,`<span class="mini c-obj pop">${q.f}</span>`,'Object',st===2&&n===0)}
+      ${verbSlot}
+      ${slot(n>=2,`<span class="mini c-by pop">by</span>`,'by',st===2&&n===1)}
+      ${slot(n>=3,`<span class="mini c-subj pop">${q.b}</span>`,'Subject',st===2&&n===2)}
+      ${q.x?`<span class="extra">${q.x}</span>`:''}<span class="dot">.</span></div>`;
+  }else board.hidden=true;
+  /* ACTION */
+  const a=$('#action');
+  if(S.step===1){
+    a.innerHTML=`<p class="ask">Put each word in the right box 👇</p><div class="boxes">`+
+      ['s','v','o'].map(id=>`<button class="box c-${ROLE[id]}${S.sel.box===id?' sel':''}${S.placed[id]?' filled':''}${sh('box-'+id)}" data-box="${id}">
+        <div class="bname">${NAME[id]}</div><div class="bdef">${DEF[id]}</div>
+        <div class="bfill">${S.placed[id]?`<span class="mini c-${ROLE[id]} pop">${q[id]}</span>`:'?'}</div></button>`).join('')+`</div>`;
+  }else if(S.step===2){
+    const used={f:S.boardN>=1,by:S.boardN>=2,bs:S.boardN>=3};
+    const lbl={f:[q.f,'c-obj'],by:['by','c-by'],bs:[q.b,'c-subj'],vt:[q.v,'c-verb']};
+    let note='';
+    if(q.s.toLowerCase()!==q.b.toLowerCase()||q.o.toLowerCase()!==q.f.toLowerCase())
+      note=`<p class="ask" style="font-size:1rem;color:#9d174d">⚠️ Pronouns change! ${q.s.toLowerCase()!==q.b.toLowerCase()?`<b>${q.s}</b> → <b>${q.b}</b>`:''} ${q.o.toLowerCase()!==q.f.toLowerCase()?`&nbsp; <b>${q.o}</b> → <b>${q.f}</b>`:''}</p>`;
+    a.innerHTML=`<p class="ask">Build the passive sentence — tap the cards in the right order 👇</p>${note}
+      <div class="pool">`+S.pool.filter(id=>!used[id]).map(id=>`<button class="card c-${lbl[id][1].slice(2)}${sh('pool-'+id)}" data-pool="${id}" style="font-size:1.4rem;padding:10px 20px">${lbl[id][0]}</button>`).join('')+`</div>`;
+  }else if(S.step===3){
+    a.innerHTML=`<p class="ask">Which <b style="color:var(--be)">to be</b> goes with <span class="mini c-obj">${q.f}</span> ?</p>
+      <div class="opts">${['am','is','are'].map(x=>`<button class="big c-be${sh('be-'+x)}" data-be="${x}">${x}</button>`).join('')}</div>
+      <div class="cheat"><span><b>I</b> → am</span><span><b>he / she / it / one thing</b> → is</span><span><b>you / we / they / many things</b> → are</span></div>`;
+  }else if(S.step===4){
+    const hint=S.ppWrong>=2?`<span class="f">V1: ${V.v1}</span>→<span class="f">V2: ${V.v2}</span>→<span class="f">V3: ?</span>`:`<span class="f">${V.v1}</span>→<b>PP (V3)</b>`;
+    a.innerHTML=`<p class="ask">Change <span class="mini c-verb">${q.v}</span> to the <b style="color:var(--pp)">PP</b> (3rd form)</p>
+      <div class="family">${hint}</div>
+      <div class="opts">${S.ppOpts.map(x=>`<button class="big c-pp${sh('pp-'+x)}" data-pp="${x}">${x}</button>`).join('')}</div>`;
+  }else{
+    const w=(t,c)=>`<span class="w c-${c}">${t}</span>`;
+    const st=S.mistakes===0?3:S.mistakes<=2?2:1;
+    a.innerHTML=`<div class="starsrow pop">${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div>
+      <div class="cmp"><span class="k">ACTIVE</span><div class="line">${w(q.s,'subj')}${w(q.v,'verb')}${w(q.o,'obj')}${q.x?' '+q.x:''}.</div></div>
+      <div class="cmp"><span class="k">PASSIVE</span><div class="line">${w(q.f,'obj')}${w(q.be,'be')}${w(V.pp,'pp')}${w('by','by')}${w(q.b,'subj')}${q.x?' '+q.x:''}.</div></div>
+      <div class="rowc"><button class="act listen" data-act="listen">🔊 Listen</button>
+      <button class="act next" data-act="next">${S.qi+1<S.queue.length?'Next ➜':'Finish 🏁'}</button></div>`;
+  }
+  S.fx='';
+}
+
+/* ================== ACTIONS ================== */
+function resolve(){
+  const q=S.cur;
+  if(S.sel.card&&S.sel.box){
+    const c=S.sel.card,b=S.sel.box;
+    if(c===b){
+      S.placed[c]=1;S.score+=10;sfx.ok();S.sel={};
+      if(Object.keys(S.placed).length===3){
+        S.step=2;
+        say('Great! Now flip it: the OBJECT goes FIRST, the SUBJECT goes LAST after “by”.','الأوبجكت الأول، والسابجكت في الآخر بعد by','good');
+      }else say(`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} “${q[c]}” is the ${NAME[c]}.`,'','good');
+    }else{
+      wrong(`Not quite! “${q[c]}” is the ${NAME[c]} — ${DEF[c]}.`,DEF_AR[c],'card-'+c);
+      S.sel={};
+    }
+  }
+  render();
+}
+function poolPick(id){
+  const q=S.cur,order=['f','by','bs'],exp=order[S.boardN];
+  if(id===exp){
+    S.boardN++;S.score+=10;sfx.ok();
+    if(S.boardN===1)say('Yes! Leave a gap for the verb — it will change later. What comes after the verb? 🤔','سيبي مكان للفيرب. بعده بنكتب إيه؟','good');
+    else if(S.boardN===2)say('Now the doer! Who did the action? Put the SUBJECT last.','دلوقتي السابجكت في الآخر','good');
+    else{S.step=3;say(`Now change the verb! First: choose the right “to be” for “${q.f}”.`,'نغيّر الفيرب: الأول اختاري to be','good')}
+  }else if(id==='vt'){
+    wrong('The verb stays out for now — it will become “be + PP” in the middle!','الفيرب هنغيّره بعدين ونحطه في النص','pool-vt');
+  }else if(exp==='f'){
+    wrong('The passive sentence starts with the OBJECT!','الجملة الـ passive بتبدأ بالأوبجكت','pool-'+id);
+  }else if(exp==='by'){
+    wrong('After the verb we write “by”.','بعد الفيرب بنكتب by','pool-'+id);
+  }else{
+    wrong('The doer (the old subject) goes LAST, after “by”.','السابجكت القديم في الآخر بعد by','pool-'+id);
+  }
+  render();
+}
+function pickBe(x){
+  const q=S.cur;
+  if(x===q.be){S.score+=10;sfx.ok();S.step=4;say(`Yes — “${q.f}” → ${q.be}. Now the verb must be the PP (3rd form).`,'دلوقتي الفيرب يبقى PP (الفورم الثالثة)','good')}
+  else wrong(`Look at the first word: “${q.f}”. Rule: ${BE_RULE[q.be]}.`,'بصّي على أول كلمة في الجملة الجديدة','be-'+x);
+  render();
+}
+function pickPP(x){
+  const q=S.cur,V=VERBS[q.k];
+  if(x===V.pp){
+    S.score+=10;S.step=5;
+    const st=S.mistakes===0?3:S.mistakes<=2?2:1;S.stars+=st;
+    S.streak=S.mistakes===0?S.streak+1:0;
+    sfx.win();confetti();
+    say(`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} ${q.v} → ${V.pp}. Tap 🔊 to hear it!`,'','good');
+    render();speak(passiveText(q));return;
+  }
+  S.ppWrong++;
+  wrong('PP is the 3rd form of the verb — not the base form and not -ing!','الـ PP هو الفورم التالتة للفعل','pp-'+x);
+  render();
+}
+function nextQ(){S.qi++;if(S.qi>=S.queue.length)endScreen();else loadQ()}
+function endScreen(){
+  $('#game').hidden=true;const e=$('#end');e.hidden=false;
+  const max=S.queue.length*3,pct=S.stars/max;
+  const [em,msg]=pct>=.9?['🏆','Passive Voice Master!']:pct>=.7?['🥇','Excellent work!']:pct>=.5?['🥈','Good job! Practise a little more.']:['🌱','Keep going — you are learning!'];
+  e.innerHTML=`<div class="panel"><div class="trophy">${em}</div>
+    <h2 style="text-align:center;margin:0">${msg}</h2>
+    <p class="big-score">⭐ ${S.stars} / ${max} stars &nbsp;•&nbsp; 🎯 ${S.score} points</p>
+    <div class="rowc"><button class="act again" data-act="level:${S.level}">🔁 Play again</button>
+    <button class="act home" data-act="home">🏠 Levels</button></div></div>`;
+  sfx.win();confetti();
+}
+
+/* ================== EVENTS ================== */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-card],[data-box],[data-pool],[data-be],[data-pp],[data-act]');
+  if(!t)return;
+  const d=t.dataset;
+  if(d.act){
+    if(d.act.startsWith('level:'))return startGame(+d.act.split(':')[1]);
+    if(d.act==='home'){$('#end').hidden=true;$('#game').hidden=true;$('#start').hidden=false;return}
+    if(d.act==='next')return nextQ();
+    if(d.act==='listen')return speak(passiveText(S.cur));
+    if(d.act==='mute'){S.mute=!S.mute;if(S.mute&&window.speechSynthesis)speechSynthesis.cancel();return render()}
+  }
+  if(S.step===1){
+    if(d.card&&!S.placed[d.card]){S.sel.card=S.sel.card===d.card?null:d.card;return resolve()}
+    if(d.box&&!S.placed[d.box]){S.sel.box=S.sel.box===d.box?null:d.box;return resolve()}
+  }
+  if(S.step===2&&d.pool)return poolPick(d.pool);
+  if(S.step===3&&d.be)return pickBe(d.be);
+  if(S.step===4&&d.pp)return pickPP(d.pp);
+});
+</script>
+</body>
+</html>

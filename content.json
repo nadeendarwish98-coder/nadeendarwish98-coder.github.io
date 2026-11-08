@@ -40,6 +40,13 @@
           "url": "games/might-could-game.html",
           "description": "12 detective mysteries to practise might, could and might not for possibilities — with happy background music and a score at the end.",
           "tags": ["Grammar", "Year 5"]
+        },
+        {
+          "title": "Passive Voice Quest",
+          "icon": "🚀",
+          "url": "games/passive-voice-game.html",
+          "description": "Present simple active → passive, step by step: find the subject, verb and object, flip the sentence, then add be + PP and by. 36 colourful examples across 4 levels.",
+          "tags": ["Grammar", "Passive voice"]
         }
       ]
     }
