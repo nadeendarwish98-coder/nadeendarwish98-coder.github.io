@@ -65,6 +65,7 @@ h1,h2,h3{font-family:'Playfair Display',serif;margin:0;color:var(--brown2)}
 .meter{display:flex;align-items:center;gap:10px;margin-top:10px;font-weight:700}
 .bar{flex:1;height:16px;background:#d8c7a0;border:2px solid var(--brown);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#d9a34a,#b23a3a);transition:width .25s}
 .bar.good i{background:linear-gradient(90deg,#8bb26a,#4b6b4a)}
+.goal{background:#3b2519;color:var(--gold2);border-radius:10px;padding:9px 14px;font-weight:700;font-size:18px;text-align:center;margin-bottom:12px}
 .hint{text-align:center;color:var(--muted);font-style:italic;margin:8px 0 0;min-height:24px}
 .kbar{position:relative;height:40px;margin:14px 0 6px;background:#d8c7a0;border:3px solid var(--brown);border-radius:10px;overflow:hidden}
 .kbar .zone{position:absolute;top:0;bottom:0;background:rgba(75,107,74,.75);border-left:3px solid #2f4b2e;border-right:3px solid #2f4b2e}
@@ -344,66 +345,54 @@ const sceneSVG=(n,chars=[],o={})=>sv(sceneInner(n,o)+chars.map(c=>fig(...c)).joi
 const STAGES=[
  {ch:'Chapter 10',t:'The Long Road',scene:'road',chars:[['oliver',230,372,1.5,{e:'sad'}]],
   txt:'Oliver awoke with a cry of pain. His left arm hung heavy at his side. He was so weak that he could hardly sit up. But at last he got to his feet and tried to walk.',
-  ar:'استيقظ أوليفر وهو يصرخ من الألم. كانت ذراعه اليسرى ثقيلة، وكان ضعيفًا جدًا. لكنه وقف أخيرًا وحاول أن يمشي.',
-  vocab:[['weak','ضعيف'],['pain','ألم'],['road','طريق'],['pity','شفقة']],how:'Tap <b>LEFT</b> and <b>RIGHT</b> foot one after the other to help Oliver walk to the house. Don\'t press the same foot twice!',game:'stepper',
+  vocab:[['weak'],['pain'],['road'],['pity']],how:'Tap <b>LEFT</b> and <b>RIGHT</b> foot one after the other to help Oliver walk to the house. Don\'t press the same foot twice!',game:'stepper',
   card:'Oliver awoke in the fields, weak and in pain, and started to walk.',item:'walk'},
  {ch:'Chapter 10',t:'Knock, Knock!',scene:'gate',chars:[['oliver',180,396,1.3,{e:'sad'}]],
   txt:'He pushed open the garden gate and went slowly across the grass. He climbed the steps, knocked at the door and then fell down, almost dead with pain and fear.',
-  ar:'دفع بوابة الحديقة ومشى ببطء فوق العشب. صعد الدرجات وطرق الباب ثم سقط من شدة الألم والخوف.',
-  vocab:[['gate','بوابة'],['grass','عشب'],['steps','درجات'],['knock','يطرق']],how:'Watch the needle! Press <b>KNOCK</b> when it is inside the <b>green zone</b>. Knock 3 times.',game:'knock',
+  vocab:[['gate'],['grass'],['steps'],['knock']],how:'Watch the needle! Press <b>KNOCK</b> when it is inside the <b>green zone</b>. Knock 3 times.',game:'knock',
   card:'Oliver knocked at the door of the big house, then fell down.',item:'hat'},
  {ch:'Chapter 10',t:'Tea in the Kitchen',scene:'kitchen',chars:[['giles',250,380,1.3,{e:'scared'}],['brittles',400,390,1.3,{e:'scared'}],['cook',560,390,1.3,{e:'shock'}]],
   txt:'Mr. Giles, Brittles and the other servants were having early morning tea in the kitchen. Suddenly there was a noise outside. “It was a knock,” said Mr. Giles. “Open the door, Brittles.”',
-  ar:'كان السيد جايلز وبريتلز وبقية الخدم يشربون شاي الصباح في المطبخ. فجأة سُمع صوت في الخارج. قال جايلز: «إنها طرقة. افتح الباب يا بريتلز».',
-  vocab:[['servants','خدم'],['tea','شاي'],['noise','ضوضاء'],['alarm','فزع']],how:'Who said it? Tap a <b>quote</b>, then tap the <b>person</b> who said it.',game:'whosaid',
+  vocab:[['servants'],['tea'],['noise'],['alarm']],how:'Who said it? Tap a <b>quote</b>, then tap the <b>person</b> who said it.',game:'whosaid',
   card:'The servants heard a knock at the kitchen door and nobody wanted to open it!',item:'cup'},
  {ch:'Chapter 10',t:'A Thief in the Hall',scene:'hall',chars:[['giles',300,405,1.4,{e:'angry',arm:[0,1]}],['brittles',470,400,1.3,{e:'shock'}]],
   txt:'Brittles opened the door, and all they saw was poor little Oliver Twist. Mr. Giles pulled him into the hall. “Here is one of the thieves, madam!” “Quiet,” said a sweet voice from the top of the stairs.',
-  ar:'فتح بريتلز الباب، ولم يروا سوى أوليفر المسكين. سحبه جايلز إلى الصالة وصاح: «هذا لصّ يا سيدتي!» فقال صوت عذب من أعلى الدرج: «اهدؤوا».',
-  vocab:[['hall','صالة'],['thief','لص'],['stairs','درج'],['quiet','هادئ']],how:'Put the story events in the <b>right order</b>. Tap the event that happened <b>next</b>.',game:'order',
+  vocab:[['hall'],['thief'],['stairs'],['quiet']],how:'Put the story events in the <b>right order</b>. Tap the event that happened <b>next</b>.',game:'order',
   card:'Mr. Giles pulled Oliver into the hall. Rose spoke kindly from the stairs.',item:'letter'},
  {ch:'Chapter 10',t:'The Doctor\'s Visit',scene:'bedroom',chars:[['losberne',560,398,1.3,{e:'n'}],['maylie',300,404,1.3,{e:'sad'}]],
   txt:'Dr. Losberne stayed in Mr. Giles\' room for over an hour. His bag was brought up from the carriage. The bedroom bell was rung very often, and the servants ran up and down the stairs.',
-  ar:'بقي الدكتور لوسبيرن في غرفة السيد جايلز أكثر من ساعة. أُحضرت حقيبته من العربة، وكان جرس غرفة النوم يُرنّ كثيرًا.',
-  vocab:[['doctor','طبيب'],['carriage','عربة'],['bell','جرس'],['curtain','ستارة']],how:'Hidden objects! Find the <b>6 things</b> from the list in the bedroom. Careful — wrong taps count!',game:'hidden',
+  vocab:[['doctor'],['carriage'],['bell'],['curtain']],how:'Hidden objects! Find the <b>6 things</b> from the list in the bedroom. Careful — wrong taps count!',game:'hidden',
   card:'The doctor looked after Oliver for over an hour.',item:'bag'},
  {ch:'Chapter 10',t:'A New Life',scene:'garden',chars:[['oliver',360,408,1.3,{e:'happy'}],['rose',470,404,1.3,{e:'happy'}],['maylie',250,404,1.3,{e:'happy'}]],
   txt:'Oliver grew better. It was a completely new life for him. He went for walks, helped in the garden, fed Mrs. Maylie\'s birds and listened while Rose played the piano. Three months passed. Oliver was really happy.',
-  ar:'تحسّن أوليفر. كانت حياة جديدة تمامًا بالنسبة له. تمشّى وساعد في الحديقة وأطعم الطيور واستمع إلى عزف روز على البيانو. مرّت ثلاثة أشهر وكان أوليفر سعيدًا جدًا.',
-  vocab:[['garden','حديقة'],['birds','طيور'],['piano','بيانو'],['flowers','زهور']],how:'Find the <b>matching pairs</b>: each word has a picture. Flip two cards at a time!',game:'memory',
+  vocab:[['garden'],['birds'],['piano'],['flowers']],how:'Find the <b>matching pairs</b>: each word has a picture. Flip two cards at a time!',game:'memory',
   card:'Oliver grew better and lived a happy new life with the ladies.',item:'flower'},
  {ch:'Chapter 11',t:'Rose\'s Song',scene:'piano',chars:[['rose',520,404,1.3,{e:'happy'}],['maylie',690,408,1.2,{e:'happy'}],['oliver',330,408,1.1,{e:'happy'}]],
   txt:'One beautiful night, Rose sat down at the piano. After playing for a little time her hands suddenly began to shake. Her face was very white.',
-  ar:'في ليلة جميلة جلست روز إلى البيانو. وبعد أن عزفت قليلًا بدأت يداها ترتجفان فجأة، وكان وجهها شديد الشحوب.',
-  vocab:[['piano','بيانو'],['shake','يرتجف'],['white','شاحب / أبيض'],['tired','متعب']],how:'Listen to the notes, then <b>play them back</b> in the same order. The tune gets longer each round!',game:'simon',
+  vocab:[['piano'],['shake'],['white'],['tired']],how:'Listen to the notes, then <b>play them back</b> in the same order. The tune gets longer each round!',game:'simon',
   card:'Rose sat down at the piano, but her hands began to shake.',item:'piano'},
  {ch:'Chapter 11',t:'Run to the Inn!',scene:'fields',chars:[['oliver',240,376,1.4,{e:'scared'}]],
   txt:'Mrs. Maylie wrote a letter to Dr. Losberne. “Will you take it to the inn for me?” Oliver ran off at once across the fields with the letter.',
-  ar:'كتبت السيدة ميلي رسالة إلى الدكتور لوسبيرن وقالت: «هل تأخذها إلى النُزل؟» فركض أوليفر عبر الحقول على الفور بالرسالة.',
-  vocab:[['letter','رسالة'],['inn','نُزل'],['fields','حقول'],['ran','ركض']],how:'Tap the screen or press <b>SPACE</b> to <b>jump</b> over fences, stones and puddles. You have 3 hearts!',game:'runner',
+  vocab:[['letter'],['inn'],['fields'],['ran']],how:'Tap the screen or press <b>SPACE</b> to <b>jump</b> over fences, stones and puddles. You have 3 hearts!',game:'runner',
   card:'Oliver ran across the fields with Mrs. Maylie\'s letter.',item:'letter'},
  {ch:'Chapter 11',t:'The Mysterious Stranger',scene:'inn',chars:[['stranger',480,398,1.4,{e:'angry',arm:[1,0]}],['oliver',360,398,1.3,{e:'scared'}]],
   txt:'Oliver was coming out of the inn when he almost fell against a tall man in a black coat. “Curse you!” said the man in a voice of terrible anger. Then he suddenly fell to the ground.',
-  ar:'كان أوليفر يخرج من النُزل عندما كاد يصطدم برجل طويل يرتدي معطفًا أسود. صاح الرجل بغضب شديد: «لعنة عليك!» ثم سقط على الأرض فجأة.',
-  vocab:[['stranger','غريب'],['tall','طويل'],['anger','غضب'],['mad','مجنون']],how:'Answer <b>3 questions</b> about what happened at the inn.',game:'quiz',
+  vocab:[['stranger'],['tall'],['anger'],['mad']],how:'Answer <b>3 questions</b> about what happened at the inn.',game:'quiz',
   card:'At the inn, Oliver met a mysterious man who shouted at him in anger.',item:'hat',
   qs:[{q:'What did Oliver take to the inn?',o:['A letter','A bag','A flower'],a:0,e:'Mrs. Maylie wrote a letter to Dr. Losberne.'},
       {q:'What did the tall man wear?',o:['A white coat','A black coat','A green coat'],a:1,e:'He was a tall man in a black coat.'},
       {q:'What did Oliver think about the man?',o:['That he was a doctor','That he was a friend','That he was mad'],a:2,e:'Oliver thought that the stranger must be mad.'}]},
  {ch:'Chapter 11',t:'Is Rose Dying?',scene:'hall',sceneO:{night:true},chars:[['maylie',280,404,1.35,{e:'scared'}],['losberne',450,398,1.35,{e:'happy'}],['oliver',590,408,1.2,{e:'happy'}]],
   txt:'At last Dr. Losberne came out. “Thank God, no!” he cried. “She will not die, but will live for years to come.” The old lady fell upon her knees in prayer. It was almost too much happiness to bear.',
-  ar:'خرج الدكتور لوسبيرن أخيرًا وصاح: «الحمد لله، لا! لن تموت بل ستعيش سنوات طويلة». ركعت السيدة العجوز تصلّي، وكانت السعادة أكبر من أن تُحتمل.',
-  vocab:[['prayer','صلاة / دعاء'],['sleep','نوم'],['flowers','زهور'],['doctor','طبيب']],how:'Unscramble the <b>letters</b> to spell the story words. Tap the letters in the right order.',game:'scramble',
+  vocab:[['prayer'],['sleep'],['flowers'],['doctor']],how:'Unscramble the <b>letters</b> to spell the story words. Tap the letters in the right order.',game:'scramble',
   card:'Dr. Losberne told them: Rose will live! Everyone was so happy.',item:'flower'},
  {ch:'Chapter 11',t:'Fagin at the Window',scene:'window',sceneO:{figs:fig('fagin',400,300,1.5,{e:'angry'})+fig('stranger',490,305,1.6,{e:'angry'})},chars:[['oliver',620,342,1.3,{e:'shock'}]],
   txt:'“What was that?” Suddenly, there at the window, stood Fagin. And beside him stood the man from the inn. It was only a second, and they were gone. Oliver jumped into the garden and called for help.',
-  ar:'«ما هذا؟» وفجأة وقف فاجن عند النافذة، وبجانبه الرجل الذي رآه عند النُزل. لم يدم ذلك سوى لحظة ثم اختفيا. قفز أوليفر إلى الحديقة ونادى طالبًا النجدة.',
-  vocab:[['window','نافذة'],['hunt','مطاردة'],['clue','دليل'],['stick','عصا']],how:'Night search! Move your <b>lantern</b> and tap the bushes. Find <b>3 clues</b> with only 8 tries.',game:'search',
+  vocab:[['window'],['hunt'],['clue'],['stick']],how:'Night search! Move your <b>lantern</b> and tap the bushes. Find <b>3 clues</b> with only 8 tries.',game:'search',
   card:'Oliver saw Fagin and the stranger at the window, but they ran away.',item:'foot'},
  {ch:'Chapter 11',t:'The Mystery Continues',scene:'nightgarden',chars:[['giles',250,408,1.2,{e:'n'}],['losberne',380,404,1.25,{e:'n'}],['oliver',500,408,1.1,{e:'sad'}],['brittles',620,408,1.1,{e:'n'}]],
   txt:'Mr. Giles ran off and Brittles followed him. Dr. Losberne joined in the hunt, but the two men could not be found. “It must have been a dream, Oliver,” said the doctor. “Oh no, indeed, sir,” replied Oliver.',
-  ar:'ركض جايلز وتبعه بريتلز، وانضم إليهم الدكتور في المطاردة، لكنهم لم يجدوا الرجلين. قال الدكتور: «لا بد أنه كان حلمًا يا أوليفر». فأجاب: «كلا يا سيدي، بل رأيتهما حقًا».',
-  vocab:[['dream','حلم'],['search','يبحث'],['success','نجاح'],['strange','غريب']],how:'Final test! Answer <b>6 questions</b> about Chapters 10 and 11 to finish the adventure.',game:'final',
+  vocab:[['dream'],['search'],['success'],['strange']],how:'Final test! Answer <b>6 questions</b> about Chapters 10 and 11 to finish the adventure.',game:'final',
   card:'Nobody could find the two men. What did Fagin want with Oliver?',item:'button',
   qs:[{q:'Who found Oliver at the door of the big house?',o:['Mr. Giles and the servants','The doctor','Rose'],a:0,e:'Brittles opened the door and Mr. Giles pulled Oliver in.'},
       {q:'Rose Maylie was a very beautiful girl with blue eyes.',tf:1,a:1,e:'Yes! Rose had blue eyes and a sweet smile.'},
@@ -419,8 +408,7 @@ function showTitle(){
  const started=Object.keys(state.stars).length>0;
  app.innerHTML=`<div class="panel hero"><div class="orn">❦ ❦ ❦</div>${sceneSVG('garden',[['oliver',300,408,1.4,{e:'happy'}],['rose',420,404,1.4,{e:'happy'}],['maylie',200,404,1.4,{e:'happy'}]])}
  <h1>Oliver Twist</h1><h2 style="font-size:26px;margin:0">The Road to Safety</h2><div class="sub">A Victorian adventure through Chapters 10 &amp; 11</div>
- <div class="ar" style="color:var(--muted);margin-bottom:6px">مغامرة فيكتورية مع أوليفر تويست — الفصل ١٠ و ١١</div>
- <div><input id="nm" maxlength="20" placeholder="Your name · اسمك" value="${esc(state.name)}"></div>
+ <div><input id="nm" maxlength="20" placeholder="Your name" value="${esc(state.name)}"></div>
  <button class="btn" id="go">${started?'Continue the adventure ▶':'Begin the adventure ▶'}</button>
  ${started?`<button class="btn alt" id="rs" style="margin-left:8px">Start again</button>`:''}</div>`;
  $('#go').onclick=()=>{state.name=$('#nm').value.trim();save();go(showMap)};
@@ -446,7 +434,7 @@ function showMap(){
   ${st?`<text x="${x}" y="${y+44}" text-anchor="middle" font-size="16" fill="#8a5a10" stroke="#fff3d6" stroke-width=".6">${'★'.repeat(st)}${'☆'.repeat(3-st)}</text>`:''}
   <title>${esc(s.t)}</title></g>`});
  const [ox,oy]=MAPP[curI];m+=fig('oliver',ox+34,oy+6,.55,{e:'happy'});
- app.innerHTML=`<div class="panel"><div class="maphead"><h2>The Adventure Map</h2><div class="row"><span class="pill">★ ${total()} / 36</span><button class="btn alt" id="sb" style="padding:7px 16px;font-size:15px">📖 My Storybook</button></div></div>${sv(m,'map','0 0 960 600')}<p class="hint">Tap a glowing step on the road to continue the story. · اضغط على المحطة المضيئة لتكمل القصة</p></div>`;
+ app.innerHTML=`<div class="panel"><div class="maphead"><h2>The Adventure Map</h2><div class="row"><span class="pill">★ ${total()} / 36</span><button class="btn alt" id="sb" style="padding:7px 16px;font-size:15px">📖 My Storybook</button></div></div>${sv(m,'map','0 0 960 600')}<p class="hint">Tap the glowing step to play.</p></div>`;
  document.querySelectorAll('.node').forEach(n=>n.onclick=()=>{const i=+n.dataset.i;if(unlocked(i))go(()=>showStage(i));else{sfx.bad();n.classList.add('shake')}});
  $('#sb').onclick=()=>go(showBook);
 }
@@ -458,18 +446,17 @@ function showStage(i){
  const s=STAGES[i];
  app.innerHTML=`<div class="panel"><div class="stagegrid"><div>${sceneSVG(s.scene,s.chars,s.sceneO||{})}</div><div>
  <div class="chap">${s.ch} · Stage ${i+1} of 12</div><h2 style="font-size:30px;margin:4px 0">${esc(s.t)}</h2>
- <div class="story">${esc(s.txt)}</div><div class="storyar ar">${esc(s.ar)}</div>
- <div class="chips">${s.vocab.map(v=>`<span class="chip"><b>${esc(v[0])}</b> · <span class="ar">${esc(v[1])}</span></span>`).join('')}</div>
- <div class="how">🎯 ${s.how}</div>
+ <div class="story">${esc(s.txt)}</div> <div class="chips">${s.vocab.map(v=>`<span class="chip"><b>${esc(v[0])}</b></span>`).join('')}</div>
  <div class="row"><button class="btn" id="st">Play ▶</button><button class="btn alt" id="ls">🔊 Listen</button><button class="btn alt" id="mp">Map</button></div></div></div></div>`;
  $('#ls').onclick=()=>speak(s.txt);$('#mp').onclick=()=>{if(window.speechSynthesis)speechSynthesis.cancel();go(showMap)};
  $('#st').onclick=()=>{if(window.speechSynthesis)speechSynthesis.cancel();go(()=>playStage(i))};
  setTimeout(()=>speak(s.txt),400);
 }
+const SHORT=['Tap LEFT, then RIGHT, then LEFT…','Tap KNOCK when the needle is in the green.','Tap a quote, then tap who said it.','Tap the events in the right order.','Find the 6 things in the picture.','Match the picture with its word.','Listen, then play the same notes.','Tap to jump over things!','Pick the right answer.','Tap the letters to spell the word.','Tap the bushes to find 3 clues.','Pick the right answer.'];
 function playStage(i){
  const s=STAGES[i];
- app.innerHTML=`<div class="panel gbox"><div class="gt"><h2>${i+1}. ${esc(s.t)}</h2><div class="row"><span class="pill" id="gs"></span><button class="btn alt" id="gh" style="padding:5px 14px;font-size:14px">❓ Help</button><button class="btn alt" id="gm" style="padding:5px 14px;font-size:14px">Map</button></div></div><div id="gb"></div></div>`;
- $('#gm').onclick=()=>go(showMap);$('#gh').onclick=()=>alert(s.how.replace(/<[^>]+>/g,''));
+ app.innerHTML=`<div class="panel gbox"><div class="gt"><h2>${i+1}. ${esc(s.t)}</h2><div class="row"><span class="pill" id="gs"></span><button class="btn alt" id="gm" style="padding:5px 14px;font-size:14px">Map</button></div></div><div class="goal">${SHORT[i]}</div><div id="gb"></div></div>`;
+ $('#gm').onclick=()=>go(showMap);
  GAMES[s.game]($('#gb'),s,st=>endStage(i,st),t=>{$('#gs').textContent=t||''});
 }
 function endStage(i,stars){
@@ -497,7 +484,7 @@ GAMES.stepper=(b,st,done,hud)=>{
  const N=18;let n=0,last=null,mist=0,fin=false;
  b.innerHTML=`<div id="sa"></div><div class="meter"><span>Pain</span><div class="bar"><i id="pb"></i></div></div><div class="pad"><button class="big" id="fl">◀ LEFT foot</button><button class="big" id="fr">RIGHT foot ▶</button></div><p class="hint" id="hn">Left… right… keep going!</p>`;
  const draw=()=>{const f=n/N;$('#sa').innerHTML=sceneSVG('road',[['oliver',130+f*430,396-f*70,1.5-f*.8,{e:mist>2?'scared':'sad',d:0}]])};
- const step=side=>{if(fin)return;if(last===side){mist++;sfx.bad();shake($('#sa'));$('#hn').textContent='Ouch! Use the OTHER foot!'}else{n++;sfx.step();$('#hn').textContent=['Left… right… keep going!','Slowly, slowly…','Nearly there!'][n%3]}last=side;$('#pb').style.width=Math.min(100,mist*18)+'%';hud(n+' / '+N+' steps');draw();
+ const step=side=>{if(fin)return;if(last===side){mist++;sfx.bad();shake($('#sa'));$('#hn').textContent='Ouch! Use the OTHER foot!'}else{n++;sfx.step();$('#hn').textContent=['Left… right…','Slowly, slowly…','Nearly there!'][n%3]}last=side;$('#pb').style.width=Math.min(100,mist*18)+'%';hud(n+' / '+N+' steps');draw();
   if(n>=N){fin=true;$('#hn').textContent='Oliver reached the house!';setTimeout(()=>done(starsBy(mist,1,3)),700)}};
  $('#fl').onclick=()=>step('L');$('#fr').onclick=()=>step('R');
  const kd=e=>{if(e.key=='ArrowLeft'||e.key=='a')step('L');if(e.key=='ArrowRight'||e.key=='d')step('R')};document.addEventListener('keydown',kd);cleanup=()=>document.removeEventListener('keydown',kd);
@@ -506,7 +493,7 @@ GAMES.stepper=(b,st,done,hud)=>{
 
 GAMES.knock=(b,st,done,hud)=>{
  let hits=0,miss=0,t0=performance.now(),raf,fin=false,ctr=.5,w=.26;
- b.innerHTML=`<div id="sa">${sceneSVG('gate',[['oliver',290,404,1.3,{e:'sad'}]])}</div><div class="kbar" id="kb"><div class="zone" id="zn"></div><div class="needle" id="nd"></div></div><div class="pad"><button class="big" id="kn">KNOCK!</button></div><p class="hint" id="hn">Wait for the needle to reach the green zone.</p>`;
+ b.innerHTML=`<div id="sa">${sceneSVG('gate',[['oliver',290,404,1.3,{e:'sad'}]])}</div><div class="kbar" id="kb"><div class="zone" id="zn"></div><div class="needle" id="nd"></div></div><div class="pad"><button class="big" id="kn">KNOCK!</button></div><p class="hint" id="hn">Wait for the needle…</p>`;
  const zone=()=>{w=[.28,.2,.15][Math.min(hits,2)];ctr=rnd(.25,.75);const z=$('#zn');z.style.left=(ctr-w/2)*100+'%';z.style.width=w*100+'%'};
  let pos=0;const loop=t=>{const sp=1.9+hits*.7;pos=(Math.sin((t-t0)/1000*sp)+1)/2;$('#nd').style.left=`calc(${pos*100}% - 3px)`;raf=requestAnimationFrame(loop)};
  const hit=()=>{if(fin)return;if(Math.abs(pos-ctr)<=w/2){hits++;sfx.knock();$('#hn').textContent='TOK TOK! '+hits+' / 3';if(hits>=3){fin=true;cancelAnimationFrame(raf);$('#sa').innerHTML=sceneSVG('gate',[['oliver',290,404,1.3,{e:'sad'}]]).replace(/<g transform="translate\(290,404\)[^>]*>/,m=>m.replace(')',') rotate(80)'));setTimeout(()=>done(starsBy(miss,1,3)),900)}else zone()}else{miss++;sfx.bad();shake($('#kb'));$('#hn').textContent='Too early or too late — try again!'}hud(hits+' / 3 knocks')};
@@ -533,12 +520,12 @@ GAMES.order=(b,st,done,hud)=>{
 };
 
 GAMES.hidden=(b,st,done,hud)=>{
- const objs=[['bag','a doctor\'s bag','حقيبة الطبيب',1.1,[425,342]],['bell','a bell','جرس',1,[212,168]],['candle','a candle','شمعة',.9,[462,400]],['curtain','a curtain','ستارة',1.2,[724,128]],['teapot','a teapot','إبريق شاي',1,[40,236]],['flower','a flower','زهرة',1,[300,230]]];
+ const objs=[['bag','a doctor\'s bag','',1.1,[425,342]],['bell','a bell','',1,[212,168]],['candle','a candle','',.9,[462,400]],['curtain','a curtain','',1.2,[724,128]],['teapot','a teapot','',1,[40,236]],['flower','a flower','',1,[300,230]]];
  // positions chosen to sit naturally in the bedroom scene
  const pos={bag:[430,352],bell:[392,60],candle:[350,276],curtain:[500,126],teapot:[140,248],flower:[88,222]};
  let found=new Set(),mist=0;
  const inner=sceneInner('bedroom')+objs.map(o=>{const p=pos[o[0]];return `<g class="obj" data-k="${o[0]}" transform="translate(${p[0]},${p[1]}) scale(${o[3]*.85})" style="cursor:pointer" opacity=".95"><rect x="-6" y="-6" width="60" height="60" fill="transparent"/>${ICON[o[0]]}</g>`}).join('')+fig('losberne',620,400,1.15,{e:'n',d:0});
- b.innerHTML=`<div id="sa" style="position:relative">${sv(inner)}</div><div class="find" id="fd">${objs.map(o=>`<span id="f_${o[0]}">${o[1]} · <span class="ar">${o[2]}</span></span>`).join('')}</div><p class="hint" id="hn">Look carefully!</p>`;
+ b.innerHTML=`<div id="sa" style="position:relative">${sv(inner)}</div><div class="find" id="fd">${objs.map(o=>`<span id="f_${o[0]}">${o[1]}</span>`).join('')}</div><p class="hint" id="hn">Look carefully!</p>`;
  const svg=b.querySelector('svg');
  svg.querySelectorAll('.obj').forEach(g=>g.addEventListener('click',e=>{e.stopPropagation();const k=g.dataset.k;if(found.has(k))return;found.add(k);sfx.ok();$('#f_'+k).classList.add('ok');g.insertAdjacentHTML('beforeend','<circle cx="24" cy="24" r="30" fill="none" stroke="#4b6b4a" stroke-width="4"/>');hud(found.size+' / 6');$('#hn').textContent='Found it!';if(found.size>=6)setTimeout(()=>done(starsBy(mist,2,5)),800)}));
  svg.addEventListener('click',()=>{if(found.size>=6)return;mist++;sfx.bad();shake(svg);$('#hn').textContent='Nothing there… ('+mist+' wrong taps)'});
@@ -546,9 +533,9 @@ GAMES.hidden=(b,st,done,hud)=>{
 };
 
 GAMES.memory=(b,st,done,hud)=>{
- const pr=[['book','book','كتاب'],['piano','piano','بيانو'],['flower','flowers','زهور'],['bird','bird','طائر'],['cup','tea','شاي'],['walk','walk','مشي']];
+ const pr=[['book','book'],['piano','piano'],['flower','flowers'],['bird','bird'],['cup','tea'],['walk','walk']];
  let cards=shuffle(pr.flatMap((p,i)=>[{i,t:'ic'},{i,t:'w'}]));let open=[],moves=0,ok=0,lock=false;
- b.innerHTML=`<div class="memgrid">${cards.map((c,x)=>`<div class="mc" data-x="${x}"><div><div class="b">❦</div><div class="f">${c.t=='ic'?iconSvg(pr[c.i][0]):`<span style="font-size:22px">${pr[c.i][1]}</span><span class="ar" style="font-size:15px;color:var(--muted)">${pr[c.i][2]}</span>`}</div></div></div>`).join('')}</div><p class="hint" id="hn">Match each picture with its word.</p>`;
+ b.innerHTML=`<div class="memgrid">${cards.map((c,x)=>`<div class="mc" data-x="${x}"><div><div class="b">❦</div><div class="f">${c.t=='ic'?iconSvg(pr[c.i][0]):`<span style="font-size:22px">${pr[c.i][1]}</span>`}</div></div></div>`).join('')}</div><p class="hint" id="hn">Find the pairs.</p>`;
  document.querySelectorAll('.mc').forEach(m=>m.onclick=()=>{const x=+m.dataset.x;if(lock||m.classList.contains('flip')||m.classList.contains('ok'))return;m.classList.add('flip');sfx.pop();open.push(x);
   if(open.length==2){moves++;hud(moves+' moves');const [a,c]=open,A=cards[a],B=cards[c];if(A.i==B.i&&A.t!=B.t){ok++;document.querySelectorAll('.mc')[a].classList.add('ok');document.querySelectorAll('.mc')[c].classList.add('ok');sfx.ok();open=[];if(ok>=6)setTimeout(()=>done(starsBy(moves,8,12)),800)}else{lock=true;setTimeout(()=>{document.querySelectorAll('.mc')[a].classList.remove('flip');document.querySelectorAll('.mc')[c].classList.remove('flip');open=[];lock=false},800)}}});
  hud('0 moves');
@@ -603,10 +590,10 @@ GAMES.quiz=(b,st,done,hud)=>quiz(b,st.qs,done,hud,`<div style="margin-bottom:10p
 GAMES.final=(b,st,done,hud)=>quiz(b,st.qs,done,hud,'');
 
 GAMES.scramble=(b,st,done,hud)=>{
- const W=[['DOCTOR','He helps sick people.','طبيب'],['PRAYER','The old lady fell on her knees in ...','دعاء'],['SLEEP','Rose fell into a deep ...','نوم'],['FLOWERS','Oliver picked beautiful ... for Rose\'s room.','زهور']];
+ const W=[['DOCTOR','He helps sick people.'],['PRAYER','The old lady fell on her knees in ...'],['SLEEP','Rose fell into a deep ...'],['FLOWERS','Oliver picked beautiful ... for Rose\'s room.']];
  let wi=0,mist=0,pos=0;
  const show=()=>{const [w,h,ar]=W[wi];let tl=shuffle([...w].map((c,i)=>({c,i})));let g=0;while(tl.map(t=>t.c).join('')==w&&g++<20)tl=shuffle(tl);
-  b.innerHTML=`<div>${sceneSVG('hall',[['losberne',300,404,1.2,{e:'happy'}],['maylie',460,404,1.2,{e:'happy'}]],{night:true})}</div><p class="q" style="text-align:center">${esc(h)} <span class="ar" style="color:var(--muted);font-size:16px">(${ar})</span></p><div class="tilesrow" id="sl">${[...w].map(()=>`<div class="slot"></div>`).join('')}</div><div class="tilesrow" id="tl">${tl.map((t,k)=>`<button class="tile" data-k="${k}">${t.c}</button>`).join('')}</div><p class="hint" id="hn">Word ${wi+1} of ${W.length}</p>`;
+  b.innerHTML=`<div>${sceneSVG('hall',[['losberne',300,404,1.2,{e:'happy'}],['maylie',460,404,1.2,{e:'happy'}]],{night:true})}</div><p class="q" style="text-align:center">${esc(h)}</p><div class="tilesrow" id="sl">${[...w].map(()=>`<div class="slot"></div>`).join('')}</div><div class="tilesrow" id="tl">${tl.map((t,k)=>`<button class="tile" data-k="${k}">${t.c}</button>`).join('')}</div><p class="hint" id="hn">Word ${wi+1} of ${W.length}</p>`;
   pos=0;const slots=[...b.querySelectorAll('.slot')];
   b.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{if(t.classList.contains('used'))return;if(t.textContent==w[pos]){slots[pos].textContent=t.textContent;t.classList.add('used');pos++;sfx.pop();if(pos>=w.length){sfx.ok();hud((wi+1)+' / '+W.length);setTimeout(()=>{wi++;if(wi>=W.length)done(starsBy(mist,2,5));else show()},700)}}else{mist++;sfx.bad();shake(t)}})};
  show();hud('0 / '+W.length);
@@ -618,7 +605,7 @@ GAMES.search=(b,st,done,hud)=>{
  const spots=shuffle(bush.map((_,i)=>i)).slice(0,3),clue={};spots.forEach((s,i)=>clue[s]=ck[i]);
  let tries=8,got=new Set(),tapped=new Set(),fin=false;
  let ins=sceneInner('nightgarden')+bush.map((p,i)=>`<g id="b${i}" style="cursor:pointer" transform="translate(${p[0]},${p[1]})"><ellipse cx="0" cy="0" rx="46" ry="30" fill="#3d6048"/><ellipse cx="-22" cy="-10" rx="26" ry="20" fill="#4a7054"/><ellipse cx="24" cy="-8" rx="28" ry="22" fill="#44684e"/><g id="r${i}"></g></g>`).join('');
- b.innerHTML=`<div class="wrapA" id="wa">${sv(ins)}<div class="dark" id="dk"></div></div><div class="row" style="justify-content:space-between;margin-top:10px"><span class="hearts" id="tr">🏮 × ${tries}</span><div class="find" id="fd" style="margin:0">${ck.map(k=>`<span id="c_${k}">${cn[k]}</span>`).join('')}</div></div><p class="hint" id="hn">Move your lantern and tap a bush.</p>`;
+ b.innerHTML=`<div class="wrapA" id="wa">${sv(ins)}<div class="dark" id="dk"></div></div><div class="row" style="justify-content:space-between;margin-top:10px"><span class="hearts" id="tr">🏮 × ${tries}</span><div class="find" id="fd" style="margin:0">${ck.map(k=>`<span id="c_${k}">${cn[k]}</span>`).join('')}</div></div><p class="hint" id="hn">Tap a bush.</p>`;
  const wa=$('#wa'),dk=$('#dk');const mv=e=>{const r=wa.getBoundingClientRect(),p=e.touches?e.touches[0]:e;dk.style.setProperty('--x',(p.clientX-r.left)+'px');dk.style.setProperty('--y',(p.clientY-r.top)+'px')};
  wa.addEventListener('pointermove',mv);wa.addEventListener('pointerdown',mv);
  bush.forEach((p,i)=>$('#b'+i).addEventListener('click',()=>{if(fin||tapped.has(i))return;tapped.add(i);tries--;$('#tr').textContent='🏮 × '+tries;const c=clue[i];
