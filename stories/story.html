@@ -34,6 +34,7 @@
   .opt:hover:not(:disabled){ border-color:var(--grape); }
   .opt.right{ background:#DFF5E5; border-color:var(--grass); }
   .opt.wrong{ background:#FFE1E1; border-color:var(--coral); }
+  .chs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.chs a{text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;padding:8px 18px;border-radius:999px;background:var(--card);border:2px solid var(--line);color:var(--ink)}.chs a.on{background:var(--grape);border-color:var(--grape);color:#fff}.yt{display:inline-block;margin-top:10px;color:var(--muted);font-weight:700;font-size:14px}
   .score{ font-family:'Baloo 2',cursive; font-size:22px; text-align:center; margin-top:18px; min-height:32px; }
   .msg{ text-align:center; color:var(--muted); font-weight:700; padding:60px 0; }
 </style>
@@ -49,10 +50,14 @@ const id=(new URLSearchParams(location.search).get('id')||'').replace(/[^a-z0-9_
 const app=document.getElementById('app');
 
 if(!id){ app.innerHTML='<div class="msg">No story selected.</div>'; }
-else fetch(id+'.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(s=>{
+else fetch(id+'.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(s0=>{
+  const chs=s0.chapters; const qid=id;
+  let ci=chs?Math.max(0,Math.min(chs.length-1,(parseInt(new URLSearchParams(location.search).get('ch'))||1)-1)):0;
+  const s=chs?Object.assign({},s0,chs[ci],{title:s0.title,subtitle:chs[ci].title+(s0.subtitle?' · '+s0.subtitle:'')}):s0;
   document.title=s.title+' — Nadeen\'s Learning Hub';
   let html=`<h1>${esc(s.title)}</h1><p class="sub">${esc(s.subtitle||'')}</p>`;
-  if(s.youtube) html+=`<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(s.youtube)}" title="${esc(s.title)}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+  if(chs&&chs.length>1) html+=`<div class="chs">${chs.map((c,k)=>`<a class="${k===ci?'on':''}" href="?id=${esc(qid)}&ch=${k+1}">${esc(c.title)}</a>`).join('')}</div>`;
+  if(s.youtube) html+=`<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(s.youtube)}" title="${esc(s.title)}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div><a class="yt" href="https://www.youtube.com/watch?v=${esc(s.youtube)}" target="_blank" rel="noopener">Video not playing? Watch on YouTube ↗</a>`;
   if((s.vocab||[]).length) html+=`<h2>New Words</h2><div class="vocab">${s.vocab.map(w=>`<div class="word"><div class="e">${esc(w.emoji||'')}</div><b>${esc(w.word)}</b><span>${esc(w.meaning||'')}</span></div>`).join('')}</div>`;
   if((s.games||[]).length) html+=`<h2>Play</h2><div class="games">${s.games.map(g=>`<a href="../${esc(g.url)}">${esc(g.title)}</a>`).join('')}</div>`;
   if((s.questions||[]).length) html+=`<h2>Questions</h2><div id="qs"></div><div class="score" id="score"></div>`;

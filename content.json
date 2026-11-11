@@ -5,7 +5,15 @@
       "title": "Stories",
       "emoji": "📖",
       "description": "Watch the story, learn the new words, then play and answer.",
-      "items": []
+      "items": [
+        {
+          "title": "Oliver Twist",
+          "icon": "🎩",
+          "url": "stories/story.html?id=oliver-twist",
+          "description": "Follow Oliver's adventure chapter by chapter — watch each chapter video inside the site.",
+          "tags": ["Level 3", "Chapter 1"]
+        }
+      ]
     },
     {
       "id": "games",
