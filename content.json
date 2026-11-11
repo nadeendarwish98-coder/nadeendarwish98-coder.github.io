@@ -14,6 +14,13 @@
       "description": "Browser games for warm-ups, icebreakers, and first-day fun.",
       "items": [
         {
+          "title": "Oliver Twist Adventure",
+          "icon": "🎩",
+          "url": "games/oliver-twist-adventure.html",
+          "description": "A Victorian adventure map for Chapters 10 & 11 — 12 stages, 12 different mini-games, a storybook to collect and a certificate at the end.",
+          "tags": ["Story", "Chapters 10–11", "Adventure"]
+        },
+        {
           "title": "5 Seconds Challenge",
           "icon": "⏰",
           "url": "games/5-seconds-challenge.html",
