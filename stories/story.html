@@ -9,34 +9,87 @@
 <style>
   :root{ --ink:#2B2140; --paper:#FFF9F0; --card:#fff; --sun:#FFC93C; --coral:#FF6B6B; --sky:#4EA8DE;
     --grass:#4CAF6D; --grape:#8E7CFF; --line:#EFE6D8; --muted:#6B6280; }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Nunito',sans-serif; min-height:100vh; }
-  .wrap{ max-width:820px; margin:0 auto; padding:28px 20px 80px; }
-  .home{ display:inline-block; text-decoration:none; color:var(--grape); font-weight:800; margin-bottom:18px; }
-  h1{ font-family:'Baloo 2',cursive; font-size:clamp(28px,5vw,40px); margin:0 0 6px; }
-  .sub{ color:var(--muted); font-weight:600; margin:0 0 22px; }
-  .video{ position:relative; aspect-ratio:16/9; border-radius:20px; overflow:hidden; background:#000;
-    box-shadow:0 10px 28px rgba(43,33,64,.15); }
+  .wrap{ max-width:860px; margin:0 auto; padding:24px 18px 90px; }
+  .home{ display:inline-block; text-decoration:none; color:var(--grape); font-weight:800; margin-bottom:14px; }
+  h1{ font-family:'Baloo 2',cursive; font-size:clamp(30px,6vw,46px); margin:0 0 4px; line-height:1.1; }
+  .sub{ color:var(--muted); font-weight:700; margin:0 0 18px; }
+  .chs{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px; }
+  .chs a{ text-decoration:none; font-family:'Baloo 2',cursive; font-weight:700; padding:8px 20px; border-radius:999px; background:var(--card); border:2px solid var(--line); color:var(--ink); }
+  .chs a.on{ background:linear-gradient(135deg,var(--grape),var(--sky)); border-color:transparent; color:#fff; box-shadow:0 6px 14px rgba(142,124,255,.35); }
+  .video{ position:relative; aspect-ratio:16/9; border-radius:22px; overflow:hidden; background:#000; box-shadow:0 12px 30px rgba(43,33,64,.18); border:4px solid #fff; }
   .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-  h2{ font-family:'Baloo 2',cursive; font-size:24px; margin:40px 0 12px; }
-  .vocab{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
-  .word{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; text-align:center; }
-  .word .e{ font-size:30px; } .word b{ display:block; font-family:'Baloo 2',cursive; font-size:19px; }
-  .word span{ color:var(--muted); font-size:14px; font-weight:600; }
+  .yt{ display:inline-block; margin-top:10px; color:var(--muted); font-weight:700; font-size:14px; }
+  h2{ font-family:'Baloo 2',cursive; font-size:27px; margin:42px 0 14px; display:flex; align-items:center; gap:10px; }
+  h2 small{ font-family:'Nunito'; font-size:14px; color:var(--muted); font-weight:700; }
   .games{ display:flex; gap:12px; flex-wrap:wrap; }
-  .games a{ background:var(--grape); color:#fff; text-decoration:none; font-family:'Baloo 2',cursive; font-weight:700;
-    padding:12px 20px; border-radius:999px; }
-  .q{ background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; margin-bottom:16px; }
-  .q p{ margin:0 0 12px; font-weight:800; font-size:17px; }
-  .opts{ display:grid; gap:10px; }
-  .opt{ font:inherit; font-weight:700; text-align:left; padding:12px 16px; border-radius:14px; cursor:pointer;
-    background:var(--paper); border:2px solid var(--line); color:var(--ink); }
-  .opt:hover:not(:disabled){ border-color:var(--grape); }
-  .opt.right{ background:#DFF5E5; border-color:var(--grass); }
-  .opt.wrong{ background:#FFE1E1; border-color:var(--coral); }
-  .chs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.chs a{text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;padding:8px 18px;border-radius:999px;background:var(--card);border:2px solid var(--line);color:var(--ink)}.chs a.on{background:var(--grape);border-color:var(--grape);color:#fff}.yt{display:inline-block;margin-top:10px;color:var(--muted);font-weight:700;font-size:14px}
-  .score{ font-family:'Baloo 2',cursive; font-size:22px; text-align:center; margin-top:18px; min-height:32px; }
+  .games a{ background:linear-gradient(135deg,#FF8A5B,var(--coral)); color:#fff; text-decoration:none; font-family:'Baloo 2',cursive; font-weight:700; font-size:18px;
+    padding:13px 26px; border-radius:999px; box-shadow:0 6px 0 #D4504F; display:inline-block; transition:transform .1s; }
+  .games a:hover{ transform:translateY(-2px); } .games a:active{ transform:translateY(4px); box-shadow:0 2px 0 #D4504F; }
+  /* vocab */
+  .vocab{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
+  .vc{ perspective:700px; cursor:pointer; height:170px; }
+  .vc>div{ position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.3,1.4,.5,1); transform-style:preserve-3d; }
+  .vc.flip>div{ transform:rotateY(180deg); }
+  .vc .a,.vc .b{ position:absolute; inset:0; backface-visibility:hidden; border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px; text-align:center; box-shadow:0 8px 0 rgba(0,0,0,.12); }
+  .vc .a .e{ font-size:54px; line-height:1; filter:drop-shadow(0 4px 0 rgba(0,0,0,.12)); }
+  .vc .a b{ font-family:'Baloo 2',cursive; font-size:23px; margin-top:6px; color:#fff; text-shadow:0 2px 0 rgba(0,0,0,.18); }
+  .vc .a i{ font-style:normal; font-size:12px; font-weight:800; color:rgba(255,255,255,.85); margin-top:2px; }
+  .vc .b{ transform:rotateY(180deg); background:#fff; border:3px solid var(--c); color:var(--ink); font-weight:700; font-size:15px; line-height:1.35; }
+  .vc .b b{ font-family:'Baloo 2',cursive; font-size:20px; color:var(--c); margin-bottom:4px; }
+  .tip{ color:var(--muted); font-weight:700; font-size:14px; margin:-6px 0 14px; }
+  /* challenge */
+  .cbox{ background:linear-gradient(160deg,#fff,#F6F1FF); border:3px solid #fff; border-radius:28px; box-shadow:0 14px 34px rgba(43,33,64,.14); padding:22px; position:relative; overflow:hidden; }
+  .cbox::before{ content:''; position:absolute; right:-60px; top:-60px; width:180px; height:180px; border-radius:50%; background:rgba(255,201,60,.25); }
+  .start{ text-align:center; padding:10px 0 4px; position:relative; }
+  .start p{ font-weight:800; font-size:19px; margin:6px 0 16px; }
+  .big{ font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; padding:14px 40px; border:0; border-radius:999px; cursor:pointer; color:#fff;
+    background:linear-gradient(135deg,#5BC97A,var(--grass)); box-shadow:0 7px 0 #357E4D; transition:transform .1s; }
+  .big:active{ transform:translateY(5px); box-shadow:0 2px 0 #357E4D; }
+  .big.alt{ background:linear-gradient(135deg,#8E7CFF,#6C5CE7); box-shadow:0 7px 0 #4B3FB0; }
+  .qtop{ display:flex; align-items:center; gap:12px; position:relative; }
+  .dots{ display:flex; gap:6px; flex:1; flex-wrap:wrap; }
+  .dot{ width:16px; height:16px; border-radius:50%; background:#E6DDF5; transition:all .3s; }
+  .dot.cur{ background:var(--sun); transform:scale(1.3); box-shadow:0 0 0 4px rgba(255,201,60,.35); }
+  .dot.ok{ background:var(--grass); } .dot.half{ background:var(--sun); } .dot.no{ background:var(--coral); }
+  .streak{ font-family:'Baloo 2',cursive; font-weight:800; color:#E8590C; min-width:90px; text-align:right; }
+  .mrow{ display:flex; gap:14px; align-items:flex-end; margin:14px 0 6px; position:relative; }
+  .mascot{ width:92px; flex:none; }
+  .mascot.hop{ animation:hop .6s; } .mascot.wob{ animation:wob .5s; }
+  @keyframes hop{ 30%{transform:translateY(-22px) rotate(-6deg)} 60%{transform:translateY(0) rotate(5deg)} 80%{transform:translateY(-8px)} }
+  @keyframes wob{ 20%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} 80%{transform:rotate(-4deg)} }
+  .bubble{ flex:1; background:#fff; border:3px solid var(--grape); border-radius:20px; border-bottom-left-radius:4px; padding:12px 16px; font-weight:800; font-size:19px; line-height:1.35; position:relative; min-height:62px; }
+  .qnum{ font-family:'Baloo 2',cursive; color:var(--grape); font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-top:14px; }
+  .qq{ font-family:'Baloo 2',cursive; font-size:clamp(22px,4.5vw,30px); font-weight:700; line-height:1.25; margin:2px 0 14px; position:relative; }
+  .opts{ display:grid; gap:12px; position:relative; }
+  .opt{ font:inherit; font-weight:800; font-size:19px; text-align:left; padding:14px 18px 14px 62px; border-radius:18px; cursor:pointer; border:0; color:#fff; position:relative; min-height:62px;
+    box-shadow:0 6px 0 rgba(0,0,0,.18); transition:transform .1s, filter .2s; text-shadow:0 2px 0 rgba(0,0,0,.14); }
+  .opt::before{ content:attr(data-l); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.3); display:grid; place-items:center; font-family:'Baloo 2'; font-size:20px; }
+  .opt:nth-child(1){ background:linear-gradient(135deg,#FF8A8A,var(--coral)); }
+  .opt:nth-child(2){ background:linear-gradient(135deg,#6CC0F5,var(--sky)); }
+  .opt:nth-child(3){ background:linear-gradient(135deg,#FFD866,#F5A623); }
+  .opt:nth-child(4){ background:linear-gradient(135deg,#7BD99A,var(--grass)); }
+  .opt:hover:not(:disabled){ transform:translateY(-3px); filter:brightness(1.06); }
+  .opt:active:not(:disabled){ transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.18); }
+  .opt.right{ background:linear-gradient(135deg,#7BD99A,#2E9E5B)!important; animation:pulse .5s; }
+  .opt.no{ filter:grayscale(.85) brightness(1.05); opacity:.55; animation:shake .35s; }
+  .opt:disabled{ cursor:default; }
+  @keyframes pulse{ 50%{transform:scale(1.04)} }
+  @keyframes shake{ 25%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 75%{transform:translateX(-3px)} }
+  .nextrow{ text-align:center; margin-top:16px; min-height:70px; position:relative; }
+  .end{ text-align:center; position:relative; padding:6px 0; }
+  .bigstars{ font-size:62px; letter-spacing:8px; color:var(--sun); text-shadow:0 5px 0 #D99A00; }
+  .bigstars .off{ color:#E3DAC9; text-shadow:none; }
+  .end h3{ font-family:'Baloo 2',cursive; font-size:34px; margin:6px 0; }
+  .end p{ font-weight:800; font-size:19px; margin:4px 0 16px; }
+  .row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .best{ font-weight:800; color:var(--muted); margin-top:12px; }
+  #snd{ position:fixed; right:14px; bottom:14px; z-index:30; width:48px; height:48px; border-radius:50%; border:0; font-size:22px; cursor:pointer; background:#fff; box-shadow:0 6px 16px rgba(43,33,64,.25); }
+  .conf{ position:fixed; top:-20px; width:11px; height:15px; z-index:60; animation:fall linear forwards; pointer-events:none; border-radius:2px; }
+  @keyframes fall{ to{ transform:translateY(110vh) rotate(720deg); } }
   .msg{ text-align:center; color:var(--muted); font-weight:700; padding:60px 0; }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
 </style>
 </head>
 <body>
@@ -44,40 +97,126 @@
   <a class="home" href="../index.html">← Home</a>
   <div id="app"><div class="msg">Loading…</div></div>
 </div>
+<button id="snd" title="Sound on/off" aria-label="Sound on/off">🔊</button>
+
 <script>
 const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
 const id=(new URLSearchParams(location.search).get('id')||'').replace(/[^a-z0-9_-]/gi,'');
 const app=document.getElementById('app');
 
+/* ---------- gentle sounds ---------- */
+let AC=null,muted=false;
+try{muted=localStorage.getItem('hub_muted')==='1'}catch(e){}
+const sndBtn=document.getElementById('snd');sndBtn.textContent=muted?'🔇':'🔊';
+sndBtn.onclick=()=>{muted=!muted;sndBtn.textContent=muted?'🔇':'🔊';try{localStorage.setItem('hub_muted',muted?'1':'0')}catch(e){}if(muted&&window.speechSynthesis)speechSynthesis.cancel()};
+function tone(f,d,delay=0,v=.09,type='sine'){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);const t=AC.currentTime+delay;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d+.05)}catch(e){}}
+const sfx={
+  pop:()=>tone(660,.12,0,.06),
+  flip:()=>{tone(520,.1,0,.06);tone(780,.14,.07,.05)},
+  good:()=>{tone(523,.35,0,.09);tone(659,.35,.09,.08);tone(784,.5,.18,.08)},
+  try:()=>{tone(392,.22,0,.07,'triangle');tone(330,.3,.14,.06,'triangle')},
+  streak:()=>{tone(784,.3,0,.08);tone(988,.3,.1,.08);tone(1175,.5,.2,.08)},
+  win:()=>[523,659,784,1047,1319].forEach((f,i)=>tone(f,.55,i*.13,.08))
+};
+function speak(t){if(muted||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+function confetti(n){const cs=['#FFC93C','#FF6B6B','#4EA8DE','#4CAF6D','#8E7CFF','#FF8A5B'];for(let i=0;i<n;i++){const d=document.createElement('div');d.className='conf';d.style.left=Math.random()*100+'vw';d.style.background=cs[i%6];d.style.animationDuration=(1.8+Math.random()*1.8)+'s';d.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),4500)}}
+
+/* ---------- mascot (friendly owl in a top hat) ---------- */
+const OWL=(mood='n')=>`<svg class="mascot" id="mascot" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+ <ellipse cx="60" cy="134" rx="34" ry="5" fill="#000" opacity=".15"/>
+ <path d="M26 70q-10 22 2 44l12-8z" fill="#7A4B2C"/><path d="M94 70q10 22 -2 44l-12-8z" fill="#7A4B2C"/>
+ <ellipse cx="60" cy="86" rx="38" ry="44" fill="#9B6238"/><ellipse cx="60" cy="96" rx="25" ry="32" fill="#F6DDB0"/>
+ <path d="M48 92q4 4 8 0M64 92q4 4 8 0M48 104q4 4 8 0M64 104q4 4 8 0M56 116q4 4 8 0" stroke="#D9B27A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ <path d="M26 54q-4-22 10-30l6 16zM94 54q4-22-10-30l-6 16z" fill="#7A4B2C"/>
+ <circle cx="60" cy="56" r="34" fill="#A66B3F"/>
+ <circle cx="45" cy="54" r="17" fill="#fff"/><circle cx="75" cy="54" r="17" fill="#fff"/>
+ ${mood=='sad'?`<circle cx="46" cy="58" r="8" fill="#3B2A20"/><circle cx="74" cy="58" r="8" fill="#3B2A20"/>`:`<circle cx="46" cy="55" r="8.5" fill="#3B2A20"/><circle cx="74" cy="55" r="8.5" fill="#3B2A20"/><circle cx="49" cy="51" r="3" fill="#fff"/><circle cx="77" cy="51" r="3" fill="#fff"/>`}
+ <path d="M54 66l6 10 6-10z" fill="#FF9F1C"/>
+ <circle cx="30" cy="68" r="6" fill="#FF8A8A" opacity=".55"/><circle cx="90" cy="68" r="6" fill="#FF8A8A" opacity=".55"/>
+ <path d="M42 120l-4 12h12zM78 120l4 12H70z" fill="#FF9F1C"/>
+ <ellipse cx="60" cy="28" rx="30" ry="6" fill="#2B2140"/><rect x="40" y="2" width="40" height="28" rx="3" fill="#2B2140"/><rect x="40" y="20" width="40" height="7" fill="#FF6B6B"/><ellipse cx="60" cy="3" rx="20" ry="3.5" fill="#3E3260"/>
+</svg>`;
+
+/* ---------- page ---------- */
 if(!id){ app.innerHTML='<div class="msg">No story selected.</div>'; }
 else fetch(id+'.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(s0=>{
-  const chs=s0.chapters; const qid=id;
+  const chs=s0.chapters;
   let ci=chs?Math.max(0,Math.min(chs.length-1,(parseInt(new URLSearchParams(location.search).get('ch'))||1)-1)):0;
   const s=chs?Object.assign({},s0,chs[ci],{title:s0.title,subtitle:chs[ci].title+(s0.subtitle?' · '+s0.subtitle:'')}):s0;
+  const key='hub_best_'+id+'_'+ci;
   document.title=s.title+' — Nadeen\'s Learning Hub';
+  const COL=['#FF6B6B','#4EA8DE','#F5A623','#4CAF6D','#8E7CFF','#FF8A5B'];
   let html=`<h1>${esc(s.title)}</h1><p class="sub">${esc(s.subtitle||'')}</p>`;
-  if(chs&&chs.length>1) html+=`<div class="chs">${chs.map((c,k)=>`<a class="${k===ci?'on':''}" href="?id=${esc(qid)}&ch=${k+1}">${esc(c.title)}</a>`).join('')}</div>`;
+  if(chs&&chs.length>1) html+=`<div class="chs">${chs.map((c,k)=>`<a class="${k===ci?'on':''}" href="?id=${esc(id)}&ch=${k+1}">${esc(c.title)}</a>`).join('')}</div>`;
   if(s.youtube) html+=`<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(s.youtube)}" title="${esc(s.title)}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div><a class="yt" href="https://www.youtube.com/watch?v=${esc(s.youtube)}" target="_blank" rel="noopener">Video not playing? Watch on YouTube ↗</a>`;
-  if((s.vocab||[]).length) html+=`<h2>New Words</h2><div class="vocab">${s.vocab.map(w=>`<div class="word"><div class="e">${esc(w.emoji||'')}</div><b>${esc(w.word)}</b><span>${esc(w.meaning||'')}</span></div>`).join('')}</div>`;
-  if((s.games||[]).length) html+=`<h2>Play</h2><div class="games">${s.games.map(g=>`<a href="../${esc(g.url)}">${esc(g.title)}</a>`).join('')}</div>`;
-  if((s.questions||[]).length) html+=`<h2>Questions</h2><div id="qs"></div><div class="score" id="score"></div>`;
+  if((s.games||[]).length) html+=`<h2>🎮 Play</h2><div class="games">${s.games.map(g=>`<a href="../${esc(g.url)}">${esc(g.title)}</a>`).join('')}</div>`;
+  const vocab=(s.vocab||[]);
+  if(vocab.length) html+=`<h2>🌟 New Words</h2><p class="tip">Tap a card to hear the word and see what it means.</p><div class="vocab">${vocab.map((w,k)=>`<div class="vc" data-k="${k}" style="--c:${COL[k%6]}"><div><div class="a" style="background:linear-gradient(135deg,${COL[k%6]},${COL[k%6]}CC)"><span class="e">${esc(w.emoji||'⭐')}</span><b>${esc(w.word)}</b><i>TAP ME</i></div><div class="b"><b>${esc(w.word)}</b>${esc(w.meaning||'')}</div></div></div>`).join('')}</div>`;
+  const story=(s.questions||[]);
+  const hasQuiz=story.length||vocab.some(w=>w.meaning);
+  if(hasQuiz) html+=`<h2>🏆 Challenge <small>answer, collect stars!</small></h2><div class="cbox" id="cb"></div>`;
   app.innerHTML=html;
 
-  const qs=document.getElementById('qs'); if(!qs) return;
-  let done=0, correct=0; const total=s.questions.length;
-  s.questions.forEach((q,i)=>{
-    const opts=q.type==='tf'?['True','False']:q.options;
-    const ans=q.type==='tf'?(q.answer?0:1):q.answer;
-    const box=document.createElement('div'); box.className='q';
-    box.innerHTML=`<p>${i+1}. ${esc(q.q)}</p><div class="opts">${opts.map((o,j)=>`<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div>`;
-    box.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
-      const j=+b.dataset.j; const all=box.querySelectorAll('.opt');
-      all.forEach(x=>x.disabled=true);
-      all[ans].classList.add('right'); if(j!==ans) b.classList.add('wrong'); else correct++;
-      done++; if(done===total) document.getElementById('score').textContent=`⭐ You got ${correct} out of ${total}!`;
-    }));
-    qs.appendChild(box);
-  });
+  document.querySelectorAll('.vc').forEach(c=>c.onclick=()=>{c.classList.toggle('flip');sfx.flip();if(c.classList.contains('flip'))speak(vocab[+c.dataset.k].word)});
+  if(!hasQuiz)return;
+
+  /* ---------- challenge ---------- */
+  const cb=document.getElementById('cb');
+  const best=()=>{try{return +localStorage.getItem(key)||0}catch(e){return 0}};
+  function build(){
+    const vq=shuffle(vocab.filter(w=>w.meaning)).slice(0,4).map(w=>{
+      const others=shuffle(vocab.filter(x=>x.word!==w.word)).slice(0,2).map(x=>x.word);
+      return {q:`Which word means “${w.meaning}”?`,options:[w.word,...others],answer:0,emoji:w.emoji,vocab:1};
+    });
+    const sq=story.map(q=>q.type==='tf'?{q:q.q,options:['True','False'],answer:q.answer?0:1,tf:1}:{q:q.q,options:q.options,answer:q.answer});
+    return [...vq,...sq].map(q=>{if(q.tf)return q;const cor=q.options[q.answer];const o=shuffle(q.options);return Object.assign({},q,{options:o,answer:o.indexOf(cor)})});
+  }
+  function intro(){
+    const b=best();
+    cb.innerHTML=`<div class="start">${OWL()}<p>Ready to show what you know?<br><span style="color:var(--muted);font-size:16px">${build().length} fun questions are waiting!</span></p><button class="big" id="go">Let's go! ▶</button>${b?`<div class="best">Your best: ${'★'.repeat(b)}${'☆'.repeat(3-b)}</div>`:''}</div>`;
+    cb.querySelector('.start .mascot').style.width='120px';
+    document.getElementById('go').onclick=()=>{sfx.pop();run()};
+  }
+  function run(){
+    const qs=build();let i=0,pts=0,streak=0;const marks=qs.map(()=>'');
+    const OK=['Great job! ⭐','Awesome!','You got it! 🎉','Brilliant!','Super reading! 📚','Wonderful!','Yes! Well done!'];
+    const TRY=['Nice try! Have another go 💪','Almost! Try again!','Don\'t give up — you can do it!','So close! One more try!'];
+    const NO=['Good effort! Now you know 🌈','That\'s okay — learning is fun!','Next time you\'ll get it! 💛'];
+    function show(){
+      const q=qs[i];let tries=0,done=false;
+      cb.innerHTML=`<div class="qtop"><div class="dots">${qs.map((_,k)=>`<div class="dot ${marks[k]} ${k===i?'cur':''}"></div>`).join('')}</div><div class="streak" id="stk">${streak>=2?'🔥 '+streak+' in a row!':''}</div></div>
+      <div class="mrow">${OWL()}<div class="bubble" id="bb">${i===0?'Let\'s start! You can do it!':pick(['Next one!','Here we go!','Think carefully… 🤔','You\'re doing great!'])}</div></div>
+      <div class="qnum">Question ${i+1} of ${qs.length}</div><div class="qq">${q.emoji?`<span style="font-size:34px">${esc(q.emoji)}</span> `:''}${esc(q.q)}</div>
+      <div class="opts" id="os">${q.options.map((o,k)=>`<button class="opt" data-k="${k}" data-l="${'ABCD'[k]}">${esc(o)}</button>`).join('')}</div><div class="nextrow" id="nx"></div>`;
+      const mas=document.getElementById('mascot'),bb=document.getElementById('bb'),opts=[...document.querySelectorAll('.opt')];
+      const anim=c=>{mas.classList.remove('hop','wob');void mas.getBoundingClientRect();mas.classList.add(c)};
+      opts.forEach(btn=>btn.onclick=()=>{if(done)return;const k=+btn.dataset.k;tries++;
+        if(k===q.answer){done=true;opts.forEach(o=>o.disabled=true);btn.classList.add('right');
+          const first=tries===1;pts+=first?1:.5;marks[i]=first?'ok':'half';streak=first?streak+1:0;
+          bb.textContent=first?pick(OK):'You found it! Well done 🌟';anim('hop');
+          if(streak>=3&&streak%3==0){sfx.streak();confetti(14);bb.textContent='Amazing streak! 🔥🔥🔥'}else sfx.good();
+          if(first)speak(q.options[q.answer].length<14&&!q.tf?q.options[q.answer]:'');
+          nextBtn()}
+        else{btn.disabled=true;btn.classList.add('no');streak=0;document.getElementById('stk').textContent='';
+          if(tries>=2||q.options.length<=2){done=true;opts.forEach(o=>o.disabled=true);opts[q.answer].classList.add('right');marks[i]='no';bb.textContent=pick(NO)+' The answer is “'+q.options[q.answer]+'”.';anim('wob');sfx.try();nextBtn()}
+          else{bb.textContent=pick(TRY);anim('wob');sfx.try()}}
+      });
+      function nextBtn(){document.getElementById('nx').innerHTML=`<button class="big alt" id="nb">${i+1>=qs.length?'See my stars ⭐':'Next ➜'}</button>`;document.getElementById('nb').onclick=()=>{sfx.pop();i++;if(i>=qs.length)finish();else show()}}
+    }
+    function finish(){
+      const pct=pts/qs.length,stars=pct>=.85?3:pct>=.55?2:1;
+      try{if(stars>best())localStorage.setItem(key,stars)}catch(e){}
+      const msg=stars==3?['Superstar reader!','You are amazing — you know this story so well!']:stars==2?['Well done!','Great work! Try again to win all 3 stars!']:['Good try!','You\'re getting better! Watch the story again and play once more.'];
+      const next=chs&&chs[ci+1]?`<a class="big" style="text-decoration:none;display:inline-block" href="?id=${esc(id)}&ch=${ci+2}">Next: ${esc(chs[ci+1].title)} ➜</a>`:'';
+      cb.innerHTML=`<div class="end"><div class="bigstars">${'★'.repeat(stars)}<span class="off">${'★'.repeat(3-stars)}</span></div>${OWL()}<h3>${msg[0]}</h3><p>${msg[1]}</p><p style="color:var(--muted)">You scored ${Math.round(pts*10)/10} out of ${qs.length}</p><div class="row"><button class="big alt" id="ag">Play again ↻</button>${next}</div></div>`;
+      cb.querySelector('.mascot').style.width='120px';cb.querySelector('.mascot').classList.add('hop');
+      sfx.win();confetti(stars*22);document.getElementById('ag').onclick=()=>{sfx.pop();run()};
+    }
+    show();
+  }
+  intro();
 }).catch(()=>{ app.innerHTML='<div class="msg">Story not found.</div>'; });
 </script>
 </body>

@@ -1,30 +1,264 @@
 {
-  "title": "Oliver Twist",
-  "subtitle": "Usborne English Readers · Level 3",
-  "chapters": [
+ "title": "Oliver Twist",
+ "subtitle": "Usborne English Readers · Level 3",
+ "chapters": [
+  {
+   "title": "Chapter 1",
+   "youtube": "ldWV2OQk_Mc"
+  },
+  {
+   "title": "Chapter 2",
+   "youtube": "EcaWeTNZGs4"
+  },
+  {
+   "title": "Chapter 3",
+   "youtube": "kNj1txOxn9E"
+  },
+  {
+   "title": "Chapter 6",
+   "youtube": "qsmFwCI7fwg"
+  },
+  {
+   "title": "Chapter 10",
+   "youtube": "yu-Imx8JFLE",
+   "games": [
     {
-      "title": "Chapter 1",
-      "youtube": "ldWV2OQk_Mc"
-    },
-    {
-      "title": "Chapter 10",
-      "youtube": "yu-Imx8JFLE",
-      "games": [
-        {
-          "title": "🎩 Play the Oliver Twist Adventure",
-          "url": "games/oliver-twist-adventure.html"
-        }
-      ]
-    },
-    {
-      "title": "Chapter 11",
-      "youtube": "ICImBgzkxN4",
-      "games": [
-        {
-          "title": "🎩 Play the Oliver Twist Adventure",
-          "url": "games/oliver-twist-adventure.html"
-        }
-      ]
+     "title": "🎩 Play the Oliver Twist Adventure",
+     "url": "games/oliver-twist-adventure.html"
     }
-  ]
+   ],
+   "vocab": [
+    {
+     "word": "pain",
+     "emoji": "🤕",
+     "meaning": "a bad hurting feeling in your body"
+    },
+    {
+     "word": "house",
+     "emoji": "🏠",
+     "meaning": "a building where people live"
+    },
+    {
+     "word": "knock",
+     "emoji": "🚪",
+     "meaning": "to hit a door with your hand to ask to come in"
+    },
+    {
+     "word": "tea",
+     "emoji": "☕",
+     "meaning": "a hot drink people have in the morning"
+    },
+    {
+     "word": "thief",
+     "emoji": "🕵️",
+     "meaning": "a person who steals things"
+    },
+    {
+     "word": "doctor",
+     "emoji": "👨‍⚕️",
+     "meaning": "a person who helps sick people get better"
+    },
+    {
+     "word": "carriage",
+     "emoji": "🐎",
+     "meaning": "a vehicle with wheels pulled by horses"
+    },
+    {
+     "word": "bell",
+     "emoji": "🔔",
+     "meaning": "a metal thing that rings when you pull or hit it"
+    },
+    {
+     "word": "piano",
+     "emoji": "🎹",
+     "meaning": "a big musical instrument with black and white keys"
+    },
+    {
+     "word": "garden",
+     "emoji": "🌷",
+     "meaning": "a place outside with flowers and plants"
+    }
+   ],
+   "questions": [
+    {
+     "type": "mcq",
+     "q": "Where did Oliver go when he was hurt and tired?",
+     "options": [
+      "To a house near the road",
+      "To a big castle",
+      "To a school",
+      "To a boat"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "mcq",
+     "q": "What was Mr. Giles doing in the kitchen?",
+     "options": [
+      "Having his morning tea",
+      "Playing the piano",
+      "Cleaning the windows",
+      "Sleeping"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "tf",
+     "q": "Rose was an old lady.",
+     "answer": false
+    },
+    {
+     "type": "mcq",
+     "q": "Who did Brittles ride to town to get?",
+     "options": [
+      "The doctor",
+      "The police",
+      "Fagin",
+      "A teacher"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "mcq",
+     "q": "What did they find in the bed?",
+     "options": [
+      "A child",
+      "A dog",
+      "A big bag",
+      "A letter"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "mcq",
+     "q": "How long did Oliver live happily with the ladies?",
+     "options": [
+      "Three months",
+      "One day",
+      "Ten years",
+      "Two weeks"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "title": "Chapter 11",
+   "youtube": "ICImBgzkxN4",
+   "games": [
+    {
+     "title": "🎩 Play the Oliver Twist Adventure",
+     "url": "games/oliver-twist-adventure.html"
+    }
+   ],
+   "vocab": [
+    {
+     "word": "letter",
+     "emoji": "✉️",
+     "meaning": "a message you write on paper and send"
+    },
+    {
+     "word": "inn",
+     "emoji": "🏨",
+     "meaning": "a small old hotel where travellers stay"
+    },
+    {
+     "word": "fields",
+     "emoji": "🌾",
+     "meaning": "big open areas of land with grass or crops"
+    },
+    {
+     "word": "stranger",
+     "emoji": "🧍",
+     "meaning": "a person you do not know"
+    },
+    {
+     "word": "angry",
+     "emoji": "😠",
+     "meaning": "feeling very cross and upset"
+    },
+    {
+     "word": "ill",
+     "emoji": "🤒",
+     "meaning": "not well; sick"
+    },
+    {
+     "word": "prayer",
+     "emoji": "🙏",
+     "meaning": "words you say to ask God for help"
+    },
+    {
+     "word": "window",
+     "emoji": "🪟",
+     "meaning": "a glass opening in a wall"
+    },
+    {
+     "word": "dream",
+     "emoji": "💭",
+     "meaning": "pictures and stories in your head when you sleep"
+    },
+    {
+     "word": "search",
+     "emoji": "🔍",
+     "meaning": "to look carefully for something"
+    }
+   ],
+   "questions": [
+    {
+     "type": "mcq",
+     "q": "What happened to Rose’s hands?",
+     "options": [
+      "They began to shake",
+      "They turned blue",
+      "They got dirty",
+      "They were tied"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "mcq",
+     "q": "Where did Oliver take the letter?",
+     "options": [
+      "To the inn",
+      "To the church",
+      "To the river",
+      "To the market"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "tf",
+     "q": "The man at the inn wore a white coat.",
+     "answer": false
+    },
+    {
+     "type": "mcq",
+     "q": "What did Dr. Losberne say about Rose?",
+     "options": [
+      "She would live",
+      "She must go away",
+      "She was a thief",
+      "She needed a horse"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "mcq",
+     "q": "Who did Oliver see at the window?",
+     "options": [
+      "Fagin",
+      "Mr. Giles",
+      "Brittles",
+      "The doctor"
+     ],
+     "answer": 0
+    },
+    {
+     "type": "tf",
+     "q": "Dr. Losberne found the two men.",
+     "answer": false
+    }
+   ]
+  }
+ ]
 }
