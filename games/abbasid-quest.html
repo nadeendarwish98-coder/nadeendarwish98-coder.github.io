@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Abbasid Quest · Grade 8 Social Studies Review</title>
+<meta name="theme-color" content="#070b1f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b1f;--bg2:#111a3f;--gold:#f5c45e;--gold2:#ffe3a1;--teal:#3ad7c4;--red:#ff5d73;--ivory:#f7f1e1;--glass:rgba(255,255,255,.07);--line:rgba(245,196,94,.28)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:radial-gradient(1200px 700px at 50% -10%,#1b2a66 0%,var(--bg) 60%);color:var(--ivory);overflow-x:hidden;line-height:1.45}
+h1,h2,h3,.cz{font-family:'Cinzel',Georgia,'Times New Roman',serif}
+button{font-family:inherit;cursor:pointer;border:0;color:inherit}
+#bg{position:fixed;inset:0;z-index:0;width:100%;height:100%}
+#fx{position:fixed;inset:0;z-index:60;pointer-events:none;width:100%;height:100%}
+#app{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:14px 14px 40px;min-height:100vh}
+.screen{animation:scrIn .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes scrIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:999px;font-weight:700;font-size:1rem;color:#2a1c00;background:linear-gradient(135deg,#ffe3a1,#f5c45e 55%,#e0a23a);box-shadow:0 6px 22px rgba(245,196,94,.35),inset 0 1px 0 rgba(255,255,255,.6);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 10px 30px rgba(245,196,94,.5)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--glass);color:var(--ivory);box-shadow:none;border:1px solid var(--line)}
+.btn.sm{padding:8px 16px;font-size:.85rem}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.iconbtn{width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--line);font-size:1.05rem;display:grid;place-items:center}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.center{text-align:center}
+
+/* ---------- INTRO ---------- */
+.intro{min-height:calc(100vh - 54px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding-bottom:120px}
+.intro .moon{position:absolute;top:2%;right:6%;width:84px;height:84px;filter:drop-shadow(0 0 22px rgba(255,227,161,.8));animation:float 6s ease-in-out infinite}
+.eyebrow{letter-spacing:.35em;font-size:.72rem;color:var(--gold);text-transform:uppercase;font-weight:600;animation:fadeUp .9s .1s both}
+.hero{font-size:clamp(2.6rem,10vw,4.6rem);line-height:1.02;margin:10px 0 6px;font-weight:800;background:linear-gradient(180deg,#fff7dc,#f5c45e 60%,#c4872a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 24px rgba(245,196,94,.45));animation:heroIn 1.2s cubic-bezier(.2,.9,.2,1) .2s both}
+.sub{font-size:1.02rem;color:#d9d2bd;max-width:420px;margin:0 auto 22px;animation:fadeUp .9s .6s both}
+.intro .btn{animation:fadeUp .9s 1s both,glow 2.4s 2s ease-in-out infinite}
+.skyline{position:fixed;left:0;right:0;bottom:0;height:230px;filter:drop-shadow(0 0 18px rgba(245,196,94,.25));z-index:0;pointer-events:none}
+.skyline svg{width:100%;height:100%}
+.win{animation:twinkle 3s ease-in-out infinite}
+@keyframes heroIn{from{opacity:0;transform:scale(.7) translateY(30px);letter-spacing:.4em}to{opacity:1;transform:none;letter-spacing:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{box-shadow:0 6px 22px rgba(245,196,94,.35)}50%{box-shadow:0 6px 44px rgba(245,196,94,.85)}}
+@keyframes twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ---------- MAP ---------- */
+.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);font-weight:600;font-size:.88rem}
+.maptitle{font-size:1.5rem;margin:6px 0 2px;color:var(--gold2)}
+.mapsub{font-size:.85rem;color:#c9c2ad;margin-bottom:10px}
+.trail{position:relative;padding:10px 0 20px}
+.trail:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:0;border-left:3px dashed rgba(245,196,94,.4);transform:translateX(-50%);animation:trailflow 1.6s linear infinite}
+@keyframes trailflow{to{border-left-color:rgba(245,196,94,.9)}}
+.node{position:relative;z-index:1;display:flex;margin:14px 0;animation:nodeIn .6s both;animation-delay:calc(var(--i)*.09s)}
+.node:nth-child(odd){justify-content:flex-start}
+.node:nth-child(even){justify-content:flex-end}
+@keyframes nodeIn{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+.stage{width:min(78%,420px);display:flex;gap:12px;align-items:center;text-align:left;padding:12px 14px;border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.04)),#0e1740;border:1px solid var(--line);transition:transform .2s,border-color .2s;position:relative}
+.stage:hover{transform:translateY(-3px) scale(1.02);border-color:var(--gold)}
+.stage .ic{flex:none;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:1.7rem;background:radial-gradient(circle at 30% 25%,#fff3,transparent 60%),var(--c);box-shadow:0 0 22px var(--c)}
+.stage .tx b{display:block;font-family:'Cinzel',serif;font-size:1rem;line-height:1.15}
+.stage .tx small{color:#cfc8b3;font-size:.78rem;line-height:1.2;display:block;margin-top:3px}
+.stars{letter-spacing:2px;font-size:.85rem;margin-top:3px;filter:grayscale(1) opacity(.35)}
+.stars.on{filter:none}
+.stage.locked{opacity:.5;filter:grayscale(.7);pointer-events:none}
+.stage.locked .ic:after{content:"🔒";position:absolute;right:10px;top:8px;font-size:1rem}
+.stage.boss{border-color:var(--red);background:linear-gradient(135deg,rgba(255,93,115,.25),rgba(255,255,255,.04)),#1a1030;animation:bossPulse 2s ease-in-out infinite}
+@keyframes bossPulse{0%,100%{box-shadow:0 0 0 rgba(255,93,115,0)}50%{box-shadow:0 0 34px rgba(255,93,115,.55)}}
+.nextflag{position:absolute;top:-8px;right:-6px;background:var(--teal);color:#032a26;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px;animation:bounce 1.2s infinite}
+@keyframes bounce{50%{transform:translateY(-4px)}}
+
+/* ---------- STORY ---------- */
+.topline{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.prog{flex:1;height:10px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 14px var(--gold)}
+.chip{display:inline-block;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(245,196,94,.08)}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border:1px solid var(--line);border-radius:24px;padding:16px;backdrop-filter:blur(8px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.scene{position:relative;height:230px;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(245,196,94,.16),rgba(0,0,0,.25) 70%),linear-gradient(180deg,#0e1a45,#0a1130);border:1px solid rgba(245,196,94,.2);margin-bottom:14px}
+.scene svg.svg{position:absolute;inset:0;width:100%;height:100%}
+.scene .big{position:absolute;left:0;right:0;top:12px;text-align:center;font-family:'Cinzel',serif;font-weight:800;font-size:clamp(1.8rem,8vw,2.8rem);color:var(--gold2);text-shadow:0 0 24px rgba(245,196,94,.9),0 3px 0 #7a4f10;animation:bigIn .9s .15s cubic-bezier(.2,1.4,.3,1) both;z-index:3}
+@keyframes bigIn{from{opacity:0;transform:scale(2.4);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.stitle{font-size:1.45rem;margin-bottom:8px;color:#fff;animation:fadeUp .6s .1s both}
+.pts{list-style:none;display:grid;gap:9px}
+.pts li{position:relative;padding:10px 12px 10px 38px;background:rgba(255,255,255,.06);border-radius:14px;font-size:.95rem;animation:ptIn .6s both;animation-delay:calc(.25s + var(--i)*.28s);border-left:3px solid var(--gold)}
+.pts li:before{content:"✦";position:absolute;left:12px;top:9px;color:var(--gold)}
+@keyframes ptIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.dots{display:flex;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);transition:.3s}
+.dots i.on{background:var(--gold);transform:scale(1.35);box-shadow:0 0 10px var(--gold)}
+
+/* scene parts */
+.tiles{position:absolute;inset:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:14px;align-content:center}
+.tiles.hasbig{padding-top:58px}
+.tile{width:calc(33% - 10px);min-width:92px;max-width:130px;text-align:center;padding:10px 6px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid var(--line);animation:pop .6s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i)*.22s + .25s)}
+.tile .e{font-size:2rem;display:block;animation:bob 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*.3s)}
+.tile .t{font-size:.72rem;font-weight:600;line-height:1.15;display:block;margin-top:3px}
+.tile.top{width:100%;max-width:170px;background:rgba(245,196,94,.18);border-color:var(--gold);box-shadow:0 0 28px rgba(245,196,94,.4)}
+.tile.top .e{font-size:2.4rem}
+.tiles.pyr{flex-direction:column;gap:8px}
+.tiles.pyr .rowt{display:flex;gap:8px;justify-content:center;width:100%}
+.tiles.pyr .tile{min-width:70px;padding:7px 4px}
+.tiles.pyr .tile .e{font-size:1.5rem}
+@keyframes pop{from{opacity:0;transform:scale(.2) rotate(-10deg)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.conv{position:absolute;inset:0}
+.conv .c{position:absolute;left:50%;top:44%;font-size:3.4rem;transform:translate(-50%,-50%);filter:drop-shadow(0 0 18px #f5c45e);animation:breathe 2.4s ease-in-out infinite}
+.conv .s{position:absolute;left:50%;top:44%;font-size:1.8rem;opacity:0;animation:fly 3.2s ease-in infinite;animation-delay:calc(var(--i)*.4s)}
+.conv .lbl{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-weight:700;letter-spacing:.2em;font-size:.8rem;color:var(--gold2);text-transform:uppercase}
+@keyframes fly{0%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.2) rotate(0)}20%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(360deg)}}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.14)}}
+.tl{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);padding:0 18px}
+.tl .ln{position:absolute;left:8%;right:8%;top:6px;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));transform-origin:left;animation:grow 1.4s .2s both;border-radius:3px;box-shadow:0 0 12px var(--gold)}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tl .it{display:flex;justify-content:space-between;position:relative;padding-top:0}
+.tl .p{flex:1;text-align:center;animation:fadeUp .6s both;animation-delay:calc(var(--i)*.35s + .5s)}
+.tl .p b{display:block;font-family:'Cinzel',serif;color:var(--gold2);font-size:1.1rem;margin-top:8px;text-shadow:0 0 12px rgba(245,196,94,.8)}
+.tl .p span{display:block;font-size:.72rem;font-weight:600;margin-top:2px;padding:0 3px;line-height:1.2}
+.tl .p:before{content:"";display:block;width:15px;height:15px;border-radius:50%;background:var(--gold);margin:0 auto;box-shadow:0 0 14px var(--gold);position:relative;z-index:2}
+.orb{position:absolute;inset:0}
+.orb .ctr{position:absolute;left:50%;top:50%;font-size:2.8rem;transform:translate(-50%,-50%);filter:drop-shadow(0 0 18px #f5c45e);animation:breathe 3s ease-in-out infinite}
+.orb .ring{position:absolute;left:50%;top:50%;width:0;height:0;animation:rot 24s linear infinite}
+.orb .sat{position:absolute;left:0;top:0;transform:rotate(var(--a)) translateX(88px) rotate(calc(-1*var(--a)))}
+.orb .sat div{transform:translate(-50%,-50%);white-space:nowrap;padding:5px 11px;border-radius:99px;background:rgba(10,17,48,.85);border:1px solid var(--gold);font-size:.72rem;font-weight:600;animation:rotr 24s linear infinite;box-shadow:0 0 14px rgba(245,196,94,.4)}
+.orb .guide{position:absolute;left:50%;top:50%;width:176px;height:176px;margin:-88px 0 0 -88px;border:1px dashed rgba(245,196,94,.4);border-radius:50%}
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes rotr{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+.rl{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:6 6;animation:dash 1s linear infinite,fadeIn .8s both}
+@keyframes dash{to{stroke-dashoffset:-24}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.nd{transform-box:fill-box;transform-origin:center;animation:pop .6s both}
+.nd text.l{font-size:11.5px;font-weight:600;fill:#fff;paint-order:stroke;stroke:#0a1130;stroke-width:3px;text-anchor:middle;font-family:'Poppins',sans-serif}
+.nd text.em{font-size:20px;text-anchor:middle;dominant-baseline:central}
+.ping{fill:none;stroke:var(--gold);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 2s ease-out infinite}
+@keyframes ping{from{opacity:.9;transform:scale(.5)}to{opacity:0;transform:scale(2.4)}}
+.horse{position:absolute;top:92px;font-size:2rem;animation:charge 3s ease-in-out infinite;z-index:2}
+.horse.l{left:6%}
+.horse.r{right:6%;transform:scaleX(-1)}
+@keyframes charge{0%{transform:translateX(0)}60%,100%{transform:translateX(calc(var(--d)*80px))}}
+.horse.r{animation-name:charge2}
+@keyframes charge2{0%{transform:scaleX(-1) translateX(0)}60%,100%{transform:scaleX(-1) translateX(80px)}}
+.spark{position:absolute;left:50%;top:84px;font-size:3rem;transform:translateX(-50%);animation:clang 1.5s ease-in-out infinite;z-index:2;filter:drop-shadow(0 0 16px #ffd36a)}
+@keyframes clang{0%,55%{transform:translateX(-50%) scale(.4);opacity:0}70%{transform:translateX(-50%) scale(1.3) rotate(-10deg);opacity:1}100%{transform:translateX(-50%) scale(1) rotate(8deg);opacity:.9}}
+.brick{transform-box:fill-box;transform-origin:center}
+.fallb{animation:fallb 4s ease-in infinite}
+@keyframes fallb{0%,30%{transform:none;opacity:1}58%{transform:translate(var(--fx),70px) rotate(var(--fr));opacity:.9}70%,96%{opacity:0}100%{transform:none;opacity:1}}
+.weak{animation:weakp 1s ease-in-out infinite}
+@keyframes weakp{50%{fill:#ff6a6a}}
+
+/* ---------- QUIZ ---------- */
+.qtop{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.xpb{font-weight:700;color:var(--gold2);font-size:.9rem;white-space:nowrap}
+.streak{font-weight:700;color:#ffb24a;font-size:.85rem;min-width:56px;text-align:right}
+.qcard{animation:qIn .5s cubic-bezier(.2,.9,.2,1) both}
+@keyframes qIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.qmeta{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.imp{background:linear-gradient(135deg,#ffe3a1,#f5c45e);color:#3a2500;font-size:.68rem;font-weight:800;letter-spacing:.12em;padding:4px 10px;border-radius:99px;animation:glow 2s infinite}
+.qtext{font-size:1.18rem;font-weight:600;line-height:1.35;margin-bottom:14px;font-family:'Poppins',sans-serif}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);font-size:1rem;font-weight:500;transition:transform .15s,background .2s,border-color .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--gold);background:rgba(245,196,94,.1)}
+.opt b{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(245,196,94,.18);color:var(--gold2);font-size:.85rem}
+.opt.ok{background:rgba(58,215,196,.22);border-color:var(--teal);animation:okp .5s}
+.opt.bad{background:rgba(255,93,115,.2);border-color:var(--red);animation:shake .45s}
+.opt.dim{opacity:.45}
+@keyframes okp{50%{transform:scale(1.04)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tf .opt{justify-content:center;font-size:1.15rem;font-weight:700;padding:22px 10px}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.mt button{padding:12px 10px;border-radius:14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.16);font-size:.88rem;font-weight:600;min-height:52px;transition:.15s}
+.mt button.sel{border-color:var(--gold);background:rgba(245,196,94,.22);transform:scale(1.04);box-shadow:0 0 18px rgba(245,196,94,.5)}
+.mt button.done{background:rgba(58,215,196,.22);border-color:var(--teal);pointer-events:none}
+.mt button.shk{animation:shake .4s;border-color:var(--red)}
+.hint{font-size:.78rem;color:#c9c2ad;margin-bottom:10px}
+.slots{display:grid;gap:8px;margin-bottom:12px}
+.slot{min-height:46px;border-radius:14px;border:1.5px dashed rgba(245,196,94,.4);display:flex;align-items:center;gap:10px;padding:8px 12px;font-size:.9rem;font-weight:600}
+.slot b{flex:none;width:26px;height:26px;border-radius:50%;background:rgba(245,196,94,.2);display:grid;place-items:center;font-size:.8rem;color:var(--gold2)}
+.slot.f{border-style:solid;border-color:var(--teal);background:rgba(58,215,196,.15);animation:pop .4s}
+.bank{display:flex;flex-wrap:wrap;gap:8px}
+.bank button{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);font-weight:600;font-size:.88rem;transition:.15s}
+.bank button:hover{border-color:var(--gold)}
+.bank button.used{display:none}
+.bank button.shk{animation:shake .4s;border-color:var(--red)}
+.cloze{font-size:1.02rem;line-height:2.3;margin-bottom:14px}
+.blank{display:inline-block;min-width:90px;padding:2px 12px;margin:0 3px;border-bottom:3px solid var(--gold);background:rgba(245,196,94,.12);border-radius:8px 8px 0 0;font-weight:700;color:var(--gold2);text-align:center;line-height:1.7}
+.blank.act{background:rgba(245,196,94,.3);animation:glow 1.5s infinite}
+.blank.ok{border-color:var(--teal);color:#8ff3e5;background:rgba(58,215,196,.18)}
+.blank.bad{border-color:var(--red);color:#ffb3bd;background:rgba(255,93,115,.18)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:16px 16px 22px;border-radius:26px 26px 0 0;animation:sheetUp .45s cubic-bezier(.2,1,.3,1) both;box-shadow:0 -14px 50px rgba(0,0,0,.55)}
+.sheet.ok{background:linear-gradient(180deg,#0f4a45,#0a2f30)}
+.sheet.bad{background:linear-gradient(180deg,#5a1626,#34101c)}
+.sheet .in{max-width:760px;margin:0 auto}
+.sheet h3{font-size:1.2rem;margin-bottom:4px;font-family:'Poppins',sans-serif;font-weight:700}
+.sheet p{font-size:.92rem;margin-bottom:12px;color:#f1ebd8}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+.xpfloat{position:fixed;left:50%;top:38%;font-weight:800;font-size:2rem;color:var(--gold2);text-shadow:0 0 20px var(--gold);z-index:70;pointer-events:none;animation:xpup 1.1s ease-out forwards}
+@keyframes xpup{from{opacity:1;transform:translate(-50%,0) scale(.7)}to{opacity:0;transform:translate(-50%,-90px) scale(1.4)}}
+.hearts{font-size:1.15rem;letter-spacing:2px}
+.bosshp{flex:1}
+.bosshp .lab{font-size:.68rem;letter-spacing:.14em;color:#ffb3bd;font-weight:700;display:flex;justify-content:space-between;margin-bottom:3px}
+.bosshp .bar{height:12px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;border:1px solid rgba(255,93,115,.5)}
+.bosshp .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff5d73,#ffb24a);transition:width .6s;box-shadow:0 0 14px #ff5d73}
+.bossface{font-size:1.9rem;transition:.2s}
+.bossface.hit{animation:shake .5s}
+
+/* ---------- RESULT / CERT ---------- */
+.res{text-align:center;padding-top:14px}
+.res .big3{font-size:3.2rem;letter-spacing:6px;margin:6px 0}
+.res .big3 span{display:inline-block;animation:starIn .8s cubic-bezier(.2,1.6,.3,1) both;animation-delay:calc(var(--i)*.4s + .2s)}
+.res .big3 span.off{filter:grayscale(1) opacity(.25)}
+@keyframes starIn{from{opacity:0;transform:scale(4) rotate(-90deg)}to{opacity:1;transform:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.stat{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:12px 6px}
+.stat b{display:block;font-size:1.4rem;color:var(--gold2)}
+.stat small{font-size:.72rem;color:#cfc8b3}
+.cert{border:3px double var(--gold);border-radius:18px;padding:26px 16px;background:radial-gradient(circle at 50% 0,rgba(245,196,94,.25),rgba(255,255,255,.04) 70%);margin:14px 0;position:relative;animation:pop .8s both}
+.cert h2{font-size:1.5rem;color:var(--gold2);letter-spacing:.06em}
+.cert .nm{font-family:'Cinzel',serif;font-size:1.7rem;margin:10px 0;color:#fff;border-bottom:2px solid var(--gold);display:inline-block;min-width:200px;padding:0 10px}
+.cert input{background:transparent;border:0;border-bottom:2px solid var(--gold);color:#fff;font-family:'Cinzel',serif;font-size:1.5rem;text-align:center;width:min(100%,320px);outline:none;padding:4px}
+.cert .seal{font-size:3rem;margin-top:6px;animation:float 3s ease-in-out infinite}
+
+/* ---------- FLASHCARDS ---------- */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.tabs button{flex:none;padding:8px 14px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font-size:.8rem;font-weight:600}
+.tabs button.on{background:linear-gradient(135deg,#ffe3a1,#f5c45e);color:#2a1c00}
+.fc{perspective:1200px;height:270px;margin:8px 0 14px}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d;cursor:pointer}
+.fc.flip .in{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1.5px solid var(--gold);background:linear-gradient(160deg,#1a2a63,#0d1538);box-shadow:0 16px 40px rgba(0,0,0,.45),inset 0 0 40px rgba(245,196,94,.08)}
+.fc .face.back{transform:rotateY(180deg);background:linear-gradient(160deg,#5a3d0a,#2c1d05)}
+.fc .face small{letter-spacing:.2em;font-size:.68rem;color:var(--gold);margin-bottom:12px;font-weight:700}
+.fc .face p{font-size:1.15rem;font-weight:600}
+
+/* ---------- BOSS INTRO ---------- */
+.bossintro{text-align:center;padding-top:10px}
+.bossintro .guard{font-size:6rem;animation:float 3s ease-in-out infinite,bossGlow 2s infinite;display:block;margin:8px 0}
+@keyframes bossGlow{50%{filter:drop-shadow(0 0 34px #ff5d73)}}
+.rules{list-style:none;display:grid;gap:8px;text-align:left;max-width:420px;margin:14px auto}
+.rules li{background:var(--glass);padding:10px 14px;border-radius:14px;border:1px solid var(--line);font-size:.92rem}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media print{body *{visibility:hidden}.cert,.cert *{visibility:visible}.cert{position:absolute;left:5%;top:10%;width:90%}#bg,#fx,.skyline{display:none}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<canvas id="fx"></canvas>
+<div id="app"></div>
+
+<script>
+"use strict";
+/* =====================================================================
+   ABBASID QUEST — Grade 8 Social Studies (Flexi) revision game
+   Everything is in this one file. Content lives in LESSONS below.
+   ===================================================================== */
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const UNLOCK_ALL=location.hash.indexOf('unlock')>-1;
+
+/* ---------- saved progress ---------- */
+const KEY='abbasidQuestG8v1';
+let state=(function(){try{return Object.assign({stars:{},xp:0,boss:false,name:''},JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return {stars:{},xp:0,boss:false,name:''}}})();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+/* ---------- sound ---------- */
+let AC=null,muted=false;
+function beep(f,d,type,v,when){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type||'sine';o.frequency.value=f;o.connect(g);g.connect(AC.destination);const t=AC.currentTime+(when||0);g.gain.setValueAtTime(v||.06,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d)}catch(e){}}
+const sfx={tap:()=>beep(520,.05,'sine',.04),ok:()=>{beep(660,.12,'triangle',.07);beep(990,.18,'triangle',.07,.1)},bad:()=>{beep(200,.28,'sawtooth',.05)},win:()=>[523,659,784,1046,1318].forEach((f,i)=>beep(f,.25,'triangle',.07,i*.12))};
+
+/* ---------- animated night sky ---------- */
+(function(){
+  const c=$('#bg'),x=c.getContext('2d');let W,H,stars=[],dust=[],shoot=null;
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;stars=Array.from({length:Math.round(W*H/7000)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.2,p:Math.random()*6.28,s:Math.random()*.02+.005}));dust=Array.from({length:26},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+1,v:Math.random()*.3+.1,p:Math.random()*6.28}))}
+  addEventListener('resize',size);size();
+  function tick(){
+    x.clearRect(0,0,W,H);
+    stars.forEach(s=>{s.p+=s.s;x.globalAlpha=.35+.65*Math.abs(Math.sin(s.p));x.fillStyle='#fff';x.beginPath();x.arc(s.x,s.y,s.r,0,6.28);x.fill()});
+    dust.forEach(d=>{d.y-=d.v;d.p+=.02;d.x+=Math.sin(d.p)*.3;if(d.y<-10){d.y=H+10;d.x=Math.random()*W}x.globalAlpha=.35;x.fillStyle='#f5c45e';x.shadowColor='#f5c45e';x.shadowBlur=10;x.beginPath();x.arc(d.x,d.y,d.r,0,6.28);x.fill();x.shadowBlur=0});
+    if(!shoot&&Math.random()<.004)shoot={x:Math.random()*W*.8,y:Math.random()*H*.4,l:0};
+    if(shoot){shoot.x+=9;shoot.y+=4;shoot.l+=1;x.globalAlpha=1-shoot.l/40;x.strokeStyle='#ffe3a1';x.lineWidth=2;x.beginPath();x.moveTo(shoot.x,shoot.y);x.lineTo(shoot.x-60,shoot.y-26);x.stroke();if(shoot.l>40)shoot=null}
+    x.globalAlpha=1;requestAnimationFrame(tick)
+  }
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches)tick();
+})();
+
+/* ---------- confetti ---------- */
+function confetti(n){
+  const c=$('#fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#f5c45e','#ffe3a1','#3ad7c4','#ff5d73','#ffffff','#8fb7ff'];
+  const P=Array.from({length:n||160},()=>({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,w:Math.random()*9+4,h:Math.random()*5+3,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[Math.floor(Math.random()*cols.length)]}));
+  let f=0;(function t(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(++f<170)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})();
+}
+function xpPop(txt){const d=document.createElement('div');d.className='xpfloat';d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),1100)}
+
+/* =====================================================================
+   SCENES — animated motion graphics for every story card
+   ===================================================================== */
+const SC={};
+SC.astrolabe=o=>{
+  let t='';for(let i=0;i<48;i++){const a=i*7.5*Math.PI/180,r1=92,r2=i%4?99:106;t+=`<line x1="${200+r1*Math.cos(a)}" y1="${125+r1*Math.sin(a)}" x2="${200+r2*Math.cos(a)}" y2="${125+r2*Math.sin(a)}"/>`}
+  return `<svg class="svg" viewBox="0 0 400 230"><defs><radialGradient id="ag"><stop offset="0" stop-color="#ffe7a0" stop-opacity=".85"/><stop offset="1" stop-color="#f5c45e" stop-opacity="0"/></radialGradient></defs>
+  <circle cx="200" cy="125" r="108" fill="url(#ag)" opacity=".5"><animate attributeName="r" values="100;118;100" dur="4s" repeatCount="indefinite"/></circle>
+  <g stroke="#f5c45e" fill="none" stroke-width="1.6"><g stroke-width="1.3">${t}<animateTransform attributeName="transform" type="rotate" from="0 200 125" to="360 200 125" dur="50s" repeatCount="indefinite"/></g>
+  <circle cx="200" cy="125" r="80" stroke-dasharray="3 9"><animateTransform attributeName="transform" type="rotate" from="360 200 125" to="0 200 125" dur="30s" repeatCount="indefinite"/></circle>
+  <circle cx="200" cy="125" r="58" stroke-dasharray="14 6"><animateTransform attributeName="transform" type="rotate" from="0 200 125" to="360 200 125" dur="20s" repeatCount="indefinite"/></circle>
+  <path d="M200 45 L206 125 L200 205 L194 125Z" fill="rgba(245,196,94,.25)"><animateTransform attributeName="transform" type="rotate" from="0 200 125" to="360 200 125" dur="14s" repeatCount="indefinite"/></path></g>
+  <text x="200" y="136" font-size="44" text-anchor="middle">${o.emoji||'☀️'}</text></svg>`;
+};
+SC.converge=o=>{
+  const sc=['-150px,-50px','150px,-60px','-130px,80px','140px,70px','0px,-100px','-60px,100px','90px,-90px','-170px,10px'];
+  return `<div class="conv"><div class="c">${o.center||'🏛️'}</div>${sc.map((p,i)=>{const [x,y]=p.split(',');return `<div class="s" style="--x:${x};--y:${y};--i:${i}">📜</div>`}).join('')}<div class="lbl">${esc(o.label||'')}</div></div>`;
+};
+SC.icons=o=>{
+  const tl=t=>`<div class="tile" style="--i:${t.i}"><span class="e">${t.e}</span><span class="t">${esc(t.t)}</span></div>`;
+  let i=0;const tiles=o.tiles.map(t=>({...t,i:i++}));
+  if(o.top){return `<div class="tiles pyr ${o.hasbig?'hasbig':''}"><div class="tile top" style="--i:0"><span class="e">${o.top.e}</span><span class="t">${esc(o.top.t)}</span></div><div class="rowt">${tiles.map(t=>tl({...t,i:t.i+1})).join('')}</div></div>`}
+  return `<div class="tiles ${o.hasbig?'hasbig':''}">${tiles.map(tl).join('')}</div>`;
+};
+SC.timeline=o=>`<div class="tl"><div class="it"><div class="ln" style="left:${50/o.items.length}%;right:${50/o.items.length}%"></div>${o.items.map((p,i)=>`<div class="p" style="--i:${i}"><b>${esc(p.k)}</b><span>${esc(p.t)}</span></div>`).join('')}</div></div>`;
+SC.orbit=o=>{
+  const n=o.items.length;
+  return `<div class="orb"><div class="guide"></div><div class="ctr">${o.center||'⭐'}</div><div class="ring">${o.items.map((it,i)=>`<div class="sat" style="--a:${Math.round(360/n*i-90)}deg"><div>${it.e} ${esc(it.t)}</div></div>`).join('')}</div></div>`;
+};
+SC.route=o=>{
+  const N=o.nodes,C=o.center;let lines='',nodes='',k=0;
+  const seg=(a,b,i)=>{const d=`M${a.x} ${a.y} Q${(a.x+b.x)/2} ${Math.min(a.y,b.y)-34} ${b.x} ${b.y}`;return `<path class="rl" d="${d}" style="animation-delay:0s,${i*.45}s"/><circle r="3.6" fill="#fff"><animateMotion dur="2.6s" begin="${i*.45}s" repeatCount="indefinite" path="${d}"/></circle>`};
+  if(o.chain){for(let i=0;i<N.length-1;i++)lines+=seg(N[i],N[i+1],i)}else if(C){N.forEach((n,i)=>lines+=seg(C,n,i))}
+  const all=(C?[C]:[]).concat(N).concat(o.extras||[]);
+  all.forEach((n,i)=>{nodes+=`<g class="nd" style="animation-delay:${i*.35}s"><circle class="ping" cx="${n.x}" cy="${n.y}" r="12"/><text class="em" x="${n.x}" y="${n.y}">${n.e||'📍'}</text><text class="l" x="${n.x}" y="${n.y+(n.up?-20:22)}">${esc(n.l||'')}</text></g>`});
+  let grid='';for(let x=20;x<400;x+=24)for(let y=30;y<230;y+=24)grid+=`<circle cx="${x}" cy="${y}" r=".9"/>`;
+  return `<svg class="svg" viewBox="0 0 400 230"><g fill="rgba(245,196,94,.18)">${grid}</g>${lines}${nodes}${o.note===false?'':'<text x="200" y="224" font-size="8.5" fill="rgba(255,255,255,.4)" text-anchor="middle">Schematic map — not to scale</text>'}</svg>`;
+};
+SC.clash=()=>{
+  const fl=(x,c,s)=>`<line x1="${x}" y1="70" x2="${x}" y2="170" stroke="#d7c79a" stroke-width="3"/><path fill="${c}" stroke="${s}" d="M${x} 72 q18 -8 36 0 t36 0 v34 q-18 8 -36 0 t-36 0z"><animate attributeName="d" dur="1.2s" repeatCount="indefinite" values="M${x} 72 q18 -8 36 0 t36 0 v34 q-18 8 -36 0 t-36 0z;M${x} 72 q18 8 36 0 t36 0 v34 q-18 -8 -36 0 t-36 0z;M${x} 72 q18 -8 36 0 t36 0 v34 q-18 8 -36 0 t-36 0z"/></path>`;
+  return `<svg class="svg" viewBox="0 0 400 230">${fl(40,'#0c0c12','#f5c45e')}${fl(290,'#f2ead2','#9a8a5a')}
+  <g fill="rgba(58,160,215,.55)"><path d="M0 190 q25 -14 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V230 H0z"><animateTransform attributeName="transform" type="translate" values="0 0;-50 0" dur="3s" repeatCount="indefinite"/></path></g>
+  <g fill="rgba(120,200,255,.5)"><path d="M0 204 q25 -12 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V230 H0z"><animateTransform attributeName="transform" type="translate" values="-50 0;0 0" dur="2.4s" repeatCount="indefinite"/></path></g>
+  <text x="200" y="224" font-size="10" fill="#fff" text-anchor="middle" font-weight="600">TIGRIS RIVER</text>
+  <text x="76" y="190" font-size="11" fill="#ffe3a1" text-anchor="middle" font-weight="700">ABBASIDS</text><text x="326" y="190" font-size="11" fill="#ffe3a1" text-anchor="middle" font-weight="700">UMAYYADS</text></svg>
+  <div class="horse l" style="--d:1">🐎</div><div class="horse r">🐎</div><div class="spark">⚔️</div>`;
+};
+SC.roundcity=()=>{
+  let gates='';[[200,35],[285,125],[200,215],[115,125]].forEach((g,i)=>gates+=`<rect x="${g[0]-6}" y="${g[1]-6}" width="12" height="12" rx="2" fill="#ffe3a1"><animate attributeName="opacity" values=".4;1;.4" dur="2s" begin="${i*.4}s" repeatCount="indefinite"/></rect>`);
+  return `<svg class="svg" viewBox="0 0 400 230"><defs><radialGradient id="rg"><stop offset="0" stop-color="#ffe7a0" stop-opacity=".7"/><stop offset="1" stop-color="#f5c45e" stop-opacity="0"/></radialGradient></defs>
+  <circle cx="200" cy="125" r="100" fill="url(#rg)" opacity=".45"/>
+  <circle cx="200" cy="125" r="92" fill="none" stroke="#f5c45e" stroke-width="2.5" stroke-dasharray="580" stroke-dashoffset="580"><animate attributeName="stroke-dashoffset" from="580" to="0" dur="2.2s" begin=".2s" fill="freeze"/></circle>
+  <circle cx="200" cy="125" r="62" fill="none" stroke="rgba(245,196,94,.55)" stroke-width="1.5" stroke-dasharray="4 6"><animateTransform attributeName="transform" type="rotate" from="0 200 125" to="360 200 125" dur="16s" repeatCount="indefinite"/></circle>
+  <g stroke="rgba(245,196,94,.35)" stroke-width="1"><line x1="200" y1="35" x2="200" y2="215"/><line x1="110" y1="125" x2="290" y2="125"/></g>${gates}
+  <text x="200" y="138" font-size="36" text-anchor="middle">🕌</text></svg>`;
+};
+SC.siege=()=>{
+  let b='';const fx=[-30,25,-15,40,-35,20,-10,30],fr=['-40deg','50deg','-25deg','70deg','-60deg','35deg','-15deg','55deg'];let n=0;
+  for(let c=0;c<4;c++)for(let r=0;r<6;r++){const x=250+c*28,y=60+r*22,weak=(c==1||c==2)&&r>=2&&r<=4;b+=`<rect class="brick ${weak?'weak fallb':''}" x="${x}" y="${y}" width="26" height="20" rx="2" fill="${weak?'#8a6a45':'#b99a6a'}" stroke="#5c4524" ${weak?`style="--fx:${fx[n%8]}px;--fr:${fr[n++%8]}"`:''}/>`}
+  return `<svg class="svg" viewBox="0 0 400 230"><rect y="192" width="400" height="40" fill="#2a2113"/>${b}
+  <text x="305" y="50" font-size="11" fill="#ffe3a1" text-anchor="middle" font-weight="700">AMORIUM</text>
+  <g><path d="M30 190 L62 190 L52 168 L38 168Z" fill="#7b5a2e"/><rect x="40" y="160" width="26" height="6" rx="2" fill="#a67c3d" transform="rotate(-28 53 163)"/><circle cx="60" cy="160" r="9" fill="#8a8a8a"/><circle cx="60" cy="160" r="3" fill="#444"/></g>
+  <text x="46" y="210" font-size="10" fill="#ffe3a1" text-anchor="middle" font-weight="600">BALLISTA</text>
+  <circle r="6" fill="#d0d0d0" stroke="#666"><animateMotion dur="4s" repeatCount="indefinite" keyTimes="0;.3;1" keyPoints="0;1;1" calcMode="linear" path="M62 156 Q160 40 262 122"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.3;.31;1" dur="4s" repeatCount="indefinite"/></circle>
+  <circle cx="262" cy="122" r="0" fill="#ffd36a"><animate attributeName="r" values="0;0;26;0" keyTimes="0;.3;.38;.5" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;.9;0" keyTimes="0;.3;.38;.5" dur="4s" repeatCount="indefinite"/></circle></svg>`;
+};
+
+/* =====================================================================
+   CONTENT — 7 lessons. Each: slides (story cards), qs (questions), cards (flashcards)
+   Question types: mcq {q,opts,a(index)} | tf {q,a(bool)} | match {q,pairs}
+                   order {q,items(in correct order)} | fill {q,text with {0},{1}.., blanks, bank}
+   important:true  → shows the gold "IMPORTANT" tag and is always in the final boss fight
+   ===================================================================== */
+const LESSONS=[
+/* ------------------------------------------------ 1 */
+{id:'s1',title:'The Golden Age',sub:'House of Wisdom & great minds',icon:'📚',color:'#f5c45e',
+slides:[
+ {t:'The Golden Age',big:'8th – 14th century',scene:{type:'astrolabe',emoji:'🌙'},pts:['Islamic civilization at its peak: science, medicine, engineering, poetry, agriculture','Scholars, philosophers and artists changed the world']},
+ {t:'House of Wisdom',scene:{type:'converge',center:'🏛️',label:'Baghdad · Bait Al-Hikmah'},pts:['Built in Baghdad','Scholars collected books from all countries and translated them into Arabic','Arabic books were then translated into Persian, Turkish and Latin']},
+ {t:'Centers of Knowledge',scene:{type:'icons',tiles:[{e:'🏥',t:'Public hospitals'},{e:'🔭',t:'Observatories'},{e:'🎓',t:'Universities'},{e:'📚',t:'Libraries'}]},pts:['Al-Qurawiin University (Morocco): 859 AD','Al-Azhar University (Egypt): 975 AD','They gave Master and PhD degrees']},
+ {t:'Power & Impact',scene:{type:'route',chain:true,nodes:[{x:30,y:120,e:'🌊',l:'Atlantic'},{x:115,y:100,e:'⚓',l:'Mediterranean'},{x:205,y:120,e:'🕌',l:'Baghdad'},{x:290,y:140,e:'🌊',l:'Indian Ocean'},{x:370,y:112,e:'🌊',l:'Pacific'}],extras:[{x:350,y:62,e:'🍊',l:'China',up:1},{x:300,y:190,e:'🌾',l:'India'}],note:false},pts:['Trade network from the Atlantic to the Pacific','Agricultural revolution: citrus to China; rice, cotton and sugar cane to India','Inspired Europe to start its renaissance']},
+ {t:'Great Minds',scene:{type:'orbit',center:'⭐',items:[{e:'🔬',t:'Ibn Al-Haitham'},{e:'⚗️',t:'Jaber Ibn Hayyan'},{e:'✍️',t:'Zeinab Al-Shahda'}]},pts:['Ibn Al-Haitham: Optics — vision happens when light rays enter the eyes','Jaber Ibn Hayyan: chemistry pioneer — discovered the Retort','Zeinab Al-Shahda: famous calligrapher and teacher']}
+],
+qs:[
+ {type:'mcq',q:'Where was the House of Wisdom built?',opts:['Baghdad','Cairo','Damascus','Samarra'],a:0,why:'Bait Al-Hikmah (the House of Wisdom) was built in Baghdad.'},
+ {type:'mcq',q:'When was Al-Qurawiin University established?',opts:['859 AD','975 AD','750 AD','762 AD'],a:0,why:'Al-Qurawiin University in Morocco was established in 859 AD. Al-Azhar came later, in 975 AD.'},
+ {type:'mcq',q:'Which crops were planted in China during the Islamic Golden Age?',opts:['Citrus crops','Rice','Cotton','Sugar cane'],a:0,why:'Citrus went to China. Rice, cotton and sugar cane were planted in India.'},
+ {type:'match',q:'Match each scientist with his / her field',pairs:[['Ibn Al-Haitham','Optics'],['Jaber Ibn Hayyan','Chemistry (Retort)'],['Zeinab Al-Shahda','Calligraphy'],['Louis Pasteur','Vaccination']],why:'Ibn Al-Haitham → Optics · Jaber Ibn Hayyan → Chemistry · Zeinab Al-Shahda → Calligraphy · Louis Pasteur (French) → Vaccination.'},
+ {type:'tf',q:'Al-Azhar University in Egypt was established in 975 AD.',a:true,why:'True — Al-Azhar University was established in 975 AD.'},
+ {type:'tf',q:'The Islamic civilization inspired Europe to start its renaissance.',a:true,why:'True — Europe made use of Islamic philosophies and inventions to start its renaissance.'}
+],
+cards:[
+ ['When was the Golden Age?','Mid 8th century until the 14th century'],
+ ['What was the House of Wisdom?','A center in Baghdad where scholars collected and translated books into Arabic'],
+ ['Al-Qurawiin vs Al-Azhar','Al-Qurawiin (Morocco): 859 AD · Al-Azhar (Egypt): 975 AD'],
+ ['Crops spread by the agricultural revolution','Citrus → China · Rice, cotton, sugar cane → India'],
+ ['Ibn Al-Haitham & Jaber Ibn Hayyan','Optics (light rays enter the eyes) · Chemistry (the Retort)']
+]},
+/* ------------------------------------------------ 2 */
+{id:'s2',title:'The Abbasids Arrive',sub:'Rise of the third Islamic state',icon:'🏴',color:'#9b8cff',
+slides:[
+ {t:'A New Caliphate',big:'750 AD',scene:{type:'icons',hasbig:1,tiles:[{e:'🏴',t:'Abbasid State'},{e:'👤',t:'Abu Al-Abbas Al-Saffah'},{e:'🕌',t:'3rd Islamic state'}]},pts:['Third state in Islamic history, founded by Abu Al-Abbas Al-Saffah','Named after Al-Abbas, uncle of Prophet Mohammad','Ruled for about 5 centuries']},
+ {t:'Why the Umayyads Fell',scene:{type:'icons',tiles:[{e:'💔',t:'Weak caliphs'},{e:'🔥',t:'Revolutions'},{e:'💸',t:'Poor economy'},{e:'🎭',t:'Luxury & neglect'}]},pts:['Weakness after Caliph Hisham died','Revolutions, wars and a poor budget','Religious groups opposed the rulers, who loved luxury']},
+ {t:'Battle of Zab',big:'750 AD',scene:{type:'clash'},pts:['On the banks of the Tigris River in Iraq','Abdullah ibn Ali (Abbasid) vs Marwan Ibn Mohammad (last Umayyad caliph)','Umayyads defeated — Damascus conquered']},
+ {t:'Capitals & Secrets',scene:{type:'timeline',items:[{k:'750',t:'Al Kufa'},{k:'762',t:'Baghdad'},{k:'796',t:'Al-Raqqa'},{k:'836',t:'Samarra'},{k:'1261',t:'Cairo'}]},pts:['First capital: Al Kufa; Baghdad was capital for most of the time','The key to success was secrecy — they called themselves the "family of Muhammad"']},
+ {t:'Three Phases',scene:{type:'icons',tiles:[{e:'🧱',t:'Foundation'},{e:'🌟',t:'First era'},{e:'🌙',t:'Second era'}]},pts:['Foundation: Al-Saffah and Al-Mansour crushed rebellions','First era: India 776 (Al-Mahdi), Sicily 827, Amorium 838']}
+],
+qs:[
+ {type:'mcq',q:'When was the Abbasid State established?',opts:['750 AD','762 AD','847 AD','1258 AD'],a:0,why:'The Abbasid State was established in 750 AD after the Umayyad collapse.'},
+ {type:'mcq',q:'The Battle of Zab took place on the banks of which river?',opts:['The Nile','The Tigris','The Euphrates','The Jordan'],a:1,why:'Zab battle (750 AD) was on the banks of the Tigris River in Iraq.'},
+ {type:'mcq',q:'How long did the Abbasids rule?',opts:['About 1 century','About 3 centuries','About 5 centuries','About 10 centuries'],a:2,why:'The Abbasid Caliphate ruled the world for about 5 centuries.'},
+ {type:'mcq',q:'What was the first capital city of the Abbasid State?',opts:['Baghdad','Al Kufa','Samarra','Cairo'],a:1,why:'After defeating the Umayyads they moved the capital from Damascus to Al Kufa (750–762).'},
+ {type:'mcq',q:'What was the main reason of Abbasids\' success?',opts:['Secrecy','A huge navy','Gold from trade','Help from Europe'],a:0,why:'They disguised their movement for years and called themselves the "family of Muhammad".'},
+ {type:'match',important:true,q:'Match the Abbasid capital cities with their historical periods',pairs:[['Al Kufa','750–762'],['Al-Raqqa','796–809'],['Baghdad','762–796, 809–836, 892–1258'],['Samarra','836–892'],['Cairo','1261–1517']],why:'Al Kufa 750–762 · Al-Raqqa 796–809 · Baghdad 762–796, 809–836, 892–1258 · Samarra 836–892 · Cairo 1261–1517.'},
+ {type:'mcq',important:true,q:'Who led the conquest of Sicily in 827 AD?',opts:['Abdullah ibn Ali','Haroun Al-Rashid','Al-Afshin','Asad Ibn Al-Furat'],a:3,why:'Sicily was conquered in 827 AD under the leadership of Asad Ibn Al-Furat and the Al-Aghaliba princes.'},
+ {type:'tf',q:'Marwan Ibn Mohammad was the last Umayyad caliph.',a:true,why:'True — he lost at Zab, escaped to Egypt and was killed there.'}
+],
+cards:[
+ ['When and by whom was the Abbasid State founded?','750 AD · Abu Al-Abbas Al-Saffah'],
+ ['Why "Abbasid"?','Named after Al-Abbas, the uncle of Prophet Mohammad'],
+ ['Why did the Umayyads fall?','Weak caliphs, revolutions, poor economy, religious opposition, luxury'],
+ ['Battle of Zab','750 AD · Tigris River · Abbasids beat Marwan Ibn Mohammad · Damascus fell'],
+ ['Why did the Abbasids succeed? First capital?','Secrecy ("family of Muhammad") · Al Kufa']
+]},
+/* ------------------------------------------------ 3 */
+{id:'s3',title:'The Caliphs',sub:'Power, boards & star rulers',icon:'👑',color:'#ff9f43',
+slides:[
+ {t:'Two Eras',scene:{type:'timeline',items:[{k:'750',t:'Al-Saffah starts'},{k:'847',t:'Al-Mutawakkil starts 2nd era'},{k:'1258',t:'Al-Mus\'tasim ends'}]},pts:['Power passed from father to son or brother','First era: 9 caliphs (Al-Saffah → Al-Wathiq)','Second era: 12 caliphs (Al-Mutawakkil → Al-Mus\'tasim)']},
+ {t:'Pyramid of Power',scene:{type:'icons',top:{e:'👑',t:'The Caliph'},tiles:[{e:'🛡️',t:'Police'},{e:'💰',t:'Kharag'},{e:'🚪',t:'Hajib'},{e:'⚔️',t:'Army'}]},pts:['The Caliph: political and religious leader','Police: arrest opponents · Kharag: collect taxes like Zakat','Hajib: decides who meets the Caliph']},
+ {t:'The Army',scene:{type:'icons',tiles:[{e:'🏹',t:'Ballista'},{e:'🛡️',t:'Shields'},{e:'🗡️',t:'Swords'}]},pts:['Arab leaders with Persian soldiers','Hundreds of thousands of soldiers plus volunteers (farmers, Bedouins)']},
+ {t:'Star Caliphs',scene:{type:'orbit',center:'👑',items:[{e:'🌟',t:'Harun Al-Rashid'},{e:'⚔️',t:'Al-Mu\'tasim'},{e:'🛡️',t:'Al-Mutawakkil'},{e:'💪',t:'Al-Mu\'tadid'}]},pts:['Harun Al-Rashid (5th, 786–809): Baghdad reached 1 million people','Al-Mu\'tasim (8th, 833–842): beat Talibiin & Zat, took Amorium','Al-Mutawakkil (847–862): fought Turkish power','Al-Mu\'tadid (892–902): "Second Saffah" — capital back to Baghdad']}
+],
+qs:[
+ {type:'mcq',q:'Who was the first Caliph of the Abbasid State?',opts:['Abu Al-Abbas Al-Saffah','Abu Ga\'far Al-Mansour','Harun Al-Rashid','Al-Mu\'tasim'],a:0,why:'Abu Al-Abbas Al-Saffah (750–754) started the Abbasid era.'},
+ {type:'mcq',q:'Who was at the top of the social and political pyramid?',opts:['The Hajib','The Caliph','The army leader','The Kharag'],a:1,why:'The Caliph combined political and religious leadership.'},
+ {type:'match',q:'Match each administrative board with its job',pairs:[['Police','Arrest opponents & implement orders'],['Kharag','Collect taxes such as Zakat'],['Hajib','Allow people to meet the Caliph']],why:'Police arrest opponents · Kharag is the financial authority · Hajib is the Caliph\'s servant who allows meetings.'},
+ {type:'mcq',q:'Which war instrument was used in the Abbasid era?',opts:['Ballista','Cannon','Machine gun','Tank'],a:0,why:'They used traditional instruments: ballista, shields and swords.'},
+ {type:'mcq',q:'When did Haroun Al-Rashid conquer Dibsah?',opts:['792 AD','797 AD','806 AD','827 AD'],a:0,why:'Dibsah was conquered in 792 AD (Al-Sefsaf frontier in 797 AD).'},
+ {type:'mcq',important:true,q:'Which Caliph faced and defeated the Talibiin and Zat opposition movements?',opts:['Al-Mu\'tasim Billah','Harun Al-Rashid','Al-Mutawakkil Billah','Al-Mu\'tadid Billah'],a:0,why:'Al-Mu\'tasim Billah defeated Talibiin and Zat in 834 AD.'},
+ {type:'mcq',q:'Which Caliph was known as the "Second Saffah"?',opts:['Al-Mutawakkil','Al-Mu\'tadid Billah','Al-Mahdi','Al-Wathiq'],a:1,why:'Al-Mu\'tadid earned this title for his power and firmness; he restored stability and moved the capital back to Baghdad.'},
+ {type:'tf',q:'The second Abbasid era had twelve Caliphs.',a:true,why:'True — the first era had nine caliphs and the second had twelve.'}
+],
+cards:[
+ ['How many caliphs in each era?','First era: 9 (Al-Saffah → Al-Wathiq) · Second era: 12 (Al-Mutawakkil → Al-Mus\'tasim)'],
+ ['Police · Kharag · Hajib','Arrest opponents · Collect taxes (Zakat) · Controls who meets the Caliph'],
+ ['Abbasid war tools','Ballista, shields and swords'],
+ ['Harun Al-Rashid','5th caliph · 786–809 · Baghdad reached 1 million people'],
+ ['Al-Mu\'tasim','8th caliph · 833–842 · beat Talibiin & Zat (834) · conquered Amorium (838)'],
+ ['Al-Mutawakkil & Al-Mu\'tadid','Faced Turkish dominance (847–862) · "Second Saffah", capital back to Baghdad (892–902)']
+]},
+/* ------------------------------------------------ 4 */
+{id:'s4',title:'Golden Age I',sub:'Baghdad, paper & numbers',icon:'🕌',color:'#3ad7c4',
+slides:[
+ {t:'Nine Caliphs, One Century',big:'First Golden Age',scene:{type:'astrolabe',emoji:'🌟'},pts:['The first Abbasid era lasted about one century (until 847 AD)','Nine caliphs ruled; Al-Saffah founded the state','Al-Mansour crushed rebellions and opposition']},
+ {t:'Harun Al-Rashid',scene:{type:'icons',tiles:[{e:'🌳',t:'Public parks'},{e:'🕌',t:'Grand mosques'},{e:'🛍️',t:'Markets'},{e:'🪙',t:'Trade'}]},pts:['The 5th caliph and most prominent of the first era','State expanded, trade flourished, Baghdad attracted scholars','Conflicts (Barmakids, Alawites) all ended in Abbasid triumph']},
+ {t:'The Round City',big:'762 AD',scene:{type:'roundcity'},pts:['Al-Mansour built Baghdad as a circle with a wall and four entrances','Cost: about 18 million Dirhams','Samarra (836): built by Al-Mu\'tasim to move his Turkish soldiers away']},
+ {t:'Minds & Paper',scene:{type:'icons',tiles:[{e:'📜',t:'Paper factory'},{e:'🔢',t:'Numbers & zero'},{e:'📖',t:'Al-Muwatta'}]},pts:['Paper factory in Baghdad: built by Abu Gaafar Al-Barmaki','Al-Khwarizmi: algebra, Arabic-Indian numbers, zero → "algorithm"','Imam Malik wrote Al-Muwatta']}
+],
+qs:[
+ {type:'mcq',q:'How many caliphs ruled in the first Abbasid era?',opts:['Five','Seven','Nine','Twelve'],a:2,why:'Nine caliphs ruled in the first Abbasid era (twelve in the second).'},
+ {type:'mcq',q:'Who built Baghdad?',opts:['Al-Mansour','Al-Mu\'tasim','Harun Al-Rashid','Al-Mamoun'],a:0,why:'Abu Gaafar Al-Mansour started building Baghdad in 762 AD.'},
+ {type:'mcq',q:'What was the shape of Baghdad?',opts:['A square with 8 gates','A circle with four entrances','A triangle with 3 gates','A rectangle with 2 gates'],a:1,why:'Baghdad was a circle surrounded by a wall with four entrances.'},
+ {type:'match',q:'Match each person with his achievement',pairs:[['Al-Khwarizmi','Algebra & the number zero'],['Imam Malik','Wrote Al-Muwatta'],['Abu Gaafar Al-Barmaki','Built a paper factory'],['Al-Mu\'tasim','Built Samarra']],why:'Al-Khwarizmi → algebra & zero · Imam Malik → Al-Muwatta · Al-Barmaki → paper factory · Al-Mu\'tasim → Samarra.'},
+ {type:'tf',q:'Samarra was built to move the Turkish soldiers away from Baghdad.',a:true,why:'True — Al-Mu\'tasim built Samarra in 836 AD for his Turkish soldiers.'},
+ {type:'mcq',q:'The term "algorithm" comes from the name of…',opts:['Ibn Sina','Al-Khwarizmi','Al-Razi','Al-Farabi'],a:1,why:'Al-Khwarizmi gave us Arabic numbers, zero, algebra — and "algorithm" comes from his name.'},
+ {type:'mcq',q:'Baghdad construction began in…',opts:['750 AD','762 AD','836 AD','893 AD'],a:1,why:'Al-Mansour started building Baghdad in 762 AD.'}
+],
+cards:[
+ ['First Golden Age','The first Abbasid era (to 847 AD): nine caliphs, prosperity in all aspects of life'],
+ ['Al-Mansour\'s Baghdad','Built 762 AD · circle · wall · four entrances · 18 million Dirhams'],
+ ['Why was Samarra built?','By Al-Mu\'tasim (836 AD) to move his Turkish soldiers away from Baghdad'],
+ ['Al-Khwarizmi','Algebra · Arabic-Indian numbers · zero · "algorithm" · managed the House of Wisdom'],
+ ['Paper & books','Paper factory: Abu Gaafar Al-Barmaki · Al-Muwatta: Imam Malik']
+]},
+/* ------------------------------------------------ 5 */
+{id:'s5',title:'Wa Mu\'tasimah',sub:'The cry that conquered Amorium',icon:'⚔️',color:'#ff5d73',
+slides:[
+ {t:'The Rebel',scene:{type:'icons',tiles:[{e:'🔥',t:'Babak Khoramddin'},{e:'🗡️',t:'20,000 fighters'},{e:'📯',t:'Asked Rome for help'}]},pts:['His rebellion distracted the state for 20 years','Al-Mu\'tasim sent a huge army and crushed it','Khoramddin was captured and sentenced to death']},
+ {t:'The Cry',big:'Wa Mu\'tasimah!',scene:{type:'icons',hasbig:1,tiles:[{e:'🏰',t:'Zabatra attacked'},{e:'🏝️',t:'Malta occupied'},{e:'📣',t:'A woman cries out'}]},pts:['Roman emperor Theophilos attacked Zabatra and occupied Malta','A woman was harassed and cried for the Caliph','Al-Mu\'tasim ordered a tremendous army']},
+ {t:'March to Amorium',scene:{type:'route',chain:true,nodes:[{x:345,y:150,e:'🕌',l:'Baghdad'},{x:255,y:118,e:'🌊',l:'Lames River'},{x:150,y:62,e:'⚔️',l:'Ankara',up:1},{x:80,y:112,e:'🏰',l:'Amorium'}],note:true},pts:['Target: Amorium — the most important Roman city','Army split in two brigades: Al-Mu\'tasim and Al-Afshin','Al-Afshin defeated the Roman emperor near Ankara']},
+ {t:'Fall of Amorium',big:'838 AD',scene:{type:'siege'},pts:['A weak wall was found and hit with ballistae','The Caliph refused the Romans\' truce','Yates surrendered — huge booty taken','Proof of the Caliph\'s courage and military intelligence']}
+],
+qs:[
+ {type:'mcq',q:'Who sent a huge army to fight Khoramdin?',opts:['Al-Afshin','Al-Mu\'tasim','Theophilos','Al-Mansour'],a:1,why:'Caliph Al-Mu\'tasim made getting rid of Khoramddin his first priority.'},
+ {type:'mcq',q:'Who occupied Malta?',opts:['Al-Afshin','Yates','Theophilos and his Roman army','Babak Khoramddin'],a:2,why:'Theophilos and his Roman army occupied Malta, killed Muslim men and children and captured women.'},
+ {type:'mcq',q:'Who led the army to Ankara?',opts:['Al-Afshin','Al-Mu\'tasim','Yates','Marwan'],a:0,why:'The army was split in two brigades; Al-Afshin led his brigade north to Ankara.'},
+ {type:'mcq',q:'Which Roman city was the target of Al-Mu\'tasim\'s army?',opts:['Constantinople','Amorium','Ankara','Zabatra'],a:1,why:'Amorium was the most important Roman city — no Muslim army had conquered it before.'},
+ {type:'order',q:'Put the story in the correct order',items:['Khoramddin\'s rebellion is crushed','Romans attack Zabatra & occupy Malta','A woman cries "Wa Mu\'tasimah!"','Army crosses the Lames River','Amorium falls'],why:'Rebellion crushed → Zabatra attacked → the cry → Lames River → fall of Amorium (838 AD).'},
+ {type:'tf',q:'Al-Mu\'tasim accepted the truce offered by the Roman emperor.',a:false,why:'False — he refused the truce and imprisoned the messenger until Amorium surrendered.'},
+ {type:'mcq',q:'How did the Muslim army break into Amorium?',opts:['By sea','By destroying a weak wall with ballistae','Through a secret tunnel','By a long famine'],a:1,why:'They camped in front of the weak wall and launched the ballistae until it fell.'}
+],
+cards:[
+ ['Babak Khoramddin','Rebel with 20,000 fighters · distracted the state for 20 years · defeated and executed'],
+ ['What started the war?','Romans attacked Zabatra & occupied Malta · a woman cried "Wa Mu\'tasimah!"'],
+ ['Target & route','Amorium (most important Roman city) · Lames River separated the borders'],
+ ['Two brigades','Al-Mu\'tasim and Al-Afshin · Al-Afshin beat the Roman emperor near Ankara'],
+ ['Fall of Amorium (838 AD)','Weak wall + ballistae · truce refused · Yates surrendered · huge booty']
+]},
+/* ------------------------------------------------ 6 */
+{id:'s6',title:'Maps & Dynasties',sub:'Expansions and self-ruling states',icon:'🗺️',color:'#5fb0ff',
+slides:[
+ {t:'The Byzantine Front',scene:{type:'route',center:{x:250,y:150,e:'🕌',l:'Baghdad'},nodes:[{x:310,y:72,e:'🏔️',l:'Tabarestan 759',up:1},{x:185,y:100,e:'🏰',l:'Burdan 780'},{x:120,y:50,e:'⚔️',l:'Heraclea & Ankara 806',up:1},{x:55,y:140,e:'🏝️',l:'Sicily 827'}]},pts:['Expansion slowed: caliphs defended borders and fought revolts','Al-Mansour: Tabarestan 759 · Al-Mahdi: Burdan 780','Harun: truce with Queen Irene (797) broken by Nicephorus I → Heraclea & Ankara (806)','Al-Ma\'moun: Sicily 827']},
+ {t:'Self-Ruling States',scene:{type:'route',center:{x:70,y:150,e:'🕌',l:'Baghdad'},nodes:[{x:190,y:100,e:'🛡️',l:'Al-Tahiriyah 820–872'},{x:290,y:165,e:'⚔️',l:'Al-Saffarid · Nishapur 873'},{x:300,y:60,e:'🌄',l:'Samanid · Transoxiana 893',up:1}]},pts:['Second era: autonomous states ruled themselves but recognized the Caliph','Al-Tahiriyah (820–872) protected the borders','Al-Saffarid took Nishapur (873)','Samanid reached Transoxiana (893)']},
+ {t:'The East',scene:{type:'route',center:{x:55,y:120,e:'🕌',l:'Baghdad'},nodes:[{x:165,y:95,e:'🏔️',l:'Afghanistan 1019'},{x:260,y:50,e:'⛰️',l:'Kyrgyzstan 1012',up:1},{x:285,y:140,e:'🏯',l:'Delhi 1193'},{x:350,y:190,e:'🌾',l:'Bengal 1197'}]},pts:['Al-Ghaznawi (962–1186): Kyrgyzstan 1012, Afghanistan 1019','Al-Ghurid (1148–1215): Peshawar & Multan 1174, Delhi 1193, Bengal 1197']},
+ {t:'West & Levant',scene:{type:'route',center:{x:335,y:130,e:'🕌',l:'Baghdad'},nodes:[{x:55,y:70,e:'🏰',l:'Saragossa 878',up:1},{x:80,y:135,e:'🏝️',l:'Sicily 827 · Malta 874'},{x:170,y:180,e:'🏺',l:'Egypt 935'},{x:215,y:95,e:'🌿',l:'Levant 937 · Antakya',up:1}]},pts:['Al-Aghaliba (800–909): Sicily 827, Malta 874, Saragossa 878','Ikhshidid: Egypt 935 and the Levant 937','Al-Hamdaniah (Mosul): Armenia 940, Aleppo 950','Seljuk (1037–1194): stopped the Crusades, reconquered Antakya']}
+],
+qs:[
+ {type:'fill',important:true,q:'Fill in the blanks',text:'In {0}, Harun Al Rashid signed a truce agreement with the Byzantine Queen Irene in return for her yearly tribute. However, king {1} rescinded this truce. Therefore, Al-Rashid sent his army and could defeat him and conquer Heraclea and Ankara in {2}.',blanks:['797 AD','Nicephorus I','806 AD'],bank:['827 AD','Theophilos','893 AD'],why:'797 AD truce with Queen Irene · King Nicephorus I broke it · Heraclea & Ankara conquered in 806 AD.'},
+ {type:'mcq',important:true,q:'Which dynasty expanded the Islamic borders to the Transoxiana countries in 893 AD?',opts:['Samanid Dynasty','Al-Ghaznawi Dynasty','Al-Ghurid Dynasty','Seljuk Dynasty'],a:0,why:'The Samanid Dynasty expanded to Transoxiana in 893 AD and fought Christian campaigns from neighboring countries.'},
+ {type:'mcq',q:'When was Delhi conquered?',opts:['1019 AD','1174 AD','1193 AD','1197 AD'],a:2,why:'Al-Ghurid Dynasty conquered Delhi in 1193 AD (Bihar and Bengal in 1197 AD).'},
+ {type:'mcq',important:true,q:'Who reconquered Antakya?',opts:['Seljuk Dynasty','Al-Hamdaniah Dynasty','Ikhshidid Dynasty','Al-Tahiriyah State'],a:0,why:'The Seljuk Dynasty (1037–1194) stopped the Crusade invasion and reconquered Antakya.'},
+ {type:'match',q:'Match each dynasty with its achievement',pairs:[['Al-Ghaznawi','Afghanistan in 1019'],['Al-Aghaliba','Sicily & Malta'],['Ikhshidid','Egypt in 935'],['Al-Hamdaniah','Restored Armenia in 940']],why:'Al-Ghaznawi → Afghanistan · Al-Aghaliba → Sicily & Malta · Ikhshidid → Egypt · Al-Hamdaniah (Mosul) → Armenia.'},
+ {type:'tf',q:'Islamic expansions continued without interruption during the first Abbasid era.',a:false,why:'False — caliphs focused on keeping borders and overcoming internal opposition, so expansions were interrupted.'},
+ {type:'mcq',q:'Which dynasty protected Egypt and the Levant from Byzantine attacks?',opts:['Ikhshidid Dynasty','Al-Ghurid Dynasty','Samanid Dynasty','Al-Saffarid State'],a:0,why:'The Ikhshidid Dynasty took Egypt (935 AD) and the Levant (937 AD) and protected them.'}
+],
+cards:[
+ ['Why did expansion slow down?','Caliphs kept their borders and fought internal opposition'],
+ ['Harun Al-Rashid & Queen Irene','Truce 797 AD · Nicephorus I broke it · Heraclea & Ankara 806 AD'],
+ ['Samanid · Al-Tahiriyah · Al-Saffarid','Transoxiana 893 · borders safe (820–872) · Nishapur 873'],
+ ['Al-Ghaznawi · Al-Ghurid','Kyrgyzstan 1012 & Afghanistan 1019 · Delhi 1193 & Bengal 1197'],
+ ['Al-Aghaliba · Ikhshidid · Al-Hamdaniah · Seljuk','Sicily 827 / Malta 874 · Egypt 935 · Armenia 940 / Aleppo 950 · stopped Crusades / Antakya']
+]},
+/* ------------------------------------------------ 7 */
+{id:'s7',title:'Second Golden Age',sub:'Weak state, brilliant minds',icon:'🌙',color:'#c78bff',
+slides:[
+ {t:'Weak State, Bright Minds',big:'847 – 1258 AD',scene:{type:'astrolabe',emoji:'🌙'},pts:['Second Abbasid era: weak in politics and society','But literature and science developed greatly']},
+ {t:'Turkish Power',scene:{type:'icons',top:{e:'🪖',t:'"Prince of Princes"'},tiles:[{e:'😰',t:'Hunger & fear'},{e:'💸',t:'Double taxes (excise)'},{e:'⚖️',t:'Corrupt courts'}]},pts:['Turkish ministers and leaders became stronger than the Caliphs','Poverty, robbery and fear; people paid double taxes']},
+ {t:'Why Knowledge Bloomed',scene:{type:'route',center:{x:200,y:125,e:'🕌',l:'Baghdad'},nodes:[{x:80,y:150,e:'🏺',l:'Cairo'},{x:300,y:70,e:'🌿',l:'Damascus',up:1}],note:false},pts:['Small countries competed to attract scholars and win the Caliph\'s gifts','Scientific centers in Cairo, Baghdad and Damascus','Scholars and poets competed for position and money']},
+ {t:'Schools & Hospitals',scene:{type:'icons',tiles:[{e:'🏫',t:'Katatib'},{e:'🕌',t:'Mosques'},{e:'🏥',t:'Bimaristans'}]},pts:['Young students learned in Katatib; older students in mosques','Greek books inspired philosophers Al-Kindi and Al-Farabi','Bimaristans (hospitals) treated patients; surgery tools were made']},
+ {t:'Legends',scene:{type:'orbit',center:'🌙',items:[{e:'🩺',t:'Al-Razi'},{e:'📘',t:'Ibn Sina'},{e:'👑',t:'Qubaiha'}]},pts:['Al-Razi: greatest physician — his book "Alhawi" is a medical encyclopedia','Ibn Sina: medicine, philosophy and music','Qubaiha: first woman with a political role — wife of Al-Mutawakkil I']}
+],
+qs:[
+ {type:'mcq',q:'When did the second Abbasid era start?',opts:['750 AD','847 AD','1258 AD','1517 AD'],a:1,why:'The second era started in 847 AD and lasted until the fall of the Abbasid State in 1258 AD.'},
+ {type:'mcq',q:'Why did poets and scholars compete with each other?',opts:['To gain position and money','To win a war','To build mosques','To move the capital'],a:0,why:'Poets and scholars competed to gain position and money.'},
+ {type:'mcq',q:'Where did young students learn in the second Abbasid era?',opts:['In mosques','In Katatib','In palaces','In Bimaristans'],a:1,why:'Young students learned in Katatib; older students learned in mosques.'},
+ {type:'match',q:'Match each person with the correct description',pairs:[['Al-Razi','Author of "Alhawi" medical encyclopedia'],['Ibn Sina','Medicine, philosophy & music'],['Al-Kindi','Great Arab philosopher'],['Qubaiha','First woman with a political role']],why:'Al-Razi → Alhawi · Ibn Sina → medicine, philosophy, music · Al-Kindi → philosopher · Qubaiha → first woman in politics.'},
+ {type:'mcq',q:'What were the powerful Turkish ministers and leaders nicknamed?',opts:['Prince of Princes','Second Saffah','Family of Muhammad','Caliph of Caliphs'],a:0,why:'They were nicknamed "Prince of Princes" because they were stronger than the Caliphs themselves.'},
+ {type:'tf',q:'Bimaristans were hospitals.',a:true,why:'True — "Bimaristan" is a Persian word meaning hospital.'},
+ {type:'mcq',q:'What was the bright side of the second Abbasid era?',opts:['Politics','Literature and science','Army strength','Tax system'],a:1,why:'Politics and society were weak, but literature, art and science developed.'}
+],
+cards:[
+ ['Second Abbasid era','847 AD until the fall of the State in 1258 AD · weak politics, strong science & literature'],
+ ['Who really ruled?','Turkish ministers & leaders — nicknamed "Prince of Princes"'],
+ ['Why did knowledge bloom?','Small countries & scholars competed · centers in Cairo, Baghdad, Damascus'],
+ ['Katatib & Bimaristans','Katatib: schools for young students (older ones in mosques) · Bimaristans: hospitals'],
+ ['Al-Razi · Ibn Sina · Qubaiha','Alhawi encyclopedia · medicine, philosophy, music · first woman in politics']
+]}
+];
+
+/* =====================================================================
+   SCREENS
+   ===================================================================== */
+function go(html){app.innerHTML=`<div class="screen">${html}</div>`;scrollTo(0,0)}
+function totalStars(){return LESSONS.reduce((a,l)=>a+(state.stars[l.id]||0),0)}
+function isOpen(i){return UNLOCK_ALL||i===0||(state.stars[LESSONS[i-1].id]||0)>0}
+function bossOpen(){return UNLOCK_ALL||LESSONS.every(l=>(state.stars[l.id]||0)>0)}
+function starsHtml(n){return `<div class="stars ${n?'on':''}">${[1,2,3].map(i=>i<=n?'⭐':'☆').join('')}</div>`}
+
+/* ---- intro ---- */
+function showIntro(){
+  const win=[[104,150],[112,150],[420,100],[438,100],[456,100],[420,122],[456,122],[640,140],[650,140],[240,155],[250,155],[330,135],[560,150],[572,150]];
+  go(`<div class="intro">
+   <svg class="moon" viewBox="0 0 100 100"><defs><mask id="cm"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="34" fill="#000"/></mask></defs><circle cx="50" cy="50" r="38" fill="#ffe3a1" mask="url(#cm)"/></svg>
+   <div class="eyebrow">Grade 8 · Social Studies · Flexi</div>
+   <h1 class="hero">ABBASID<br>QUEST</h1>
+   <p class="sub">Seven lessons. One final boss. Ready to master the Golden Age before your exam?</p>
+   <button class="btn" id="go">▶ Start the Journey</button>
+  </div>
+  <div class="skyline"><svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMax slice">
+   <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2660"/><stop offset="1" stop-color="#070b22"/></linearGradient></defs>
+   <g fill="url(#sk)" stroke="rgba(245,196,94,.7)" stroke-width="1.4">
+    <rect x="0" y="170" width="800" height="30"/>
+    <path d="M60 170 v-34 a28 28 0 0 1 56 0 v34z"/><rect x="86" y="96" width="4" height="16"/>
+    <rect x="30" y="70" width="10" height="100"/><path d="M28 70 l7 -24 l7 24z"/>
+    <path d="M180 170 v-52 h60 v52z"/><path d="M180 118 a30 30 0 0 1 60 0z"/><rect x="208" y="70" width="4" height="20"/>
+    <path d="M300 170 v-70 a100 100 0 0 1 200 0 v70z"/><rect x="398" y="10" width="4" height="30"/><rect x="330" y="150" width="140" height="20"/>
+    <rect x="270" y="60" width="12" height="110"/><path d="M268 60 l8 -28 l8 28z"/><rect x="518" y="60" width="12" height="110"/><path d="M516 60 l8 -28 l8 28z"/>
+    <path d="M580 170 v-46 h70 v46z"/><path d="M580 124 a35 35 0 0 1 70 0z"/><rect x="613" y="76" width="4" height="22"/>
+    <rect x="700" y="80" width="10" height="90"/><path d="M698 80 l7 -24 l7 24z"/><path d="M730 170 v-30 a26 26 0 0 1 52 0 v30z"/>
+   </g>
+   <g fill="#ffe3a1">${win.map((w,i)=>`<rect class="win" x="${w[0]}" y="${w[1]}" width="5" height="9" rx="2" style="animation-delay:${(i*.37)%3}s"/>`).join('')}</g>
+   <circle cx="400" cy="6" r="3" fill="#ffe3a1"/></svg></div>`);
+  $('#go').onclick=()=>{sfx.tap();showMap()};
+}
+
+/* ---- map ---- */
+function showMap(){
+  const next=LESSONS.findIndex((l,i)=>isOpen(i)&&!(state.stars[l.id]));
+  go(`<div class="hud"><span class="pill">⭐ ${totalStars()}/${LESSONS.length*3} &nbsp;·&nbsp; ${state.xp} XP</span>
+   <div class="row"><button class="iconbtn" id="snd" title="Sound">${muted?'🔇':'🔊'}</button><button class="iconbtn" id="home" title="Home">🏠</button></div></div>
+   <h2 class="maptitle">Road to the Exam</h2>
+   <p class="mapsub">Finish each lesson to unlock the next one. Beat all seven to face the Final Boss.</p>
+   <div class="row" style="margin-bottom:6px"><button class="btn sm ghost" id="rev">🃏 Quick Revise Cards</button></div>
+   <div class="trail">
+    ${LESSONS.map((l,i)=>`<div class="node" style="--i:${i}"><button class="stage ${isOpen(i)?'':'locked'}" data-i="${i}" style="--c:${l.color}">
+      ${i===next?'<span class="nextflag">PLAY NEXT</span>':''}
+      <span class="ic">${l.icon}</span><span class="tx"><b>${i+1}. ${esc(l.title)}</b><small>${esc(l.sub)}</small>${starsHtml(state.stars[l.id]||0)}</span></button></div>`).join('')}
+    <div class="node" style="--i:7"><button class="stage boss ${bossOpen()?'':'locked'}" id="boss" style="--c:#ff5d73"><span class="ic">🗿</span><span class="tx"><b>FINAL BOSS</b><small>The Exam Guardian · 3 lives</small>${state.boss?'<div class="stars on">🏆 Defeated</div>':''}</span></button></div>
+   </div>`);
+  $('#snd').onclick=()=>{muted=!muted;$('#snd').textContent=muted?'🔇':'🔊'};
+  $('#home').onclick=showIntro;
+  $('#rev').onclick=()=>showFlash(0);
+  document.querySelectorAll('.stage[data-i]').forEach(b=>b.onclick=()=>{sfx.tap();showStory(+b.dataset.i,0)});
+  $('#boss').onclick=()=>{sfx.tap();showBossIntro()};
+}
+
+/* ---- story cards ---- */
+function showStory(li,k){
+  const L=LESSONS[li],s=L.slides[k],n=L.slides.length,sc=SC[s.scene.type](s.scene);
+  go(`<div class="topline"><button class="iconbtn" id="x">✕</button><div class="prog"><i style="width:${(k+1)/n*100}%"></i></div><span class="chip">Lesson ${li+1}</span></div>
+   <div class="card"><div class="scene">${s.big?`<div class="big">${esc(s.big)}</div>`:''}${sc}</div>
+    <h2 class="stitle">${esc(s.t)}</h2>
+    <ul class="pts">${s.pts.map((p,i)=>`<li style="--i:${i}">${esc(p)}</li>`).join('')}</ul></div>
+   <div class="nav"><button class="btn ghost sm" id="bk" ${k?'':'disabled'}>◀ Back</button>
+    <div class="dots">${L.slides.map((_,i)=>`<i class="${i===k?'on':''}"></i>`).join('')}</div>
+    <button class="btn sm" id="nx">${k===n-1?'Start Quiz ⚔️':'Next ▶'}</button></div>`);
+  $('#x').onclick=showMap;
+  $('#bk').onclick=()=>{sfx.tap();showStory(li,k-1)};
+  $('#nx').onclick=()=>{sfx.tap();k===n-1?startStage(li):showStory(li,k+1)};
+}
+
+/* =====================================================================
+   QUIZ ENGINE
+   ===================================================================== */
+const R={};
+R.mcq=(q,el,done)=>{
+  const o=shuffle(q.opts.map((t,i)=>({t,c:i===q.a})));let lock=false;
+  el.innerHTML=`<div class="opts">${o.map((x,i)=>`<button class="opt" data-i="${i}"><b>${'ABCD'[i]}</b><span>${esc(x.t)}</span></button>`).join('')}</div>`;
+  const bs=el.querySelectorAll('.opt');
+  bs.forEach(b=>b.onclick=()=>{if(lock)return;lock=true;const x=o[+b.dataset.i];b.classList.add(x.c?'ok':'bad');bs.forEach((bb,i)=>{if(o[i].c)bb.classList.add('ok');else if(bb!==b)bb.classList.add('dim')});done(x.c)});
+};
+R.tf=(q,el,done)=>{
+  let lock=false;
+  el.innerHTML=`<div class="tf"><button class="opt" data-v="1">✔ True</button><button class="opt" data-v="0">✘ False</button></div>`;
+  const bs=el.querySelectorAll('.opt');
+  bs.forEach(b=>b.onclick=()=>{if(lock)return;lock=true;const v=b.dataset.v==='1',ok=v===q.a;b.classList.add(ok?'ok':'bad');if(!ok)bs.forEach(bb=>{if((bb.dataset.v==='1')===q.a)bb.classList.add('ok')});done(ok)});
+};
+R.match=(q,el,done)=>{
+  const L=q.pairs.map((p,i)=>({t:p[0],i})),Rr=shuffle(q.pairs.map((p,i)=>({t:p[1],i})));
+  let sel=null,miss=0,got=0;
+  el.innerHTML=`<p class="hint">Tap an item on the left, then its match on the right.</p><div class="mt"><div style="display:grid;gap:10px" id="ml">${L.map(x=>`<button data-i="${x.i}">${esc(x.t)}</button>`).join('')}</div><div style="display:grid;gap:10px" id="mr">${Rr.map(x=>`<button data-i="${x.i}">${esc(x.t)}</button>`).join('')}</div></div>`;
+  const lb=[...el.querySelectorAll('#ml button')],rb=[...el.querySelectorAll('#mr button')];
+  lb.forEach(b=>b.onclick=()=>{sfx.tap();lb.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b});
+  rb.forEach(b=>b.onclick=()=>{
+    if(!sel)return;
+    if(sel.dataset.i===b.dataset.i){sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;got++;sfx.ok();if(got===q.pairs.length)done(miss===0)}
+    else{miss++;sfx.bad();[sel,b].forEach(x=>{x.classList.add('shk');setTimeout(()=>x.classList.remove('shk'),450)});sel.classList.remove('sel');sel=null}
+  });
+};
+R.order=(q,el,done)=>{
+  const items=shuffle(q.items.map((t,i)=>({t,i})));let nxt=0,miss=0;
+  el.innerHTML=`<p class="hint">Tap the events in the order they happened.</p><div class="slots">${q.items.map((_,i)=>`<div class="slot" data-s="${i}"><b>${i+1}</b><span></span></div>`).join('')}</div><div class="bank">${items.map(x=>`<button data-i="${x.i}">${esc(x.t)}</button>`).join('')}</div>`;
+  const slots=el.querySelectorAll('.slot');
+  el.querySelectorAll('.bank button').forEach(b=>b.onclick=()=>{
+    if(+b.dataset.i===nxt){const s=slots[nxt];s.classList.add('f');s.querySelector('span').textContent=b.textContent;b.classList.add('used');nxt++;sfx.ok();if(nxt===q.items.length)done(miss===0)}
+    else{miss++;sfx.bad();b.classList.add('shk');setTimeout(()=>b.classList.remove('shk'),450)}
+  });
+};
+R.fill=(q,el,done)=>{
+  const parts=q.text.split(/\{(\d+)\}/);const vals=q.blanks.map(()=>null);let act=0;
+  const bank=shuffle(q.blanks.concat(q.bank||[]).map((t,i)=>({t,i})));
+  let html='';parts.forEach((p,i)=>{html+=i%2?`<span class="blank" data-b="${p}">&nbsp;&nbsp;&nbsp;</span>`:esc(p)});
+  el.innerHTML=`<p class="hint">Tap a word to drop it into the highlighted blank. Tap a filled blank to clear it.</p><div class="cloze">${html}</div><div class="bank">${bank.map(x=>`<button data-i="${x.i}" data-t="${esc(x.t)}">${esc(x.t)}</button>`).join('')}</div><div style="margin-top:16px"><button class="btn" id="chk" disabled>Check ✔</button></div>`;
+  const bl=[...el.querySelectorAll('.blank')],bb=[...el.querySelectorAll('.bank button')];
+  function paint(){bl.forEach((b,i)=>{b.classList.toggle('act',i===act&&vals[i]===null);b.textContent=vals[i]===null?'   ':vals[i].t});$('#chk').disabled=vals.some(v=>v===null)}
+  function nextEmpty(){const i=vals.findIndex(v=>v===null);act=i<0?0:i}
+  paint();
+  bb.forEach(b=>b.onclick=()=>{if(vals.every(v=>v!==null))return;sfx.tap();const i=vals[act]===null?act:vals.findIndex(v=>v===null);vals[i]={t:b.dataset.t,b};b.classList.add('used');nextEmpty();paint()});
+  bl.forEach((b,i)=>b.onclick=()=>{if(vals[i]){vals[i].b.classList.remove('used');vals[i]=null;act=i;paint()}else{act=i;paint()}});
+  $('#chk').onclick=()=>{let all=true;bl.forEach((b,i)=>{const ok=vals[i].t===q.blanks[i];b.classList.remove('act');b.classList.add(ok?'ok':'bad');if(!ok){all=false;b.textContent=vals[i].t+' → '+q.blanks[i]}});bb.forEach(b=>b.style.pointerEvents='none');$('#chk').style.display='none';all?sfx.ok():sfx.bad();done(all)};
+};
+const TYPE_NAME={mcq:'Multiple choice',tf:'True or false',match:'Matching',order:'Sequence',fill:'Fill in the blanks'};
+
+function runQuiz(cfg){
+  const queue=cfg.questions.map(q=>Object.assign({},q));
+  const total=queue.length;
+  const S={answered:0,first:0,xp:0,streak:0,lives:3,seen:0,extra:0};
+  next();
+  function topbar(){
+    if(cfg.boss)return `<button class="iconbtn" id="x">✕</button><div class="bossface" id="bf">🗿</div><div class="bosshp"><div class="lab"><span>EXAM GUARDIAN</span><span class="hearts">${'❤️'.repeat(S.lives)}${'🖤'.repeat(3-S.lives)}</span></div><div class="bar"><i style="width:${(total-S.first)/total*100}%"></i></div></div>`;
+    const denom=total+S.extra;
+    return `<button class="iconbtn" id="x">✕</button><div class="prog"><i style="width:${S.seen/denom*100}%"></i></div><span class="xpb">⭐ ${S.xp}</span><span class="streak">${S.streak>=2?'🔥 x'+S.streak:''}</span>`;
+  }
+  function next(){
+    if(!queue.length)return finish(true);
+    const q=queue.shift();
+    go(`<div class="qtop">${topbar()}</div><div class="card qcard"><div class="qmeta"><span class="chip">${cfg.boss?'Boss round':cfg.title}</span><span class="chip" style="color:#cfc8b3;border-color:rgba(255,255,255,.2)">${TYPE_NAME[q.type]}</span>${q.important?'<span class="imp">★ IMPORTANT</span>':''}${q._retry?'<span class="chip" style="color:var(--teal);border-color:var(--teal)">Second chance</span>':''}</div><div class="qtext">${esc(q.q)}</div><div id="body"></div></div><div id="sheetHost"></div>`);
+    $('#x').onclick=()=>{if(confirm('Leave this quiz? Your progress in it will be lost.'))showMap()};
+    R[q.type](q,$('#body'),ok=>answered(q,ok));
+  }
+  function answered(q,ok){
+    let gain=0;
+    if(!q._retry){S.answered++;if(ok){S.first++;S.streak++;gain=10+Math.min(S.streak-1,5)*2;S.xp+=gain}else S.streak=0}
+    S.seen++;
+    if(!ok){
+      if(cfg.boss){S.lives--;const bf=$('#bf');if(bf)bf.textContent='😈'}
+      else if(!q._retry){queue.push(Object.assign({},q,{_retry:true}));S.extra++}
+    }else if(cfg.boss){const bf=$('#bf');if(bf){bf.classList.add('hit');bf.textContent='😵'}}
+    ok?sfx.ok():sfx.bad();
+    if(ok&&gain)xpPop('+'+gain+' XP');
+    const dead=cfg.boss&&S.lives<=0;
+    const last=!queue.length;
+    const label=dead?'See result ▶':(last?'Finish ▶':'Continue ▶');
+    $('#sheetHost').innerHTML=`<div class="sheet ${ok?'ok':'bad'}"><div class="in"><h3>${ok?(q._retry?'✅ Got it this time!':'✅ Correct!'):'❌ Not quite'}</h3><p>${esc(q.why)}</p><button class="btn" id="cont" style="width:100%">${label}</button></div></div>`;
+    $('#cont').onclick=()=>{sfx.tap();dead?finish(false):next()};
+  }
+  function finish(won){
+    const acc=S.first/total;
+    cfg.onEnd({won,acc,first:S.first,total,xp:S.xp,lives:S.lives});
+  }
+}
+
+/* ---- stage run + result ---- */
+function startStage(li){
+  const L=LESSONS[li];
+  runQuiz({title:'Lesson '+(li+1),questions:shuffle(L.qs),boss:false,onEnd:r=>{
+    const stars=r.acc>=.85?3:r.acc>=.6?2:1;
+    const better=stars>(state.stars[L.id]||0);
+    state.stars[L.id]=Math.max(stars,state.stars[L.id]||0);state.xp+=r.xp;save();
+    showResult(li,r,stars,better);
+  }});
+}
+function showResult(li,r,stars,better){
+  const L=LESSONS[li],last=li===LESSONS.length-1;
+  const msg=stars===3?'Brilliant! You\'ve mastered this lesson.':stars===2?'Great work! A little more practice for 3 stars.':'Lesson complete! Revise and try again for more stars.';
+  go(`<div class="res"><span class="chip">Lesson ${li+1} complete</span><h2 class="cz" style="font-size:1.6rem;margin:10px 0;color:var(--gold2)">${esc(L.title)}</h2>
+   <div class="big3">${[1,2,3].map(i=>`<span class="${i<=stars?'':'off'}" style="--i:${i-1}">⭐</span>`).join('')}</div><p>${msg}</p>
+   <div class="stats"><div class="stat"><b>${r.first}/${r.total}</b><small>First-try correct</small></div><div class="stat"><b>${Math.round(r.acc*100)}%</b><small>Accuracy</small></div><div class="stat"><b>+${r.xp}</b><small>XP earned</small></div></div>
+   <div class="row" style="justify-content:center">
+    <button class="btn ghost" id="again">↻ Replay</button>
+    ${last?`<button class="btn" id="mp">${bossOpen()?'Face the Final Boss 🗿':'Back to map'}</button>`:`<button class="btn" id="nx">Next lesson ▶</button>`}
+   </div></div>`);
+  if(stars>=2){confetti(stars===3?220:120);sfx.win()}else sfx.ok();
+  $('#again').onclick=()=>showStory(li,0);
+  if(last)$('#mp').onclick=()=>bossOpen()?showBossIntro():showMap();
+  else $('#nx').onclick=()=>showStory(li+1,0);
+}
+
+/* ---- flashcards ---- */
+function showFlash(li,ci){
+  ci=ci||0;const L=LESSONS[li],c=L.cards[ci];
+  go(`<div class="topline"><button class="iconbtn" id="x">✕</button><h2 class="cz" style="flex:1;color:var(--gold2);font-size:1.2rem">Quick Revise</h2><span class="chip">${ci+1}/${L.cards.length}</span></div>
+   <div class="tabs">${LESSONS.map((l,i)=>`<button class="${i===li?'on':''}" data-i="${i}">${i+1}. ${esc(l.title)}</button>`).join('')}</div>
+   <div class="fc" id="fc"><div class="in"><div class="face"><small>QUESTION · TAP TO FLIP</small><p>${esc(c[0])}</p></div><div class="face back"><small>ANSWER</small><p>${esc(c[1])}</p></div></div></div>
+   <div class="nav"><button class="btn ghost sm" id="pv" ${ci?'':'disabled'}>◀ Prev</button><button class="btn ghost sm" id="shf">🔀 Shuffle</button><button class="btn sm" id="nx">${ci===L.cards.length-1?(li===LESSONS.length-1?'Done ✔':'Next lesson ▶'):'Next ▶'}</button></div>`);
+  $('#x').onclick=showMap;
+  $('#fc').onclick=()=>{sfx.tap();$('#fc').classList.toggle('flip')};
+  document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showFlash(+b.dataset.i,0));
+  $('#pv').onclick=()=>showFlash(li,ci-1);
+  $('#shf').onclick=()=>showFlash(li,Math.floor(Math.random()*L.cards.length));
+  $('#nx').onclick=()=>{if(ci<L.cards.length-1)showFlash(li,ci+1);else if(li<LESSONS.length-1)showFlash(li+1,0);else showMap()};
+}
+
+/* ---- boss ---- */
+function showBossIntro(){
+  go(`<div class="bossintro"><span class="chip" style="color:#ffb3bd;border-color:#ff5d73">Final challenge</span><h2 class="cz" style="font-size:1.9rem;margin:8px 0;color:#ffb3bd">The Exam Guardian</h2><span class="guard">🗿</span>
+   <ul class="rules"><li>🎯 12 questions from all seven lessons — including every ★ IMPORTANT question</li><li>❤️ You have 3 lives. A wrong answer breaks one.</li><li>🏆 Defeat the Guardian to earn your certificate</li></ul>
+   <div class="row" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="bk">◀ Map</button><button class="btn" id="fight" style="background:linear-gradient(135deg,#ff9aa8,#ff5d73);color:#3a0010">⚔️ Fight!</button></div></div>`);
+  $('#bk').onclick=showMap;$('#fight').onclick=()=>{sfx.tap();startBoss()};
+}
+function startBoss(){
+  const all=[].concat(...LESSONS.map(l=>l.qs));
+  const must=all.filter(q=>q.important);
+  const pool=shuffle(all.filter(q=>!q.important&&(q.type==='mcq'||q.type==='tf')));
+  const qs=shuffle(must.concat(pool.slice(0,12-must.length)));
+  runQuiz({title:'Boss',questions:qs,boss:true,onEnd:r=>{
+    state.xp+=r.xp;if(r.won){state.boss=true;state.xp+=100}save();
+    r.won?showCert(r):showBossLost(r);
+  }});
+}
+function showBossLost(r){
+  go(`<div class="res"><div style="font-size:5rem">🗿</div><h2 class="cz" style="font-size:1.7rem;color:#ffb3bd;margin:8px 0">The Guardian stands…</h2><p>You answered ${r.first} of ${r.total} correctly. Revise with the cards and come back stronger!</p>
+   <div class="row" style="justify-content:center;margin-top:18px"><button class="btn ghost" id="rv">🃏 Quick Revise</button><button class="btn" id="rt">↻ Try again</button></div></div>`);
+  $('#rv').onclick=()=>showFlash(0);$('#rt').onclick=showBossIntro;
+}
+function showCert(r){
+  confetti(260);setTimeout(()=>confetti(160),700);sfx.win();
+  const d=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  go(`<div class="res"><h2 class="cz" style="font-size:1.6rem;color:var(--gold2)">🏆 Guardian Defeated!</h2><p>${r.first}/${r.total} correct · ${r.lives} ${r.lives===1?'life':'lives'} left · +100 bonus XP</p>
+   <div class="cert"><div class="cz" style="letter-spacing:.3em;font-size:.7rem;color:var(--gold)">CERTIFICATE OF MASTERY</div><h2 style="margin:8px 0">Abbasid Scholar</h2><p style="font-size:.85rem">This certifies that</p>
+    <input id="nm" maxlength="30" placeholder="Type your name" value="${esc(state.name||'')}"><p style="font-size:.85rem;margin-top:8px">has completed all seven lessons of the Abbasid era<br>and defeated the Exam Guardian.</p><div class="seal">🏅</div><p style="font-size:.75rem;color:#cfc8b3">${d} · Grade 8 Social Studies</p></div>
+   <div class="row" style="justify-content:center"><button class="btn ghost" id="pr">🖨 Print / Save</button><button class="btn" id="mp">Back to map</button></div></div>`);
+  $('#nm').oninput=e=>{state.name=e.target.value;save()};
+  $('#pr').onclick=()=>window.print();$('#mp').onclick=showMap;
+}
+
+/* ---------- go! ---------- */
+showIntro();
+</script>
+</body>
+</html>
