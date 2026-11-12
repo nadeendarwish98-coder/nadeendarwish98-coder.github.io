@@ -4,144 +4,269 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nadeen's Learning Hub</title>
+<meta name="description" content="Stories, games and revision activities for English and Social Studies classes — tap a card to start.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8E%A8%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#2B2140;
-    --paper:#FFF9F0;
-    --card:#FFFFFF;
-    --sun:#FFC93C;
-    --coral:#FF6B6B;
-    --sky:#4EA8DE;
-    --grass:#4CAF6D;
-    --grape:#8E7CFF;
-    --line:#EFE6D8;
-    --muted:#6B6280;
+    --ink:#2B2140; --paper:#FFF9F0; --card:#FFFFFF;
+    --sun:#FFC93C; --coral:#FF6B6B; --sky:#4EA8DE; --grass:#4CAF6D; --grape:#8E7CFF;
+    --line:#EFE6D8; --muted:#6B6280;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   html,body{margin:0;padding:0;}
   body{
     background:
-      radial-gradient(circle at 8% 8%, rgba(255,201,60,0.16), transparent 38%),
-      radial-gradient(circle at 92% 12%, rgba(78,168,222,0.14), transparent 40%),
-      radial-gradient(circle at 85% 92%, rgba(255,107,107,0.12), transparent 42%),
+      radial-gradient(circle at 8% 6%, rgba(255,201,60,0.20), transparent 36%),
+      radial-gradient(circle at 94% 10%, rgba(78,168,222,0.18), transparent 40%),
+      radial-gradient(circle at 88% 70%, rgba(142,124,255,0.12), transparent 40%),
+      radial-gradient(circle at 6% 85%, rgba(255,107,107,0.12), transparent 42%),
       var(--paper);
-    color:var(--ink);
-    font-family:'Nunito',sans-serif;
-    min-height:100vh;
+    color:var(--ink); font-family:'Nunito',sans-serif; min-height:100vh; overflow-x:hidden;
   }
-  .wrap{ max-width:960px; margin:0 auto; padding:56px 24px 80px; }
+  .wrap{ max-width:1000px; margin:0 auto; padding:28px 22px 70px; position:relative; z-index:1; }
 
-  header{ text-align:center; margin-bottom:48px; }
+  /* floating doodles */
+  .doodles{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .doodles span{ position:absolute; font-size:30px; opacity:.55; animation:drift 14s ease-in-out infinite; }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(-6deg);} 50%{ transform:translateY(-26px) rotate(8deg);} }
+
+  /* hero */
+  .hero{ display:grid; grid-template-columns:1.05fr 1fr; gap:34px; align-items:center; padding:26px 0 8px; }
   .eyebrow{
-    display:inline-block; font-weight:800; font-size:13px; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--grape); margin-bottom:10px;
+    display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:13px; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--grape); background:#fff; border:1px solid var(--line);
+    padding:6px 14px; border-radius:999px; box-shadow:0 2px 0 rgba(43,33,64,.05);
   }
-  h1{
-    font-family:'Baloo 2', cursive; font-weight:800;
-    font-size:clamp(30px,5.5vw,46px); margin:0 0 12px; text-wrap:balance;
+  .hero h1{
+    font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(34px,6vw,58px);
+    line-height:1.02; margin:14px 0 12px; text-wrap:balance;
   }
-  header p{
-    max-width:520px; margin:0 auto; color:var(--muted); font-weight:600;
-    font-size:16px; line-height:1.5;
+  .hero h1 .hl{
+    background:linear-gradient(90deg,var(--coral),var(--sun) 55%,var(--grape));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:200% 100%; animation:shine 6s linear infinite;
   }
+  @keyframes shine{ to{ background-position:200% 0; } }
+  .hero .lead{ color:var(--muted); font-weight:700; font-size:17px; line-height:1.55; max-width:460px; margin:0 0 20px; }
+  .cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .btn{
+    font-family:'Baloo 2',cursive; font-weight:800; font-size:17px; text-decoration:none; cursor:pointer; border:0;
+    padding:12px 26px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn.primary{ background:var(--coral); color:#fff; box-shadow:0 5px 0 #d94f4f; }
+  .btn.primary:hover{ transform:translateY(-2px); box-shadow:0 7px 0 #d94f4f; }
+  .btn.primary:active{ transform:translateY(3px); box-shadow:0 1px 0 #d94f4f; }
+  .btn.ghost{ background:#fff; color:var(--ink); border:2px solid var(--line); }
+  .btn.ghost:hover{ transform:translateY(-2px); border-color:var(--grape); }
+  .stats{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .stat{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:10px 16px; min-width:92px; text-align:center; animation:pop .7s both; }
+  .stat:nth-child(2){ animation-delay:.12s; } .stat:nth-child(3){ animation-delay:.24s; }
+  .stat b{ display:block; font-family:'Baloo 2',cursive; font-size:26px; line-height:1.1; color:var(--grape); }
+  .stat small{ font-weight:800; font-size:11.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--muted); }
+  @keyframes pop{ from{ opacity:0; transform:scale(.6) translateY(10px);} to{ opacity:1; transform:none;} }
 
-  .grid{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:22px; margin-top:8px;
+  .art{ position:relative; padding:14px; }
+  .art .frame{
+    position:relative; border-radius:30px; overflow:hidden; background:#fff; padding:8px;
+    border:3px solid #fff; box-shadow:0 22px 44px rgba(43,33,64,.18), 0 0 0 3px var(--sun);
+    transform:rotate(2deg); transition:transform .4s ease;
+    animation:bobFrame 7s ease-in-out infinite;
   }
+  .art .frame:hover{ transform:rotate(0) scale(1.02); }
+  .art img{ display:block; width:100%; height:auto; border-radius:22px; }
+  @keyframes bobFrame{ 0%,100%{ translate:0 0;} 50%{ translate:0 -8px;} }
+  .art::before,.art::after{ content:""; position:absolute; border-radius:50%; z-index:-1; }
+  .art::before{ width:120px; height:120px; background:var(--sky); opacity:.25; left:-14px; top:-10px; animation:blob 9s ease-in-out infinite; }
+  .art::after{ width:150px; height:150px; background:var(--coral); opacity:.2; right:-16px; bottom:-14px; animation:blob 11s ease-in-out infinite reverse; }
+  @keyframes blob{ 0%,100%{ transform:scale(1) translate(0,0);} 50%{ transform:scale(1.18) translate(10px,-8px);} }
+  .sticker{
+    position:absolute; background:#fff; border:2px solid var(--line); border-radius:16px; padding:6px 12px;
+    font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; box-shadow:0 8px 18px rgba(43,33,64,.14);
+    animation:floaty 5s ease-in-out infinite; white-space:nowrap;
+  }
+  .sticker.s1{ left:-6px; bottom:34px; color:var(--grass); }
+  .sticker.s2{ right:-4px; top:6px; color:var(--grape); animation-delay:-2s; }
+  .sticker.s3{ right:18px; bottom:-10px; color:var(--coral); animation-delay:-3.5s; }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0) rotate(-3deg);} 50%{ transform:translateY(-10px) rotate(3deg);} }
 
+  .wave{ display:block; width:100%; height:64px; margin:6px 0 4px; }
+  .wave path{ fill:rgba(142,124,255,.16); }
+  .wave path.w2{ fill:rgba(255,201,60,.30); animation:waveMove 7s ease-in-out infinite alternate; }
+  @keyframes waveMove{ to{ transform:translateX(-30px);} }
+
+  /* quick-jump pills */
+  .jump{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:6px 0 4px; }
+  .jump a{
+    text-decoration:none; color:var(--ink); font-weight:800; font-size:14px; padding:8px 16px; border-radius:999px;
+    background:#fff; border:2px solid var(--line); transition:transform .15s, border-color .15s, background .15s;
+  }
+  .jump a:hover{ transform:translateY(-2px) rotate(-1.5deg); border-color:var(--grape); background:#F3F0FF; }
+
+  /* cards */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:22px; margin-top:6px; }
   .card{
-    background:var(--card); border:1px solid var(--line); border-radius:20px;
-    padding:26px 22px 22px; display:flex; flex-direction:column; gap:12px;
-    text-decoration:none; color:var(--ink);
+    --c:#FFF1CC; --a:var(--sun);
+    position:relative; background:var(--card); border:1px solid var(--line); border-radius:22px; overflow:hidden;
+    padding:26px 22px 22px; display:flex; flex-direction:column; gap:12px; text-decoration:none; color:var(--ink);
     box-shadow:0 1px 2px rgba(43,33,64,0.04);
-    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    opacity:0; transform:translateY(18px); animation:cardIn .6s ease forwards; animation-delay:calc(var(--n,0)*.07s);
   }
-  .card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 14px 28px rgba(43,33,64,0.10);
-  }
+  @keyframes cardIn{ to{ opacity:1; transform:none; } }
+  .card::before{ content:""; position:absolute; left:0; right:0; top:0; height:6px; background:var(--a); }
+  .card::after{ content:""; position:absolute; right:-34px; top:-34px; width:110px; height:110px; border-radius:50%; background:var(--c); opacity:.7; transition:transform .35s ease; }
+  .card:hover{ transform:translateY(-6px) rotate(-.6deg); box-shadow:0 18px 34px rgba(43,33,64,0.13); border-color:var(--a); }
+  .card:hover::after{ transform:scale(1.5); }
   .card:focus-visible{ outline:3px solid var(--grape); outline-offset:3px; }
-
+  .card>*{ position:relative; z-index:1; }
+  .card:nth-child(3n+1){ --c:#FFF1CC; --a:var(--sun); }
+  .card:nth-child(3n+2){ --c:#FFE1E1; --a:var(--coral); }
+  .card:nth-child(3n+3){ --c:#E3F0FF; --a:var(--sky); }
   .card .icon{
-    width:56px; height:56px; border-radius:16px; font-size:28px;
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
+    width:60px; height:60px; border-radius:18px; font-size:30px; display:flex; align-items:center; justify-content:center;
+    background:var(--c); border:2px solid #fff; box-shadow:0 4px 10px rgba(43,33,64,.1); transition:transform .25s ease;
   }
-  .card:nth-child(3n+1) .icon{ background:#FFF1CC; }
-  .card:nth-child(3n+2) .icon{ background:#FFE1E1; }
-  .card:nth-child(3n+3) .icon{ background:#E3F0FF; }
-
-  .card h2{
-    font-family:'Baloo 2', cursive; font-size:20px; margin:0; font-weight:700;
-  }
-  .card p{
-    margin:0; font-size:14.5px; line-height:1.5; color:var(--muted); font-weight:600;
-    flex-grow:1;
-  }
+  .card:hover .icon{ animation:wiggle .6s ease; }
+  @keyframes wiggle{ 0%,100%{ transform:rotate(0) scale(1);} 25%{ transform:rotate(-12deg) scale(1.12);} 60%{ transform:rotate(10deg) scale(1.12);} }
+  .card h3{ font-family:'Baloo 2',cursive; font-size:21px; margin:0; font-weight:800; line-height:1.15; }
+  .card p{ margin:0; font-size:14.5px; line-height:1.5; color:var(--muted); font-weight:600; flex-grow:1; }
   .card .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
-  .tag{
-    font-size:11.5px; font-weight:800; letter-spacing:.3px; text-transform:uppercase;
-    padding:4px 9px; border-radius:999px; background:var(--paper); color:var(--muted);
-    border:1px solid var(--line);
-  }
+  .tag{ font-size:11.5px; font-weight:800; letter-spacing:.3px; text-transform:uppercase; padding:4px 9px; border-radius:999px; background:var(--paper); color:var(--muted); border:1px solid var(--line); }
   .card .play{
-    margin-top:4px; font-family:'Baloo 2', cursive; font-weight:700; font-size:14.5px;
-    color:var(--grape); display:flex; align-items:center; gap:6px;
+    margin-top:4px; align-self:flex-start; font-family:'Baloo 2',cursive; font-weight:800; font-size:15px; color:#fff; background:var(--a);
+    padding:6px 16px; border-radius:999px; display:flex; align-items:center; gap:6px; box-shadow:0 3px 0 rgba(0,0,0,.12);
   }
   .card .play::after{ content:'→'; transition:transform .15s ease; }
-  .card:hover .play::after{ transform:translateX(3px); }
+  .card:hover .play::after{ transform:translateX(4px); }
 
-  .section{ margin-top:44px; }
-  .section:first-child{ margin-top:0; }
-  .section-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
-  .section-head h2{ font-family:'Baloo 2', cursive; font-size:26px; margin:0; font-weight:800; }
-  .section-head p{ margin:0; color:var(--muted); font-weight:600; font-size:14.5px; }
-  .empty{ color:var(--muted); font-weight:700; background:var(--card); border:2px dashed var(--line);
-    border-radius:20px; padding:22px; text-align:center; }
-  footer{
-    margin-top:56px; text-align:center; color:var(--muted);
-    font-size:13.5px; font-weight:600;
+  .section{ margin-top:46px; scroll-margin-top:16px; }
+  .section-head{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:16px; }
+  .section-head .badge{ width:50px; height:50px; border-radius:16px; background:#fff; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 3px 0 rgba(43,33,64,.06); }
+  .section-head h2{ font-family:'Baloo 2',cursive; font-size:28px; margin:0; font-weight:800; line-height:1; }
+  .section-head p{ margin:0; color:var(--muted); font-weight:700; font-size:14.5px; flex-basis:100%; padding-left:64px; margin-top:-8px; }
+  .empty{ color:var(--muted); font-weight:700; background:var(--card); border:2px dashed var(--line); border-radius:20px; padding:22px; text-align:center; }
+
+  /* contact */
+  .contact{
+    margin-top:64px; position:relative; text-align:center; border-radius:28px; padding:34px 22px 30px; overflow:hidden;
+    background:linear-gradient(135deg,#FFF1CC,#FFE1E1 55%,#E3F0FF); border:2px solid #fff; box-shadow:0 14px 30px rgba(43,33,64,.1);
   }
+  .contact .env{ font-size:46px; display:inline-block; animation:wiggle 2.8s ease-in-out infinite; }
+  .contact h2{ font-family:'Baloo 2',cursive; font-size:28px; margin:6px 0 4px; font-weight:800; }
+  .contact p{ margin:0 auto 18px; color:var(--muted); font-weight:700; max-width:460px; line-height:1.5; }
+  .contact .row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .mail{ font-family:'Baloo 2',cursive; font-weight:800; font-size:15px; margin-top:14px; color:var(--ink); word-break:break-all; }
+  .mail a{ color:var(--grape); }
+  .toast{ position:fixed; left:50%; bottom:28px; transform:translate(-50%,30px); background:var(--ink); color:#fff; padding:10px 20px; border-radius:999px; font-weight:800; opacity:0; transition:.3s; z-index:20; }
+  .toast.show{ opacity:1; transform:translate(-50%,0); }
+  footer{ margin-top:34px; text-align:center; color:var(--muted); font-size:13.5px; font-weight:700; }
 
-  @media (prefers-reduced-motion: reduce){
-    .card{ transition:none; }
+  @media (max-width:760px){
+    .hero{ grid-template-columns:1fr; gap:22px; text-align:center; }
+    .hero .lead{ margin-left:auto; margin-right:auto; }
+    .cta,.stats{ justify-content:center; }
+    .art{ order:-1; max-width:520px; margin:0 auto; }
+    .section-head p{ padding-left:0; margin-top:0; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{ animation:none !important; transition:none !important; }
+    .card{ opacity:1; transform:none; }
   }
 </style>
 </head>
 <body>
+<div class="doodles" aria-hidden="true">
+  <span style="left:4%;top:18%;animation-delay:0s">✏️</span>
+  <span style="left:90%;top:30%;animation-delay:-3s">📚</span>
+  <span style="left:8%;top:62%;animation-delay:-6s">⭐</span>
+  <span style="left:93%;top:70%;animation-delay:-9s">🎲</span>
+  <span style="left:48%;top:92%;animation-delay:-4s">🚀</span>
+  <span style="left:76%;top:8%;animation-delay:-7s">🌍</span>
+</div>
+
 <div class="wrap">
-  <header>
-    <span class="eyebrow">English Classroom</span>
-    <h1>🎨 Nadeen's Learning Hub</h1>
-    <p>Stories, games and learning activities — just tap a card to start, no downloads needed.</p>
-  </header>
+  <section class="hero">
+    <div>
+      <span class="eyebrow">✨ Learn · Play · Revise</span>
+      <h1>Welcome to <span class="hl">Nadeen's</span> Learning Hub!</h1>
+      <p class="lead">Stories to watch, games to play and revision challenges for English and Social Studies. Just tap a card to start — no downloads needed.</p>
+      <div class="cta">
+        <a class="btn primary" href="#sections">🎮 Start playing</a>
+        <a class="btn ghost" href="#contact">💌 Say hello</a>
+      </div>
+      <div class="stats" id="stats" aria-label="Site highlights"></div>
+    </div>
+    <div class="art">
+      <div class="frame">
+        <img src="images/nadeen-hero.jpg" width="843" height="426" alt="Illustration of a woman with curly hair and glasses meditating on a sunny beach cliff, with yoga mats and palm trees nearby">
+      </div>
+      <span class="sticker s1">🌿 Calm minds learn best</span>
+      <span class="sticker s2">📖 New stories soon</span>
+      <span class="sticker s3">🏆 Play &amp; win</span>
+    </div>
+  </section>
+
+  <svg class="wave" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
+    <path class="w2" d="M0 40 C150 10 300 70 450 40 C600 10 750 70 900 40 C1050 10 1150 60 1200 40 L1200 80 L0 80Z"/>
+    <path d="M0 52 C200 20 350 76 600 50 C850 24 1000 72 1200 46 L1200 80 L0 80Z"/>
+  </svg>
+
+  <nav class="jump" id="jump" aria-label="Jump to a section"></nav>
 
   <div id="sections"></div>
 
-  <footer>New stories and activities get added here over time — bookmark this page.</footer>
+  <section class="contact" id="contact">
+    <span class="env" aria-hidden="true">💌</span>
+    <h2>Questions, ideas or requests?</h2>
+    <p>Want a new game, a lesson turned into an activity, or just want to say hi? Send me an email — I'd love to hear from you!</p>
+    <div class="row">
+      <a class="btn primary" id="mailbtn" href="mailto:nadeenmiss7@gmail.com?subject=Hello%20from%20the%20Learning%20Hub">✉️ Email me</a>
+      <button class="btn ghost" id="copy" type="button">📋 Copy address</button>
+    </div>
+    <div class="mail">nadeenmiss7@gmail.com</div>
+  </section>
+
+  <footer>New stories and activities get added here over time — bookmark this page. 🔖</footer>
 </div>
+<div class="toast" id="toast" role="status">Email address copied!</div>
+
 <script>
+const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 fetch('content.json').then(r=>r.json()).then(data=>{
   const root=document.getElementById('sections');
-  const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let n=0;
   root.innerHTML=data.sections.map(sec=>{
     const items=(sec.items||[]).map(it=>`
-      <a class="card" href="${esc(it.url)}">
+      <a class="card" style="--n:${n++}" href="${esc(it.url)}">
         <div class="icon">${esc(it.icon||'⭐')}</div>
-        <h2>${esc(it.title)}</h2>
+        <h3>${esc(it.title)}</h3>
         <p>${esc(it.description)}</p>
         <div class="tags">${(it.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
         <span class="play">Open</span>
       </a>`).join('');
     return `<section class="section" id="${esc(sec.id)}">
-      <div class="section-head"><h2>${esc(sec.emoji||'')} ${esc(sec.title)}</h2><p>${esc(sec.description||'')}</p></div>
+      <div class="section-head"><span class="badge">${esc(sec.emoji||'⭐')}</span><h2>${esc(sec.title)}</h2><p>${esc(sec.description||'')}</p></div>
       ${items?`<div class="grid">${items}</div>`:`<div class="empty">Coming soon ✨</div>`}
     </section>`;
   }).join('');
+  document.getElementById('jump').innerHTML=data.sections.map(s=>`<a href="#${esc(s.id)}">${esc(s.emoji||'')} ${esc(s.title)}</a>`).join('');
+  const total=data.sections.reduce((a,s)=>a+(s.items||[]).length,0);
+  const games=(data.sections.find(s=>s.id==='games')||{items:[]}).items.length;
+  const subj=data.sections.length;
+  document.getElementById('stats').innerHTML=
+    `<div class="stat"><b>${total}</b><small>Activities</small></div><div class="stat"><b>${games}</b><small>Games</small></div><div class="stat"><b>${subj}</b><small>Sections</small></div>`;
 }).catch(()=>{ document.getElementById('sections').innerHTML='<div class="empty">Could not load content. Please refresh.</div>'; });
+
+document.getElementById('copy').addEventListener('click',()=>{
+  const mail='nadeenmiss7@gmail.com',t=document.getElementById('toast');
+  const done=m=>{t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)};
+  try{ navigator.clipboard.writeText(mail).then(()=>done('Email address copied!'),()=>done(mail)); }catch(e){ done(mail); }
+});
 </script>
 </body>
 </html>
