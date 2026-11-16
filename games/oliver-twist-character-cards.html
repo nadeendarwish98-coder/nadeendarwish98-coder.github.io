@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oliver Twist Character Cards — Nadeen's Learning Hub</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:#12163a;background-image:radial-gradient(circle at 20% 10%,#2b2f77 0,transparent 45%),radial-gradient(circle at 85% 90%,#5b1f6a 0,transparent 45%);color:#fff;min-height:100vh}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0b0e2a;border-bottom:3px solid #ffd23f}
+.home{background:#ffd23f;color:#12163a;font-weight:800;text-decoration:none;padding:8px 14px;border-radius:999px;font-size:15px;white-space:nowrap}
+.top h1{margin:0;font-size:18px;flex:1;text-align:center;letter-spacing:.5px}.score{font-weight:800;color:#ffd23f;white-space:nowrap}
+main{max-width:1000px;margin:0 auto;padding:18px 14px 40px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.tab,.chip{border:2px solid #ffd23f;background:transparent;color:#ffd23f;font:inherit;font-weight:800;padding:8px 16px;border-radius:12px;cursor:pointer}
+.tab.on,.chip.on{background:#ffd23f;color:#12163a}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}.chip{padding:5px 12px;font-size:13px;border-color:#7ee0ff;color:#7ee0ff}.chip.on{background:#7ee0ff;color:#12163a}
+.hint{text-align:center;opacity:.85;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.card{perspective:900px;height:390px;cursor:pointer}
+.in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}.card.flip .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;border:5px solid #fff;overflow:hidden;box-shadow:0 8px 20px #0007;display:flex;flex-direction:column}
+.f{background:var(--c)}.b{transform:rotateY(180deg);background:#fff;color:#1b1e4a;padding:14px}
+.ch{position:absolute;top:8px;left:8px;background:#0b0e2a;color:#ffd23f;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
+.av{flex:1;display:flex;align-items:center;justify-content:center;font-size:96px;text-shadow:0 5px 0 #0003}
+.nm{background:#0b0e2a;text-align:center;padding:10px 6px}.nm b{display:block;font-size:20px}.nm span{font-size:12px;color:#7ee0ff}
+.b h3{margin:0 0 6px;font-size:18px;color:var(--c)}.b ul{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.35}.b .tap{margin-top:auto;font-size:11px;opacity:.55;text-align:center}
+.qbox{max-width:620px;margin:0 auto;background:#fff;color:#1b1e4a;border-radius:20px;padding:20px;border:5px solid #ffd23f}
+.qbox .clue{font-size:19px;line-height:1.45;margin:8px 0 16px}.qbox .lab{font-size:12px;font-weight:800;color:#d6336c;letter-spacing:1px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.opt{border:3px solid #1b1e4a;background:#f3f4ff;border-radius:14px;padding:12px 8px;font:inherit;font-weight:800;cursor:pointer;color:#1b1e4a;display:flex;align-items:center;gap:8px;justify-content:center;font-size:16px}
+.opt.ok{background:#37d67a;border-color:#0e8a46}.opt.no{background:#ff6b6b;border-color:#b21f1f;color:#fff}
+.bar{height:10px;background:#0003;border-radius:9px;margin:14px auto;max-width:620px;overflow:hidden}.bar i{display:block;height:100%;background:#ffd23f;width:0;transition:width .3s}
+.btn{background:#ff4d8d;color:#fff;border:0;border-radius:14px;padding:12px 22px;font:inherit;font-weight:800;cursor:pointer;font-size:16px;margin-top:14px;box-shadow:0 4px 0 #a8275a}
+.big{font-size:56px;text-align:center}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.mini{border-radius:14px;border:3px solid #fff;padding:10px 4px;text-align:center;background:var(--c);font-weight:800;font-size:13px}.mini div{font-size:40px}.mini.lock{background:#2a2e66;opacity:.6}
+</style></head><body>
+<div class="top"><a class="home" href="../index.html">🏠 Learning Hub</a><h1>Oliver Twist · Character Cards</h1><div class="score" id="sc">⭐ 0</div></div>
+<main>
+ <div class="tabs"><button class="tab on" data-m="deck">🃏 The Cards</button><button class="tab" data-m="quiz">❓ Who Am I?</button><button class="tab" data-m="collect">🏆 My Collection</button></div>
+ <div id="view"></div>
+</main>
+<script>
+const CH=[
+{n:'Oliver Twist',ch:'1–11',c:'#ff7b54',e:'🧒',role:'The hero of the story',d:['Was born in a workhouse and had no family.','Asked for more food and got into big trouble.','Ran away to London and met the Artful Dodger.','Lived in Mr. Brownlow\'s house and got better with Mrs. Bedwin\'s care.','Was caught in the street by Nancy and Bill Sykes and taken back to Fagin.','Was forced to go to Chertsey, was hurt, and was found by the Maylies.']},
+{n:'Mr. Bumble',ch:'1–3',c:'#8d6e63',e:'🧔',role:'The workhouse beadle',d:['Looked after the workhouse and the boys in it.','Gave Oliver his name.','Was shocked when Oliver asked for more food.','Sent Oliver away to work for Mr. Sowerberry.']},
+{n:'Mr. Sowerberry',ch:'3–6',c:'#455a64',e:'⚰️',role:'The undertaker',d:['Made coffins for a living.','Took Oliver as his boy.','Gave Oliver a bed under the shop counter.']},
+{n:'Noah Claypole',ch:'6',c:'#9e9d24',e:'😏',role:'The undertaker\'s other boy',d:['Was unkind to Oliver and teased him.','Said horrible things about Oliver\'s mother.','Made Oliver so angry that Oliver hit him and ran away.']},
+{n:'Fagin',ch:'8–11',c:'#6a1b9a',e:'🧙',role:'The leader of the thieves',d:['Lived in a dark den in London and taught boys to steal.','Welcomed Oliver and gave him food and a bed.','Was angry when Oliver ran away and tried to hit him with a stick.','Planned the robbery at Chertsey with Bill Sykes.']},
+{n:'The Artful Dodger',ch:'6–8',c:'#00897b',e:'🎩',role:'A young pickpocket (Jack Dawkins)',d:['Met Oliver on the road to London.','Took Oliver to Fagin\'s den.','Was very clever and quick at stealing.']},
+{n:'Charley Bates',ch:'6–9',c:'#3949ab',e:'😄',role:'A young thief',d:['Lived in Fagin\'s den.','Laughed a lot, even at Oliver\'s troubles.','Took Mr. Brownlow\'s five-pound note from Oliver\'s pocket.']},
+{n:'Mr. Brownlow',ch:'7–8',c:'#1565c0',e:'👴',role:'A kind old gentleman',d:['Took Oliver into his home.','Looked after Oliver when he was ill.','Saw that Oliver\'s face was like the lady in the picture.','Sent Oliver to the bookshop with a five-pound note.']},
+{n:'Mrs. Bedwin',ch:'7',c:'#ad1457',e:'👵',role:'Mr. Brownlow\'s housekeeper',d:['Looked after Oliver kindly while he was in bed.','Talked with him and showed him the pictures.','Was worried when Oliver did not come back.']},
+{n:'Mr. Grimwig',ch:'7',c:'#2e7d32',e:'🧐',role:'Mr. Brownlow\'s friend',d:['Did not trust Oliver at all.','Said, “I\'ll eat my head!” if Oliver came back.','Was sure Oliver would run away with the money.']},
+{n:'Nancy',ch:'8–9',c:'#e53935',e:'👩',role:'A friend of Fagin and Bill',d:['Pretended Oliver was her brother in the street.','Took Oliver back to Fagin\'s house.','Threw Fagin\'s stick into the fire to protect Oliver.','Took Oliver to Bill Sykes\'s room.']},
+{n:'Bill Sykes',ch:'8–11',c:'#37474f',e:'😠',role:'A rough, dangerous thief',d:['Took the five-pound note from Fagin.','Showed Oliver a pistol and said, “Be quiet!”','Took Oliver to the house at Chertsey at night.','Put Oliver through a small window.']},
+{n:'Toby Crackit',ch:'9',c:'#ef6c00',e:'🥾',role:'A thief with red hair',d:['Waited with a candle at the old ruined house.','Climbed the garden wall with Bill and Oliver.','Ran away with Bill when the robbery went wrong.']},
+{n:'Mr. Giles',ch:'10–11',c:'#5d4037',e:'🧑‍🍳',role:'The Maylies\' servant',d:['Heard a noise at the door and was afraid.','Fired a pistol in the night.','Pulled Oliver into the house.']},
+{n:'Brittles',ch:'10–11',c:'#6d4c41',e:'🧍',role:'The Maylies\' young servant',d:['Opened the door with Mr. Giles.','Said Oliver looked as if he was dying.']},
+{n:'Rose Maylie',ch:'10–11',c:'#d81b60',e:'👧',role:'A kind young lady',d:['Spoke kindly to Oliver from the top of the stairs.','Asked the men to be quiet and gentle with him.','Sent for the doctor.']},
+{n:'Mrs. Maylie',ch:'10–11',c:'#8e24aa',e:'👩‍🦳',role:'Rose\'s kind aunt',d:['Lived in the house at Chertsey.','Was kind to Oliver and let him stay.']},
+{n:'Dr. Losberne',ch:'10–11',c:'#00838f',e:'👨‍⚕️',role:'The Maylies\' doctor',d:['Came in the night to look at Oliver.','Helped Oliver get better.']}
+];
+const S=JSON.parse(localStorage.getItem('otcc')||'{"got":[],"best":0}');const save=()=>{try{localStorage.setItem('otcc',JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s),v=$('#view');let mode='deck',filter='all';
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');mode=t.dataset.m;render()});
+const upd=()=>$('#sc').textContent='⭐ '+S.got.length+' / '+CH.length;
+const has=(c,f)=>f=="all"||inRange(c.ch,f);
+function inRange(r,f){const [a,b]=r.split('–').map(Number);const x=+f;return x>=a&&x<=(b||a)}
+function render(){upd();({deck,quiz,collect})[mode]()}
+function deck(){
+ let h='<p class="hint">Tap a card to turn it over and read what the character did in the story so far.</p><div class="chips">'+['all',1,2,3,6,7,8,9,10,11].map(f=>`<button class="chip ${filter==f?'on':''}" data-f="${f}">${f=='all'?'All':'Ch '+f}</button>`).join('')+'</div><div class="grid">';
+ CH.filter(c=>has(c,filter)).forEach((c,i)=>{h+=`<div class="card" data-n="${c.n}" style="--c:${c.c}"><div class="in"><div class="f"><span class="ch">Ch ${c.ch}</span><div class="av">${c.e}</div><div class="nm"><b>${c.n}</b><span>${c.role}</span></div></div><div class="b"><h3>${c.n}</h3><b style="font-size:12px">What did they do?</b><ul>${c.d.map(x=>`<li>${x}</li>`).join('')}</ul><div class="tap">tap to turn back</div></div></div></div>`});
+ v.innerHTML=h+'</div>';
+ v.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filter=b.dataset.f;deck()});
+ v.querySelectorAll('.card').forEach(k=>k.onclick=()=>{k.classList.toggle('flip');const n=k.dataset.n;if(k.classList.contains('flip')&&!S.got.includes(n)){S.got.push(n);save();upd()}});
+}
+function quiz(){
+ const pool=[...CH].sort(()=>Math.random()-.5).slice(0,10);let i=0,ok=0;
+ const q=()=>{if(i>=pool.length){S.best=Math.max(S.best,ok);save();v.innerHTML=`<div class="qbox" style="text-align:center"><div class="big">${ok>=8?'🏆':ok>=5?'🌟':'👍'}</div><h2>${ok} / ${pool.length}</h2><p>${ok>=8?'You know the story very well!':ok>=5?'Good job! Read the cards again to learn more.':'Read the cards and try again!'}</p><p>Best score: ${S.best}</p><button class="btn" id="again">Play again</button></div>`;$('#again').onclick=quiz;return}
+  const c=pool[i],clue=c.d[Math.floor(Math.random()*c.d.length)];
+  const o=[c,...CH.filter(x=>x!==c).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);
+  v.innerHTML=`<div class="bar"><i style="width:${i/pool.length*100}%"></i></div><div class="qbox"><span class="lab">WHO AM I? · ${i+1} OF ${pool.length}</span><div class="clue">“${clue}”</div><div class="opts">${o.map(x=>`<button class="opt" data-n="${x.n}"><span style="font-size:26px">${x.e}</span>${x.n}</button>`).join('')}</div></div>`;
+  v.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(v.dataset.l)return;v.dataset.l=1;const right=b.dataset.n==c.n;if(right){ok++;b.classList.add('ok')}else{b.classList.add('no');v.querySelectorAll('.opt').forEach(x=>x.dataset.n==c.n&&x.classList.add('ok'))}setTimeout(()=>{delete v.dataset.l;i++;q()},1200)})};
+ q();
+}
+function collect(){
+ v.innerHTML=`<p class="hint">Turn over a card to add it to your collection. You have <b>${S.got.length}</b> of ${CH.length}!</p><div class="slots">${CH.map(c=>S.got.includes(c.n)?`<div class="mini" style="--c:${c.c}"><div>${c.e}</div>${c.n}</div>`:`<div class="mini lock"><div>❔</div>???</div>`).join('')}</div>`;
+}
+render();
+</script></body></html>

@@ -13,7 +13,7 @@
           "description": "Follow Oliver's adventure chapter by chapter — watch each chapter video inside the site.",
           "tags": [
             "Level 3",
-            "Chapters 1, 2, 3, 6, 10, 11"
+            "Chapters 1, 2, 3, 6, 7, 8, 9, 10, 11"
           ]
         }
       ]
@@ -63,6 +63,28 @@
             "Story",
             "Chapters 10–11",
             "Adventure"
+          ]
+        },
+        {
+          "title": "Oliver Twist: Into the Thieves' Den",
+          "icon": "🕯️",
+          "url": "games/oliver-twist-adventure-2.html",
+          "description": "A Victorian adventure map for Chapters 7, 8 & 9 — 12 stages and 12 mini-games from Mr. Brownlow's house to the dark garden at Chertsey.",
+          "tags": [
+            "Story",
+            "Chapters 7–9",
+            "Adventure"
+          ]
+        },
+        {
+          "title": "Oliver Twist Character Cards",
+          "icon": "🃏",
+          "url": "games/oliver-twist-character-cards.html",
+          "description": "Collect a card for every character — see their name and what they did in the story so far, then test yourself with Who Am I?",
+          "tags": [
+            "Story",
+            "Cards",
+            "Chapters 1–11"
           ]
         },
         {
