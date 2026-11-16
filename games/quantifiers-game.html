@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pizza Chef – Quantifiers Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--tom:#d62828;--tomD:#9d1b1b;--cream:#fff3d6;--crust:#e9a23b;--basil:#2f9e44;--basilD:#1f6e2f;--ink:#3b1d12;--cheese:#ffd23f}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:'Nunito',sans-serif;
+ background:
+  linear-gradient(45deg,rgba(214,40,40,.16) 25%,transparent 25%,transparent 75%,rgba(214,40,40,.16) 75%),
+  linear-gradient(45deg,rgba(214,40,40,.16) 25%,transparent 25%,transparent 75%,rgba(214,40,40,.16) 75%),var(--cream);
+ background-size:70px 70px;background-position:0 0,35px 35px}
+.wrap{max-width:760px;margin:0 auto;padding:60px 14px 50px;text-align:center}
+.logo{font-family:'Lilita One',cursive;font-size:clamp(2.4rem,9vw,4.4rem);color:var(--tom);line-height:1;text-shadow:3px 3px 0 var(--cheese),6px 6px 0 var(--ink);margin:6px 0}
+.sign{display:inline-block;background:var(--basil);color:#fff;font-family:'Lilita One',cursive;padding:4px 18px;border-radius:8px;border:3px solid var(--ink);transform:rotate(-2deg);box-shadow:0 4px 0 var(--ink)}
+.board{background:#fff;border:4px solid var(--ink);border-radius:22px;padding:18px;box-shadow:0 8px 0 var(--ink);margin:16px 0}
+.btn{font-family:'Lilita One',cursive;font-size:1.25rem;letter-spacing:.5px;border:4px solid var(--ink);border-radius:16px;background:var(--tom);color:#fff;padding:10px 24px;cursor:pointer;box-shadow:0 6px 0 var(--ink)}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--ink)}
+.btn.g{background:var(--basil)}.btn.y{background:var(--cheese);color:var(--ink)}
+.menu{display:grid;gap:12px;margin-top:12px}
+.lv{font-family:inherit;text-align:left;display:flex;gap:12px;align-items:center;border:4px solid var(--ink);border-radius:18px;padding:12px 14px;background:var(--cream);cursor:pointer;box-shadow:0 6px 0 var(--ink)}
+.lv:active{transform:translateY(5px);box-shadow:0 1px 0 var(--ink)}
+.lv .e{font-size:2.4rem}.lv b{font-family:'Lilita One',cursive;font-size:1.3rem;display:block}.lv small{font-weight:800}
+.lv .st{margin-left:auto;font-size:1.3rem;white-space:nowrap}
+.hud{display:flex;justify-content:space-between;align-items:center;font-family:'Lilita One',cursive;font-size:1.2rem;gap:8px;flex-wrap:wrap}
+.hud span{background:#fff;border:3px solid var(--ink);border-radius:99px;padding:3px 14px}
+.order{position:relative;background:#fffbe9;border:4px dashed var(--tom);border-radius:16px;padding:22px 14px 16px;margin:12px 0}
+.order::before{content:'ORDER';position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--tom);color:#fff;font-family:'Lilita One',cursive;padding:1px 16px;border-radius:8px;border:3px solid var(--ink)}
+.q{font-size:clamp(1.3rem,4.6vw,1.9rem);font-weight:900;line-height:1.3}
+.q u{display:inline-block;min-width:90px;border-bottom:5px solid var(--tom);text-decoration:none;color:var(--tom)}
+.pizza{position:relative;width:170px;height:170px;margin:6px auto;border-radius:50%;background:radial-gradient(circle,var(--cheese) 0 62%,#f4b13a 63% 78%,var(--crust) 79%);border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);transition:transform .3s}
+.pizza span{position:absolute;font-size:26px;animation:drop .4s}
+@keyframes drop{from{transform:translateY(-40px) scale(1.6);opacity:0}to{transform:none;opacity:1}}
+.pizza.shake{animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-10px) rotate(-6deg)}75%{transform:translateX(10px) rotate(6deg)}}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{font-family:'Lilita One',cursive;font-size:1.2rem;border:4px solid var(--ink);border-radius:14px;background:#fff;padding:12px 8px;cursor:pointer;box-shadow:0 5px 0 var(--ink);color:var(--ink)}
+.opt:hover{background:#fff1c9}.opt.ok{background:#8fe3a1}.opt.no{background:#ff9a9a}.opt:disabled{cursor:default}
+.fb{margin-top:12px;font-weight:900;padding:10px;border-radius:12px;border:3px solid var(--ink)}
+.fb.ok{background:#e0f7e5}.fb.no{background:#ffe3e3}
+.big{font-size:4.2rem}
+.confetti{position:fixed;top:-20px;font-size:26px;z-index:50;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+</style>
+</head>
+<body>
+<a href="../index.html" id="hubBtn" style="position:fixed;top:10px;left:10px;z-index:9999;background:#fff;color:#2B2140;font:700 14px Nunito,sans-serif;padding:7px 14px;border-radius:999px;border:2px solid #2B2140;text-decoration:none;box-shadow:0 3px 0 #2B2140">🏠 Learning Hub</a>
+<div class="wrap">
+  <!-- TITLE / MENU -->
+  <div id="s-menu">
+    <div class="sign">🍕 Quantifier Pizzeria</div>
+    <div class="logo">PIZZA CHEF</div>
+    <p style="font-weight:900;font-size:1.1rem;margin:0">Read the order. Pick the right word. Build the pizza!</p>
+    <div class="board">
+      <div class="menu" id="menu"></div>
+      <p style="font-weight:800;margin:14px 0 0">❤️❤️❤️ 3 lives per order sheet · 10 orders each</p>
+      <p style="margin:8px 0 0"><a href="../grammar/quantifiers.html" style="color:var(--tom);font-weight:900">📖 Need help? Open the lesson cards</a></p>
+    </div>
+  </div>
+  <!-- PLAY -->
+  <div id="s-play" hidden>
+    <div class="hud"><span id="h-lvl"></span><span id="h-q"></span><span id="h-lives"></span></div>
+    <div class="board">
+      <div class="pizza" id="pizza"></div>
+      <div class="order"><div class="q" id="q"></div></div>
+      <div class="opts" id="opts"></div>
+      <div id="fb"></div>
+    </div>
+    <button class="btn y" id="quit">← Menu</button>
+  </div>
+  <!-- RESULT -->
+  <div id="s-end" hidden>
+    <div class="board">
+      <div class="big" id="e-emoji"></div>
+      <div class="logo" id="e-title" style="font-size:2.6rem"></div>
+      <p id="e-text" style="font-weight:900;font-size:1.2rem"></p>
+      <div id="e-stars" class="big"></div>
+      <button class="btn g" id="e-again">Play again</button>
+      <button class="btn y" id="e-menu">Menu</button>
+    </div>
+  </div>
+</div>
+<script src="../grammar/quantifiers-data.js"></script>
+<script>
+const B=window.QUANT_BANK;
+const LV=[{k:1,e:'🌶️',t:'Too & Enough',d:'The most important one — start here!'},{k:2,e:'🧀',t:'Too many / Too much / Enough',d:'Countable or uncountable?'},{k:3,e:'🍄',t:'All · No · None · Most · A few · A little',d:'The quantifier scale'},{k:'all',e:'👨‍🍳',t:'Master Chef Mix',d:'Questions from every set'}];
+const TOP=['🍅','🧀','🍄','🫒','🌶️','🥓','🍍','🌿','🧅','🫑'];
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const best=JSON.parse((()=>{try{return localStorage.getItem('pizzaQuantBest')}catch(e){return null}})()||'{}');
+let g,audio;
+function beep(f,d=.12,type='sine'){try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),v=audio.createGain();o.type=type;o.frequency.value=f;v.gain.value=.07;o.connect(v);v.connect(audio.destination);o.start();v.gain.exponentialRampToValueAtTime(.001,audio.currentTime+d);o.stop(audio.currentTime+d)}catch(e){}}
+function screen(id){['s-menu','s-play','s-end'].forEach(s=>$(s).hidden=s!==id)}
+function menu(){
+  $('menu').innerHTML=LV.map(l=>`<button class="lv" data-k="${l.k}"><span class="e">${l.e}</span><span><b>${l.t}</b><small>${l.d}</small></span><span class="st">${'⭐'.repeat(best[l.k]||0)||''}</span></button>`).join('');
+  $('menu').querySelectorAll('.lv').forEach(b=>b.onclick=()=>start(b.dataset.k));
+  screen('s-menu');
+}
+function start(k){
+  const pool=k==='all'?[].concat(...Object.values(B).map(l=>l.items)):B[k].items;
+  g={k,items:shuffle(pool).slice(0,10),i:0,lives:3,ok:0,name:LV.find(l=>String(l.k)===String(k)).t};
+  $('pizza').innerHTML='';screen('s-play');next();
+}
+function hearts(){$('h-lives').textContent='❤️'.repeat(g.lives)+'🖤'.repeat(3-g.lives)}
+function next(){
+  if(g.i>=g.items.length||g.lives<=0)return finish();
+  const [q,a,w]=g.items[g.i];
+  $('h-lvl').textContent=g.name.length>22?'Chef Mix':g.name.split(' ')[0]==='Too'?'Too & Enough':g.name;
+  $('h-q').textContent=`Order ${g.i+1}/10`;hearts();
+  $('q').innerHTML=q.includes('___')?q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>'):q;
+  $('fb').innerHTML='';
+  $('opts').innerHTML=shuffle([a,...w]).map(o=>`<button class="opt" data-o="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('');
+  $('opts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b));
+}
+function pick(b){
+  const [q,a,w,why]=g.items[g.i];const ok=b.dataset.o===a;
+  $('opts').querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.o===a)x.classList.add('ok')});
+  if(ok){g.ok++;beep(660);beep(880,.15);
+    const s=document.createElement('span');s.textContent=TOP[g.i%TOP.length];
+    const ang=Math.random()*6.28,r=Math.random()*50;s.style.left=(70+Math.cos(ang)*r)+'px';s.style.top=(70+Math.sin(ang)*r)+'px';$('pizza').appendChild(s);
+  }else{b.classList.add('no');g.lives--;beep(180,.25,'sawtooth');$('pizza').classList.remove('shake');void $('pizza').offsetWidth;$('pizza').classList.add('shake')}
+  hearts();
+  $('fb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'🍕 Delicious! +1 topping':'😬 Oops! Answer: '+a}<br><small>${why}</small></div><p style="margin:10px 0 0"><button class="btn g" id="nx">${(g.i+1>=g.items.length||g.lives<=0)?'Finish 🏁':'Next order →'}</button></p>`;
+  $('nx').onclick=()=>{g.i++;next()};
+}
+function confetti(){for(let i=0;i<40;i++){const c=document.createElement('div');c.className='confetti';c.textContent=TOP[i%TOP.length];c.style.left=Math.random()*100+'vw';c.style.animationDuration=(2+Math.random()*2.5)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),5000)}}
+function finish(){
+  const n=g.ok,over=g.lives<=0&&g.i<g.items.length;
+  const stars=n>=9?3:n>=7?2:n>=5?1:0;
+  if(stars>(best[g.k]||0)){best[g.k]=stars;try{localStorage.setItem('pizzaQuantBest',JSON.stringify(best))}catch(e){}}
+  $('e-emoji').textContent=over?'😵':stars===3?'🏆':'🍕';
+  $('e-title').textContent=over?'Kitchen closed!':stars===3?'Master Chef!':stars>=1?'Nice pizza!':'Keep practising!';
+  $('e-text').textContent=`${n} correct out of ${g.items.length}`+(over?' — you ran out of lives.':'');
+  $('e-stars').textContent=stars?'⭐'.repeat(stars):'—';
+  if(stars>=2){confetti();beep(523,.15);setTimeout(()=>beep(659,.15),150);setTimeout(()=>beep(784,.25),300)}
+  screen('s-end');
+}
+$('quit').onclick=menu;$('e-menu').onclick=menu;$('e-again').onclick=()=>start(g.k);
+menu();
+</script>
+</body>
+</html>

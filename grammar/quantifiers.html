@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantifiers: Too &amp; Enough – Grammar Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1f2a44;--teal:#0ea5a4;--tealD:#0b7f7e;--pink:#ff5d8f;--pinkD:#d63c6c;--gold:#ffb703;--goldD:#d98f00;--green:#22a559;--greenD:#177a41;--red:#e5484d;--redD:#b3282d;--bg:#eefafa}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--bg);
+ background-image:radial-gradient(#cfeeee 1.6px,transparent 1.6px);background-size:26px 26px;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:62px 14px 80px}
+h1{font-family:'Baloo 2',sans-serif;font-size:clamp(2rem,6vw,3.1rem);margin:0;text-align:center;line-height:1.05}
+h1 span{color:var(--pink)}
+.sub{text-align:center;font-weight:700;margin:6px 0 16px;color:#46607a}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0 18px}
+.tab{font:inherit;font-weight:800;border:3px solid var(--ink);background:#fff;color:var(--ink);border-radius:14px;padding:9px 16px;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.tab.on{background:var(--teal);color:#fff}
+.tab:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.panel{background:#fff;border:3px solid var(--ink);border-radius:24px;padding:20px;box-shadow:0 8px 0 var(--ink)}
+/* cards */
+.dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.dot{width:14px;height:14px;border-radius:50%;background:#d5e3e3;border:2px solid var(--ink);cursor:pointer;padding:0}
+.dot.on{background:var(--pink)}
+.card{border-radius:20px;padding:22px 18px;border:3px solid var(--ink);background:var(--cbg,#e6fbfb);text-align:center;animation:pop .35s}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+.card .chip{display:inline-block;background:var(--ink);color:#fff;font-weight:800;border-radius:99px;padding:3px 14px;font-size:.85rem}
+.card h2{font-family:'Baloo 2',sans-serif;font-size:clamp(1.7rem,6vw,2.6rem);margin:8px 0 2px;line-height:1.1}
+.rule{font-size:clamp(1.15rem,3.6vw,1.5rem);font-weight:800;margin:6px 0 12px}
+.formula{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;margin:8px 0 14px;font-weight:900;font-size:1.25rem}
+.formula b{background:#fff;border:3px solid var(--ink);border-radius:12px;padding:6px 14px}
+.formula .k{background:var(--pink);color:#fff}.formula .e{background:var(--gold)}
+.ex{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 14px;margin:8px auto;max-width:560px;font-size:1.2rem;font-weight:700;text-align:left}
+.ex.good{border-color:var(--greenD);background:#eafaf1}.ex.bad{border-color:var(--redD);background:#fdeeee}
+.ex i{font-style:normal;font-weight:900;margin-right:6px}
+mark{background:var(--gold);padding:0 5px;border-radius:6px;font-weight:900}
+mark.p{background:var(--pink);color:#fff}
+.tip{margin-top:10px;font-weight:800;color:#26466b}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.btn{font:inherit;font-weight:900;font-size:1.05rem;border:3px solid var(--ink);border-radius:14px;padding:10px 20px;background:var(--gold);color:var(--ink);cursor:pointer;box-shadow:0 5px 0 var(--ink);text-decoration:none;display:inline-block}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.ghost{background:#fff}.btn.pink{background:var(--pink);color:#fff}.btn[disabled]{opacity:.4;pointer-events:none}
+/* video */
+video{width:100%;border-radius:16px;border:3px solid var(--ink);background:#000}
+/* practice */
+.lvls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.lvl{font:inherit;text-align:left;border:3px solid var(--ink);border-radius:18px;padding:14px;background:var(--c);cursor:pointer;box-shadow:0 5px 0 var(--ink)}
+.lvl b{display:block;font-size:1.15rem}.lvl small{font-weight:700}
+.bar{height:14px;background:#d9ecec;border:2px solid var(--ink);border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+.q{font-size:clamp(1.25rem,4.4vw,1.8rem);font-weight:800;text-align:center;margin:10px 0 16px;line-height:1.3}
+.q u{display:inline-block;min-width:80px;border-bottom:4px solid var(--pink);text-decoration:none;color:var(--pink)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.opt{font:inherit;font-weight:800;font-size:1.1rem;padding:13px;border:3px solid var(--ink);border-radius:14px;background:#fff;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.opt:hover{background:#f2fbfb}
+.opt.ok{background:#bff0d3;border-color:var(--greenD)}.opt.no{background:#ffc9cb;border-color:var(--redD)}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-weight:800;border:3px solid var(--ink)}
+.fb.ok{background:#eafaf1}.fb.no{background:#fdeeee}
+.score{font-size:3rem;font-family:'Baloo 2',sans-serif;text-align:center}
+.stats{display:flex;gap:8px;justify-content:space-between;font-weight:800}
+.center{text-align:center}
+</style>
+</head>
+<body>
+<a href="../index.html" id="hubBtn" style="position:fixed;top:10px;left:10px;z-index:9999;background:#fff;color:#2B2140;font:700 14px Nunito,sans-serif;padding:7px 14px;border-radius:999px;border:2px solid #2B2140;text-decoration:none;box-shadow:0 3px 0 #2B2140">🏠 Learning Hub</a>
+<div class="wrap">
+  <h1>Too &amp; <span>Enough</span></h1>
+  <p class="sub">+ too many · too much · all · no · none · most · a few · a little</p>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-t="cards">🃏 Cards</button>
+    <button class="tab" data-t="video">🎬 Video</button>
+    <button class="tab" data-t="practice">✏️ Practice</button>
+    <a class="tab" style="text-decoration:none" href="../games/quantifiers-game.html">🍕 Game</a>
+  </div>
+
+  <div class="panel" id="cards">
+    <div class="dots" id="dots"></div>
+    <div id="card"></div>
+    <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn" id="next">Next →</button></div>
+  </div>
+
+  <div class="panel" id="video" hidden>
+    <video controls preload="metadata" poster="" src="../videos/quantifiers.mp4"></video>
+    <p class="center" style="font-weight:800">Short video: too &amp; enough first, then all the other quantifiers.</p>
+  </div>
+
+  <div class="panel" id="practice" hidden></div>
+</div>
+
+<script src="quantifiers-data.js"></script>
+<script>
+const E=(s)=>s; // examples use small inline html
+const DECK=[
+ {chip:'Start here',cbg:'#fff2c7',h:'TOO',rule:'too = MORE than we need. It is a problem. ❌',
+  f:'<b>subject</b><b>be</b><b class="k">too</b><b>adjective</b>',
+  ex:[['bad','The tea is <mark class="p">too</mark> hot.'],['bad','He is <mark class="p">too</mark> young to drive.']],
+  tip:'Think: "too" = "too bad" 😟'},
+ {chip:'Too + to',cbg:'#ffe3ec',h:'too … to',rule:'too + adjective + to + verb = we CAN\'T do it.',
+  f:'<b class="k">too</b><b>adjective</b><b>to + verb</b>',
+  ex:[['bad','The tea is <mark class="p">too</mark> hot <mark>to drink</mark>.<br><small>= We can\'t drink it.</small>'],['bad','It\'s <mark class="p">too</mark> cold <mark>to swim</mark>.']],
+  tip:'You can add "for + person": too heavy for me to lift.'},
+ {chip:'Start here',cbg:'#dff7e9',h:'ENOUGH',rule:'enough = as much as we need. It is OK. ✅',
+  f:'<b>subject</b><b>be</b><b>adjective</b><b class="e">enough</b>',
+  ex:[['good','He is tall <mark>enough</mark> to ride.'],['good','The room is big <mark>enough</mark>.']],
+  tip:'Adjective FIRST, then enough!'},
+ {chip:'Negative',cbg:'#fde4e4',h:'NOT enough',rule:'not + adjective + enough = we need MORE.',
+  f:'<b>subject</b><b>not be</b><b>adjective</b><b class="e">enough</b>',
+  ex:[['bad','She isn\'t old <mark>enough</mark> to drive.<br><small>= She is too young.</small>'],['bad','I\'m not tall <mark>enough</mark> to reach it.']],
+  tip:'"Not … enough" ≈ "too" the opposite way: not old enough = too young.'},
+ {chip:'Position',cbg:'#e6f0ff',h:'Where do they go?',rule:'too goes BEFORE the adjective. enough goes AFTER it.',
+  f:'<b class="k">too</b><b>hot</b> &nbsp;|&nbsp; <b>hot</b><b class="e">enough</b>',
+  ex:[['good','The soup is <mark class="p">too</mark> hot.'],['good','The soup is hot <mark>enough</mark>.'],['bad','The soup is enough hot.'],['bad','The soup is hot too.']],
+  tip:'too → ▶ adjective ◀ ← enough'},
+ {chip:'Too or Enough?',cbg:'#fff2c7',h:'Which one?',rule:'Same adjective, opposite meaning!',
+  f:'<b>too young</b><b>=</b><b>not old enough</b>',
+  ex:[['bad','He is <mark class="p">too</mark> young to vote.'],['bad','He isn\'t old <mark>enough</mark> to vote.'],['good','She is old <mark>enough</mark> to vote.']],
+  tip:'Problem? → too / not enough. All good? → enough.'},
+ {chip:'Enough + noun',cbg:'#dff7e9',h:'enough + noun',rule:'With nouns, enough goes BEFORE the noun.',
+  f:'<b class="e">enough</b><b>noun</b>',
+  ex:[['good','We have <mark>enough</mark> chairs.'],['bad','We don\'t have <mark>enough</mark> money.'],['bad','We don\'t have chairs enough.']],
+  tip:'enough money · enough time · enough chairs'},
+ {chip:'Nouns',cbg:'#ffe3ec',h:'too many / too much',rule:'too many + countable (plural). too much + uncountable.',
+  f:'<b class="k">too many</b><b>apples</b> &nbsp;|&nbsp; <b class="k">too much</b><b>water</b>',
+  ex:[['bad','There are <mark class="p">too many</mark> people.'],['bad','There is <mark class="p">too much</mark> noise.'],['bad','I ate <mark class="p">too many</mark> cakes.']],
+  tip:'Can you count it? 1, 2, 3 → many. Can\'t count it → much.'},
+ {chip:'Quantifier',cbg:'#e6f0ff',h:'ALL',rule:'all = 100%. Everyone / everything.',
+  f:'<b class="e">all</b><b>the</b><b>students</b>',
+  ex:[['good','<mark>All</mark> the students are here.'],['good','I ate <mark>all</mark> the cake.']],
+  tip:'🟩🟩🟩🟩🟩 = all'},
+ {chip:'Quantifier',cbg:'#dff7e9',h:'MOST',rule:'most = almost all (more than half).',
+  f:'<b class="e">most</b><b>people</b>',
+  ex:[['good','<mark>Most</mark> people like pizza.'],['good','<mark>Most</mark> of the students passed.']],
+  tip:'🟩🟩🟩🟩⬜ = most'},
+ {chip:'Quantifier',cbg:'#fff2c7',h:'A FEW',rule:'a few = some, not many. Use with COUNTABLE plural nouns.',
+  f:'<b class="e">a few</b><b>friends</b>',
+  ex:[['good','I have <mark>a few</mark> friends here.'],['good','Buy <mark>a few</mark> apples, please.']],
+  tip:'🟩🟩⬜⬜⬜ = a few (you can count them)'},
+ {chip:'Quantifier',cbg:'#ffe3ec',h:'A LITTLE',rule:'a little = some, not much. Use with UNCOUNTABLE nouns.',
+  f:'<b class="e">a little</b><b>water</b>',
+  ex:[['good','I need <mark>a little</mark> sugar.'],['good','There is <mark>a little</mark> milk left.']],
+  tip:'💧 small amount (you can\'t count it)'},
+ {chip:'Zero',cbg:'#fde4e4',h:'NO / NONE',rule:'no + noun = zero. none = zero, with NO noun after it.',
+  f:'<b class="e">no</b><b>time</b> &nbsp;|&nbsp; <b class="e">none</b><b>of the eggs</b>',
+  ex:[['good','There are <mark>no</mark> eggs.'],['good','How many eggs? <mark>None</mark>.'],['good','<mark>None</mark> of the students were late.']],
+  tip:'⬜⬜⬜⬜⬜ = none'},
+ {chip:'Review',cbg:'#e6f0ff',h:'The scale',rule:'From 100% down to 0%',
+  f:'<b>all</b><b>most</b><b>a few / a little</b><b>no / none</b>',
+  ex:[['good','🟩🟩🟩🟩🟩 <mark>all</mark>'],['good','🟩🟩🟩🟩⬜ <mark>most</mark>'],['good','🟩🟩⬜⬜⬜ <mark>a few / a little</mark>'],['good','⬜⬜⬜⬜⬜ <mark>no / none</mark>']],
+  tip:'Now watch the video or go to Practice! ✏️'}
+];
+let ci=0;
+const dots=document.getElementById('dots'),card=document.getElementById('card');
+DECK.forEach((_,i)=>{const d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','Card '+(i+1));d.onclick=()=>{ci=i;draw()};dots.appendChild(d)});
+function draw(){
+  const c=DECK[ci];
+  card.innerHTML=`<div class="card" style="--cbg:${c.cbg}"><span class="chip">${c.chip} · ${ci+1}/${DECK.length}</span>
+   <h2>${c.h}</h2><div class="rule">${c.rule}</div><div class="formula">${c.f}</div>
+   ${c.ex.map(([t,h])=>`<div class="ex ${t}"><i>${t==='good'?'✅':'❌'}</i>${h}</div>`).join('')}
+   <div class="tip">💡 ${c.tip}</div></div>`;
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===ci));
+  document.getElementById('prev').disabled=ci===0;
+  document.getElementById('next').disabled=ci===DECK.length-1;
+}
+document.getElementById('prev').onclick=()=>{ci--;draw()};
+document.getElementById('next').onclick=()=>{ci++;draw()};
+draw();
+
+/* tabs */
+document.querySelectorAll('.tab[data-t]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab[data-t]').forEach(x=>x.classList.toggle('on',x===b));
+  ['cards','video','practice'].forEach(id=>document.getElementById(id).hidden=id!==b.dataset.t);
+  if(b.dataset.t!=='video')document.querySelector('video').pause();
+  if(b.dataset.t==='practice')menu();
+});
+
+/* practice */
+const P=document.getElementById('practice');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function menu(){
+  const B=window.QUANT_BANK;
+  const cols={1:'#ffe9a8',2:'#ffd1e0',3:'#cdeedd'};
+  P.innerHTML=`<div class="center" style="font-weight:800;margin-bottom:10px">Choose a set. ${Object.values(B).reduce((n,l)=>n+l.items.length,0)} questions in total!</div>
+  <div class="lvls">${Object.keys(B).map(k=>`<button class="lvl" style="--c:${cols[k]}" data-k="${k}"><b>${k==1?'⭐ ':''}Set ${k}: ${B[k].name}</b><small>${B[k].items.length} questions${k==1?' — start here!':''}</small></button>`).join('')}
+  <button class="lvl" style="--c:#cfe3ff" data-k="all"><b>🎲 Mix of everything</b><small>20 random questions</small></button></div>`;
+  P.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>start(b.dataset.k));
+}
+let run;
+function start(k){
+  const B=window.QUANT_BANK;
+  let items=k==='all'?shuffle([].concat(...Object.values(B).map(l=>l.items))).slice(0,20):shuffle(B[k].items);
+  run={items,i:0,score:0,k};show();
+}
+function show(){
+  const it=run.items[run.i];
+  if(!it){return end()}
+  const [q,a,w,why]=it;
+  const html=q.includes('___')?q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>'):q;
+  P.innerHTML=`<div class="stats"><span>Question ${run.i+1}/${run.items.length}</span><span>⭐ ${run.score}</span></div>
+  <div class="bar"><i style="width:${run.i/run.items.length*100}%"></i></div>
+  <div class="q">${html}</div><div class="opts">${shuffle([a,...w]).map(o=>`<button class="opt" data-o="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div><div id="fb"></div>`;
+  P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,a,why));
+}
+function pick(b,a,why){
+  const ok=b.dataset.o===a;
+  P.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.o===a)x.classList.add('ok')});
+  if(!ok)b.classList.add('no'); else run.score++;
+  document.getElementById('fb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✅ Correct!':'❌ The answer is: <u style="color:inherit">'+a+'</u>'}<br><span style="font-weight:700">${why}</span></div>
+  <div class="nav" style="justify-content:flex-end"><button class="btn" id="nx">${run.i+1<run.items.length?'Next →':'Finish 🏁'}</button></div>`;
+  document.getElementById('nx').onclick=()=>{run.i++;show()};
+}
+function end(){
+  const p=Math.round(run.score/run.items.length*100);
+  P.innerHTML=`<div class="center"><div style="font-size:4rem">${p>=90?'🏆':p>=60?'🌟':'💪'}</div><div class="score">${run.score} / ${run.items.length}</div>
+  <p style="font-weight:800">${p>=90?'Amazing! You are a quantifier expert!':p>=60?'Good job! Practise a little more.':'Keep going! Read the cards again and try once more.'}</p>
+  <button class="btn pink" id="again">Try again</button> <button class="btn ghost" id="mn">Other sets</button> <a class="btn" href="../games/quantifiers-game.html">🍕 Play the game</a></div>`;
+  document.getElementById('again').onclick=()=>start(run.k);document.getElementById('mn').onclick=menu;
+}
+</script>
+</body>
+</html>

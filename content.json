@@ -19,6 +19,36 @@
       ]
     },
     {
+      "id": "grammar",
+      "title": "Grammar",
+      "emoji": "✏️",
+      "description": "Short, simple lessons with cards, video and lots of practice questions.",
+      "items": [
+        {
+          "title": "Quantifiers: Too & Enough",
+          "icon": "🃏",
+          "url": "grammar/quantifiers.html",
+          "description": "Easy cards, a short video and 95 practice questions — too & enough first, then too many, too much, all, no, none, most, a few and a little.",
+          "tags": [
+            "Grammar",
+            "Cards + Video",
+            "95 questions"
+          ]
+        },
+        {
+          "title": "Pizza Chef: Quantifiers Game",
+          "icon": "🍕",
+          "url": "games/quantifiers-game.html",
+          "description": "Read the order, pick the right quantifier and build the pizza! 4 levels, 3 lives and stars to collect.",
+          "tags": [
+            "Grammar",
+            "Game",
+            "Too & enough"
+          ]
+        }
+      ]
+    },
+    {
       "id": "games",
       "title": "Games",
       "emoji": "🎮",
