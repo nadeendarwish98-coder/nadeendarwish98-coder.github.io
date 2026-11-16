@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Machine: Past Simple Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --past:#fbbf24; --past-d:#b45309;
+  --sub:#60a5fa;  --sub-d:#1d4ed8;
+  --did:#22d3ee; --did-d:#0e7490;
+  --base:#e879f9;--base-d:#a21caf;
+  --ago:#fb7185; --ago-d:#be123c;
+  --time:#34d399;--time-d:#047857;
+  --obj:#c4b5fd; --obj-d:#6d28d9;
+  --pp:#fb923c;  --pp-d:#c2410c;
+  --wh:#f472b6;  --wh-d:#9d174d;
+  --ink:#1e1b4b;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  min-height:100vh;color:#fff;font-family:'Baloo 2',system-ui,sans-serif;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(236,72,153,.35),transparent 40%),
+    radial-gradient(circle at 85% 25%,rgba(34,211,238,.28),transparent 42%),
+    radial-gradient(circle at 50% 100%,rgba(251,191,36,.25),transparent 45%),
+    linear-gradient(180deg,#0b1026 0%,#1e1b4b 50%,#2e1065 100%);
+  background-attachment:fixed;
+}
+/* ---------- decorations ---------- */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.15;transform:scale(.6)}}
+.gear{position:fixed;z-index:0;pointer-events:none;opacity:.16;animation:spin 24s linear infinite}
+.gear.g1{font-size:150px;left:-40px;bottom:12%}
+.gear.g2{font-size:110px;right:-24px;top:16%;animation-direction:reverse;animation-duration:18s}
+.gear.g3{font-size:90px;right:8%;bottom:-20px;animation-duration:30s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.beam{position:fixed;left:0;right:0;bottom:0;height:6px;z-index:0;background:linear-gradient(90deg,#fbbf24,#fb7185,#a78bfa,#22d3ee,#fbbf24);background-size:200% 100%;animation:beam 6s linear infinite;opacity:.85}
+@keyframes beam{to{background-position:200% 0}}
+
+/* ---------- global buttons ---------- */
+.homebtn{position:fixed;top:10px;left:10px;z-index:9999;background:#fff;color:#2B2140;font:800 14px 'Baloo 2',sans-serif;padding:7px 14px;border-radius:999px;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.homebtn:hover{background:#fef3c7}
+.mutebtn{position:fixed;top:10px;right:10px;z-index:9999;border:0;background:#fff;color:#2B2140;font:800 14px 'Baloo 2',sans-serif;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:58px 14px 90px}
+
+.title{font-family:'Bungee','Baloo 2',sans-serif;text-align:center;margin:6px 0 0;font-size:clamp(1.7rem,6vw,2.9rem);line-height:1.05;
+  background:linear-gradient(90deg,#fde68a,#fb7185,#a5b4fc,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(0,0,0,.45))}
+.sub{text-align:center;font-weight:600;margin:4px 0 12px;color:#c7d2fe;font-size:1.05rem}
+
+.panel{background:#fff;color:var(--ink);border-radius:24px;padding:16px;box-shadow:0 7px 0 rgba(0,0,0,.35);margin:12px 0}
+.panel.dark{background:#0f172a;color:#fff;border:2px solid #4338ca}
+.pill{background:#312e81;border:2px solid #6366f1;color:#fff;border-radius:999px;padding:4px 12px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+
+/* role chips */
+.r-sub{--c:var(--sub);--d:var(--sub-d)}
+.r-past{--c:var(--past);--d:var(--past-d);--t:#3b2300}
+.r-did{--c:var(--did);--d:var(--did-d);--t:#022c36}
+.r-base{--c:var(--base);--d:var(--base-d)}
+.r-ago{--c:var(--ago);--d:var(--ago-d)}
+.r-time{--c:var(--time);--d:var(--time-d);--t:#022c1c}
+.r-obj{--c:var(--obj);--d:var(--obj-d);--t:#2e1065}
+.r-pp{--c:var(--pp);--d:var(--pp-d)}
+.r-wh{--c:var(--wh);--d:var(--wh-d)}
+.chip{display:inline-block;border-radius:14px;padding:3px 13px;font-weight:700;background:var(--c,#e2e8f0);color:var(--t,#fff);box-shadow:0 3px 0 var(--d,#94a3b8);margin:2px}
+.chip.ghost{background:#334155;color:#cbd5e1;box-shadow:0 3px 0 #1e293b}
+.sentence-line{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 6px;font-size:clamp(1.15rem,3.8vw,1.7rem);line-height:1.5}
+
+/* ---------- MAP ---------- */
+.formula{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;font-size:1rem}
+.formula .plus{font-weight:800;color:#6366f1}
+.progress{height:16px;background:#1e1b4b;border-radius:99px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.5);margin:8px 0}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#facc15,#fb923c,#ec4899);border-radius:99px;transition:width .5s}
+.stations{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:10px}
+.st{position:relative;font:inherit;text-align:left;border:0;border-radius:22px;padding:14px 14px 12px;cursor:pointer;color:#fff;
+  background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 7px 0 rgba(0,0,0,.4);transition:transform .12s}
+.st:hover{transform:translateY(-4px) rotate(-.6deg)}
+.st:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.4)}
+.st .num{position:absolute;top:-10px;left:-8px;width:36px;height:36px;border-radius:50%;background:#fff;color:#1e1b4b;font:400 1.1rem 'Bungee',sans-serif;display:grid;place-items:center;box-shadow:0 3px 0 rgba(0,0,0,.35)}
+.st .em{font-size:2.4rem;display:block;margin-bottom:2px}
+.st b{display:block;font-size:1.2rem;line-height:1.15}
+.st small{display:block;opacity:.95;font-size:.92rem;margin:2px 0 6px;line-height:1.25}
+.st .stz{font-size:1.15rem;letter-spacing:2px}
+.st .ribbon{position:absolute;top:10px;right:-6px;background:#fff;color:#be123c;font:400 .72rem 'Bungee',sans-serif;padding:3px 9px;border-radius:8px 0 0 8px;box-shadow:0 2px 0 rgba(0,0,0,.3)}
+.st .tick{position:absolute;bottom:10px;right:12px;font-size:1.5rem}
+
+/* ---------- STATION ---------- */
+.topbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.stname{font-family:'Bungee','Baloo 2',sans-serif;font-size:clamp(1rem,3.6vw,1.5rem);color:#fde68a}
+.btn{font:inherit;font-weight:800;font-size:1.05rem;border:0;color:#fff;border-radius:16px;padding:9px 18px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.35);transition:transform .1s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.go{background:linear-gradient(135deg,#22c55e,#15803d)}
+.btn.blue{background:linear-gradient(135deg,#38bdf8,#2563eb)}
+.btn.violet{background:linear-gradient(135deg,#a78bfa,#6d28d9)}
+.btn.fire{background:linear-gradient(135deg,#fb923c,#e11d48)}
+.btn.gray{background:linear-gradient(135deg,#64748b,#334155)}
+.stepper{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.stp{font:inherit;font-weight:700;font-size:.92rem;border:2px solid #6366f1;background:#1e1b4b;color:#c7d2fe;border-radius:12px;padding:4px 10px;cursor:pointer}
+.stp.on{background:#fbbf24;border-color:#fbbf24;color:#3b2300;transform:translateY(-2px);box-shadow:0 3px 0 #b45309}
+.stp.done{background:#14532d;border-color:#22c55e;color:#bbf7d0}
+.hud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.bar{flex:1 1 100%;height:14px;background:#1e1b4b;border-radius:99px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.5)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6);border-radius:99px;transition:width .4s}
+
+/* mascot */
+.owlrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 2px}
+.owl{font-size:54px;line-height:1;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 0 rgba(0,0,0,.35))}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.bubble{position:relative;background:#fff;color:var(--ink);border-radius:20px;padding:10px 16px;box-shadow:0 5px 0 rgba(0,0,0,.35);flex:1;font-size:1.1rem;line-height:1.3;font-weight:600}
+.bubble:before{content:"";position:absolute;left:-10px;top:22px;border:10px solid transparent;border-right-color:#fff;border-left:0}
+.bubble.bad{background:#ffe4e6}.bubble.bad:before{border-right-color:#ffe4e6}
+.bubble.good{background:#dcfce7}.bubble.good:before{border-right-color:#dcfce7}
+
+/* question card */
+.qcard{text-align:center;font-size:clamp(1.25rem,4.4vw,1.9rem);font-weight:700;line-height:1.35;margin:4px 0 14px}
+.qcard .pic{display:block;font-size:3rem;margin-bottom:4px}
+.qcard small{display:block;font-size:.95rem;color:#64748b;font-weight:600}
+.opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.opt{font:inherit;font-weight:800;font-size:clamp(1.1rem,3.8vw,1.5rem);border:3px solid #c7d2fe;background:#eef2ff;color:var(--ink);border-radius:18px;padding:10px 22px;cursor:pointer;box-shadow:0 5px 0 #c7d2fe;transition:transform .1s;min-width:120px}
+.opt:hover{transform:translateY(-2px)}
+.opt:active{transform:translateY(3px);box-shadow:0 2px 0 #c7d2fe}
+.opt.right{background:#22c55e;border-color:#15803d;color:#fff;box-shadow:0 5px 0 #15803d;animation:pop .45s}
+.opt.wrong{background:#fecdd3;border-color:#fb7185;color:#9f1239;box-shadow:0 5px 0 #fb7185;text-decoration:line-through;cursor:default}
+.opt.bucket{border:0;color:#fff;background:linear-gradient(135deg,var(--c),var(--d));box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.opt.bucket.wrong{filter:grayscale(.8) brightness(.8);text-decoration:line-through}
+.opt:disabled{cursor:default}
+.nextrow{display:flex;justify-content:center;margin-top:14px}
+.say{border:0;background:#e0e7ff;border-radius:99px;padding:4px 12px;font:inherit;font-weight:800;cursor:pointer;margin-left:6px}
+
+/* type */
+.tin{font:inherit;font-weight:800;font-size:1.6rem;text-align:center;border:3px solid #a5b4fc;border-radius:16px;padding:8px 14px;width:min(320px,90%);color:var(--ink);outline:none}
+.tin:focus{border-color:#fbbf24;box-shadow:0 0 0 5px #fef3c7}
+.tin.ok{background:#dcfce7;border-color:#22c55e}
+.trow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center}
+.ftable{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.fcell{min-width:96px;border-radius:16px;padding:6px 10px;color:#fff;background:linear-gradient(135deg,var(--c),var(--d));box-shadow:0 4px 0 rgba(0,0,0,.28);text-align:center}
+.fcell small{display:block;font-size:.72rem;opacity:.9;font-weight:700}
+.fcell b{font-size:1.4rem}
+.fcell.blank b{letter-spacing:4px}
+
+/* match */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mc{font:inherit;font-weight:800;font-size:clamp(1rem,3.6vw,1.4rem);border:0;border-radius:16px;min-height:64px;cursor:pointer;
+  background:linear-gradient(135deg,#6366f1,#4338ca);color:#fff;box-shadow:0 5px 0 #312e81;transition:transform .15s}
+.mc.up{background:#fff;color:var(--ink);box-shadow:0 5px 0 #c7d2fe;transform:rotateY(0) scale(1.04)}
+.mc.hit{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;box-shadow:0 5px 0 #14532d;cursor:default;animation:pop .45s}
+.mc.v1{border-bottom:5px solid #67e8f9}
+
+/* builder */
+.ansline,.pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.ansline{min-height:70px;border:3px dashed #a5b4fc;border-radius:18px;padding:8px;background:#f5f3ff;margin-bottom:12px}
+.ansline .ph{color:#94a3b8;font-weight:700}
+.wd{font:inherit;font-weight:800;font-size:clamp(1.05rem,3.6vw,1.45rem);border:3px solid #a5b4fc;background:#fff;color:var(--ink);border-radius:14px;padding:6px 14px;cursor:pointer;box-shadow:0 4px 0 #a5b4fc}
+.wd:active{transform:translateY(2px)}
+.wd.col{background:var(--c);border-color:var(--c);color:var(--t,#fff);box-shadow:0 4px 0 var(--d)}
+.wd.gone{display:none}
+.wd.bad{background:#fecdd3;border-color:#fb7185;animation:shake .4s}
+.wd.mark{background:#fb7185;border-color:#be123c;color:#fff}
+
+/* quest steps */
+.qsent{display:flex;flex-wrap:wrap;gap:6px 8px;justify-content:center;align-items:center;margin:6px 0 12px}
+.lab{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;text-align:center;min-height:1em}
+.lab.on{color:var(--d)}
+.qchunk{display:flex;flex-direction:column;align-items:center;gap:3px}
+.qpic{font-size:3rem;text-align:center;line-height:1}
+.steps4{display:flex;gap:6px;justify-content:center;margin:2px 0 10px;flex-wrap:wrap}
+.steps4 span{font-weight:800;font-size:.85rem;border-radius:99px;padding:3px 12px;background:#e2e8f0;color:#64748b}
+.steps4 span.on{background:#fbbf24;color:#3b2300;box-shadow:0 3px 0 #b45309}
+.steps4 span.dn{background:#22c55e;color:#fff}
+.lvl{font:inherit;border:0;border-radius:22px;padding:16px 12px;cursor:pointer;color:#fff;text-align:center;box-shadow:0 7px 0 rgba(0,0,0,.35);transition:transform .12s}
+
+/* clip */
+.clip{padding:10px}
+.screen{position:relative;height:clamp(300px,52vw,380px);border-radius:18px;overflow:hidden;
+  background:radial-gradient(circle at 50% 120%,#4c1d95,#0f172a 60%);border:2px solid #4338ca}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px;text-align:center}
+.scene h2{font-family:'Bungee','Baloo 2',sans-serif;font-weight:400;font-size:clamp(1.3rem,5vw,2.4rem);margin:0;line-height:1.1}
+.scene p{margin:0;font-size:clamp(1rem,3.4vw,1.4rem);font-weight:700;color:#e0e7ff}
+.scene .big{font-size:clamp(2.6rem,10vw,4.6rem);line-height:1}
+.scene .note{font-size:clamp(.9rem,2.8vw,1.1rem);color:#a5b4fc}
+.segs{display:flex;gap:4px;margin:8px 0}
+.seg{flex:1;height:7px;border-radius:9px;background:#312e81;overflow:hidden}
+.seg i{display:block;height:100%;width:0;background:#fbbf24}
+.seg.dn i{width:100%}
+.seg.cur i{animation:fillseg linear forwards;animation-duration:var(--ms)}
+.paused .seg.cur i{animation-play-state:paused}
+@keyframes fillseg{to{width:100%}}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+.cbtn{font:inherit;font-size:1.2rem;border:0;border-radius:12px;background:#312e81;color:#fff;padding:4px 14px;cursor:pointer}
+.cbtn:hover{background:#4338ca}
+.cap{font-weight:700;color:#c7d2fe;font-size:.95rem}
+.endclip{position:absolute;inset:0;background:rgba(15,23,42,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;animation:fadein .4s}
+@keyframes fadein{from{opacity:0}}
+
+/* scene animations */
+.a-pop{animation:pop .5s both}
+.a-up{animation:up .6s both}
+.a-left{animation:fromleft .6s both}
+.a-right{animation:fromright .6s both}
+.a-zoom{animation:zoom .7s both}
+.a-float{animation:float 2.4s ease-in-out infinite}
+.a-wig{animation:wig 1.2s ease-in-out infinite}
+.a-flip{animation:flip .8s both}
+.d1{animation-delay:.3s}.d2{animation-delay:.9s}.d3{animation-delay:1.5s}.d4{animation-delay:2.1s}.d5{animation-delay:2.7s}.d6{animation-delay:3.3s}.d7{animation-delay:3.9s}
+@keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@keyframes fromleft{from{transform:translateX(-120px);opacity:0}}
+@keyframes fromright{from{transform:translateX(120px);opacity:0}}
+@keyframes zoom{from{transform:scale(2.6);opacity:0}}
+@keyframes float{50%{transform:translateY(-8px)}}
+@keyframes wig{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+@keyframes flip{from{transform:rotateY(90deg);opacity:0}}
+.hold{opacity:0}
+.timeline{width:94%;display:flex;align-items:center;gap:0;margin:4px 0}
+.tzone{flex:1;text-align:center;padding:8px 4px;font-weight:800;font-size:.9rem}
+.tz-past{background:linear-gradient(90deg,transparent,#fbbf2455);border-radius:12px 0 0 12px;color:#fde68a}
+.tz-fut{background:linear-gradient(90deg,#64748b33,transparent);border-radius:0 12px 12px 0;color:#94a3b8}
+.tnow{background:#22c55e;color:#fff;border-radius:50%;width:62px;height:62px;display:grid;place-items:center;font:400 .85rem 'Bungee',sans-serif;box-shadow:0 0 0 6px #22c55e44;flex:none}
+.tl-ago{display:flex;align-items:flex-end;justify-content:center;gap:0;width:100%;margin:6px 0}
+.tk{flex:1;max-width:96px;text-align:center;position:relative;border-top:4px solid #818cf8;padding-top:6px;font-size:.78rem;color:#a5b4fc;font-weight:800}
+.tk.ev{border-top-color:#fb7185;color:#fb7185}
+.tk.nw{border-top-color:#22c55e;color:#4ade80}
+.tk i{display:block;font-style:normal;font-size:1.5rem;line-height:1}
+.panel .tk{color:#6366f1}.panel .tk.ev{color:#e11d48}.panel .tk.nw{color:#15803d}
+.flipcard{perspective:600px;display:inline-block}
+.fc{background:#fff;color:var(--ink);border-radius:16px;padding:8px 14px;font-weight:800;font-size:clamp(1rem,3.4vw,1.4rem);box-shadow:0 5px 0 #6366f1;margin:4px;display:inline-block}
+.fc b{color:#e11d48}.fc i{font-style:normal;color:#15803d}.fc small{display:block;font-size:.7rem;color:#64748b;letter-spacing:.06em}
+.xmark{color:#fb7185;text-decoration:line-through;font-weight:800}
+.okmark{color:#4ade80;font-weight:800}
+.clockface{width:120px;height:120px;border-radius:50%;background:#fff;border:6px solid #fbbf24;position:relative;box-shadow:0 0 0 6px #fbbf2444}
+.clockface:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:#1e1b4b;z-index:3}
+.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:4px;background:#1e1b4b}
+.hand.h{width:5px;height:30px;margin-left:-2.5px}
+.hand.m{width:3px;height:44px;margin-left:-1.5px;background:#e11d48;animation:ccw 3s linear infinite}
+.hand.h{animation:ccw 36s linear infinite}
+@keyframes ccw{to{transform:rotate(-360deg)}}
+.ftab{border-collapse:separate;border-spacing:6px;font-size:clamp(.95rem,3.4vw,1.35rem);font-weight:800}
+.ftab th{font-family:'Bungee',sans-serif;font-weight:400;font-size:.8rem;padding:4px 10px;border-radius:10px}
+.ftab td{padding:5px 12px;border-radius:12px;background:#1e293b;animation:up .6s both}
+
+/* explorer */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.vt{font:inherit;font-weight:800;border:0;border-radius:14px;padding:8px 4px;cursor:pointer;background:#eef2ff;color:var(--ink);box-shadow:0 4px 0 #c7d2fe}
+.vt.reg{background:#dcfce7;box-shadow:0 4px 0 #86efac}
+.vt.seen{outline:3px solid #fbbf24}
+.vt.cur{background:#fbbf24;box-shadow:0 4px 0 #b45309}
+.vcard{border-radius:20px;background:linear-gradient(135deg,#312e81,#4c1d95);color:#fff;padding:14px;margin-bottom:12px;animation:pop .4s}
+.vrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.ex{border-radius:14px;padding:8px 12px;margin:6px 0;font-weight:700;font-size:1.1rem;line-height:1.3;background:rgba(255,255,255,.1);border-left:6px solid var(--c)}
+.ex small{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.ex b{background:var(--c);color:var(--t,#fff);padding:0 7px;border-radius:8px}
+
+.trophy{font-size:5rem;text-align:center;animation:bob 2s infinite}
+.big-score{text-align:center;font-size:1.4rem;font-weight:800}
+.rowc{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:50;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media (max-width:560px){.owl{font-size:42px}.mgrid{grid-template-columns:repeat(3,1fr)}.homebtn,.mutebtn{font-size:12px;padding:6px 10px}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<span class="gear g1">⚙️</span><span class="gear g2">⚙️</span><span class="gear g3">⚙️</span>
+<div class="beam"></div>
+<a class="homebtn" href="../index.html">🏠 Learning Hub</a>
+<button class="mutebtn" id="mutebtn" type="button">🔊 Sound on</button>
+<div class="wrap" id="app"></div>
+<script>
+/* ============================================================
+   HELPERS FOR CLIP SCENES
+   ============================================================ */
+const CH=(t,c,a='',d='')=>`<span class="chip r-${c} ${a} ${d}">${t}</span>`;
+const LINE=(...x)=>`<div class="sentence-line">${x.join('')}</div>`;
+const TL=(p='',f='')=>`<div class="timeline"><div class="tzone tz-past">⏪ PAST ${p}</div><div class="tnow">NOW</div><div class="tzone tz-fut">FUTURE ⏩ ${f}</div></div>`;
+const EQ=(a,s,r,d=1)=>`<div class="sentence-line a-up d${d}" style="font-size:clamp(1.1rem,3.6vw,1.6rem)">${CH(a,'obj')}${CH(s,'ago')}<b>➜</b>${CH(r,'past','a-zoom','d'+(d+1))}</div>`;
+const FC=(h,d)=>`<span class="fc a-flip d${d}">${h}</span>`;
+const TIP=(t)=>`<p class="note a-up d5">${t}</p>`;
+
+/* ============================================================
+   CLIPS  (short animated lessons)
+   ============================================================ */
+const CLIPS={};
+
+CLIPS[1]={title:'What is Past Simple?',scenes:[
+ {ms:4500,say:"Let's travel back in time! Today we learn the Past Simple.",h:`<div class="big a-zoom">⏰</div><h2 class="a-up d1" style="color:#fde68a">PAST SIMPLE</h2><p class="a-up d2">Let's travel back in time! ⏪</p>`},
+ {ms:6500,say:"Yesterday, I played football.",h:`${TL('','')}<div class="big a-left d1">🧒⚽</div>${LINE(CH('Yesterday','time','a-pop','d2'),CH('I','sub','a-pop','d3'),CH('played','past','a-pop','d4'),CH('football','obj','a-pop','d5'))}`},
+ {ms:5000,say:"We use the Past Simple for finished actions in the past.",h:`<div class="big a-pop">✅🏁</div><h2 class="a-up d1">Finished actions</h2><p class="a-up d2">It started. It finished. It's over!</p>`},
+ {ms:6500,say:"Use one. One finished action at a clear time. I watched a film last night.",h:`<h2 style="color:#fbbf24" class="a-up">Use 1 · One finished action</h2><div class="fc a-left d1">I <b>watched</b> a film <i>last night</i>.</div><div class="fc a-right d3">She <b>visited</b> Cairo <i>in 2019</i>.</div><div class="fc a-left d5">We <b>ate</b> pizza <i>yesterday</i>.</div>`},
+ {ms:7000,say:"Use two. A story. One action after another. I woke up. I ate breakfast. I took the bus.",h:`<h2 style="color:#22d3ee" class="a-up">Use 2 · A story</h2><div class="big"><span class="a-pop d1">🌅</span> <span class="a-pop d2">➜</span> <span class="a-pop d3">🍳</span> <span class="a-pop d4">➜</span> <span class="a-pop d5">🚌</span></div>${LINE(CH('I woke up.','past','a-up','d1'),CH('I ate breakfast.','past','a-up','d3'),CH('I took the bus.','past','a-up','d5'))}`},
+ {ms:6500,say:"Use three. How things were in the past. He was tired. We were happy. She lived in Alexandria.",h:`<h2 style="color:#f472b6" class="a-up">Use 3 · How things were</h2><div class="fc a-left d1">He <b>was</b> tired. 😴</div><div class="fc a-right d3">We <b>were</b> happy. 😄</div><div class="fc a-left d5">She <b>lived</b> in Alexandria. 🏖️</div>`},
+ {ms:6500,say:"Present: I play every day. Past: I played yesterday.",h:`<div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center"><div class="a-left d1" style="background:#14532d;border-radius:18px;padding:12px 16px"><div class="note" style="color:#86efac">▶️ PRESENT</div><p>I <b style="color:#4ade80">play</b> every day.</p></div><div class="a-right d3" style="background:#78350f;border-radius:18px;padding:12px 16px"><div class="note" style="color:#fde68a">⏪ PAST</div><p>I <b style="color:#fbbf24">played</b> yesterday.</p></div></div>`},
+ {ms:4500,say:"Finished action. Past time. The verb changes. Now let's learn how!",h:`<h2 class="a-pop" style="color:#fde68a">Remember</h2><p class="a-up d1">✔ finished action</p><p class="a-up d2">✔ past time clue</p><p class="a-up d3">✔ the verb changes</p>`}
+]};
+
+CLIPS[2]={title:'Regular Verbs',scenes:[
+ {ms:4500,say:"Regular verbs. Just add E D!",h:`<div class="big a-pop">📘➕</div><h2 class="a-up d1" style="color:#fde68a">REGULAR VERBS</h2><p class="a-up d2">Just add ${CH('-ed','ago')}</p>`},
+ {ms:7500,say:"Rule one. Most verbs, just add E D. Walk, walked. Play, played. Clean, cleaned.",h:`<h2 style="color:#fbbf24">Rule 1 · Most verbs: +ed</h2>${EQ('walk','+ed','walked',1)}${EQ('play','+ed','played',2)}${EQ('clean','+ed','cleaned',3)}${EQ('watch','+ed','watched',4)}`},
+ {ms:6500,say:"Rule two. If the verb ends with E, add only D. Like, liked. Dance, danced.",h:`<h2 style="color:#22d3ee">Rule 2 · Ends in -e: +d</h2>${EQ('like','+d','liked',1)}${EQ('dance','+d','danced',2)}${EQ('live','+d','lived',3)}`},
+ {ms:8000,say:"Rule three. Consonant plus Y. Change Y to I E D. Study, studied. Cry, cried. But vowel plus Y just add E D. Play, played.",h:`<h2 style="color:#f472b6">Rule 3 · consonant + y ➜ ied</h2>${EQ('study','y ➜ ied','studied',1)}${EQ('cry','y ➜ ied','cried',2)}${EQ('try','y ➜ ied','tried',3)}<p class="note a-up d5">But vowel + y: just +ed ➜ play<b>ed</b>, enjoy<b>ed</b></p>`},
+ {ms:7500,say:"Rule four. One vowel and one consonant. Double the last letter. Stop, stopped. Plan, planned.",h:`<h2 style="color:#a78bfa">Rule 4 · short verbs: double it!</h2>${EQ('stop','+p+ed','stopped',1)}${EQ('plan','+n+ed','planned',2)}${EQ('hug','+g+ed','hugged',3)}<p class="note a-up d5">Two vowels? No double ➜ clean<b>ed</b></p>`},
+ {ms:8000,say:"The E D ending has three sounds. T as in walked. D as in played. And I D as in wanted.",h:`<h2 style="color:#fde68a">3 sounds of -ed 🔊</h2><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><div class="a-up d1" style="background:#0e7490;border-radius:16px;padding:10px 16px"><div class="big" style="font-size:2rem">/t/</div><p>walked<br>helped</p></div><div class="a-up d3" style="background:#9d174d;border-radius:16px;padding:10px 16px"><div class="big" style="font-size:2rem">/d/</div><p>played<br>cleaned</p></div><div class="a-up d5" style="background:#b45309;border-radius:16px;padding:10px 16px"><div class="big" style="font-size:2rem">/ɪd/</div><p>wanted<br>needed</p></div></div>`},
+ {ms:5500,say:"Four rules. Plus ed. Plus d. Y to I E D. And double the letter. You are ready to play!",h:`<h2 class="a-pop" style="color:#fde68a">4 rules to remember</h2>${LINE(CH('1 · +ed','ago','a-pop','d1'),CH('2 · +d','did','a-pop','d2'),CH('3 · y➜ied','wh','a-pop','d3'),CH('4 · double','base','a-pop','d4'))}`}
+]};
+
+CLIPS[3]={title:'Irregular Verbs',scenes:[
+ {ms:4500,say:"Irregular verbs. No E D! They change.",h:`<div class="big a-pop">🎭</div><h2 class="a-up d1" style="color:#fde68a">IRREGULAR VERBS</h2><p class="a-up d2">No -ed! They change ✨</p>`},
+ {ms:7000,say:"Go, went. Eat, ate. See, saw.",h:`<h2 style="color:#fbbf24">They change completely!</h2><div>${FC('go ➜ <b>went</b>',1)}${FC('eat ➜ <b>ate</b>',3)}${FC('see ➜ <b>saw</b>',5)}</div>`},
+ {ms:8000,say:"Have, had. Make, made. Buy, bought. Take, took. Write, wrote. Come, came.",h:`<h2 style="color:#22d3ee">More changers</h2><div>${FC('have ➜ <b>had</b>',1)}${FC('make ➜ <b>made</b>',2)}${FC('buy ➜ <b>bought</b>',3)}${FC('take ➜ <b>took</b>',4)}${FC('write ➜ <b>wrote</b>',5)}${FC('come ➜ <b>came</b>',6)}</div>`},
+ {ms:6500,say:"Some verbs stay the same. Cut, put, hit. And read, which sounds like red.",h:`<h2 style="color:#f472b6">Same shape!</h2><div>${FC('cut ➜ <b>cut</b>',1)}${FC('put ➜ <b>put</b>',2)}${FC('hit ➜ <b>hit</b>',3)}${FC('read ➜ <b>read</b> /red/',4)}</div>`},
+ {ms:6500,say:"Never say goed, eated or buyed. Say went, ate and bought.",h:`<h2 style="color:#fde68a">Be careful!</h2><p class="a-up d1"><span class="xmark">goed</span> ✖ &nbsp; <span class="okmark">went ✔</span></p><p class="a-up d2"><span class="xmark">eated</span> ✖ &nbsp; <span class="okmark">ate ✔</span></p><p class="a-up d3"><span class="xmark">buyed</span> ✖ &nbsp; <span class="okmark">bought ✔</span></p>`},
+ {ms:4500,say:"Tip. Learn three verbs every day! Now let's play.",h:`<div class="big a-pop">💪</div><h2 class="a-up d1" style="color:#fde68a">Learn 3 verbs every day!</h2><p class="a-up d2">Then play the games 🎮</p>`}
+]};
+
+CLIPS[4]={title:'Did & Didn\'t',scenes:[
+ {ms:4500,say:"Did and didn't. The past helpers!",h:`<div class="big a-pop">🤝</div><h2 class="a-up d1" style="color:#22d3ee">DID &amp; DIDN'T</h2><p class="a-up d2">The past helpers</p>`},
+ {ms:8000,say:"Negative. Subject, didn't, base verb. She didn't visit her uncle.",h:`<h2 style="color:#fb7185">Negative ❌</h2>${LINE(CH('Subject','sub','a-pop','d1'),'<b>+</b>',CH("didn't",'did','a-pop','d2'),'<b>+</b>',CH('BASE verb','base','a-pop','d3'))}${LINE(CH('She','sub','a-up','d4'),CH("didn't",'did','a-up','d4'),CH('visit','base','a-up','d5'),CH('her uncle.','obj','a-up','d5'))}`},
+ {ms:6500,say:"After didn't, use the base verb. Not visited. Did already shows the past.",h:`<h2 style="color:#fde68a">Careful!</h2><p class="a-up d1">❌ She didn't <span class="xmark">visited</span></p><p class="a-up d2">✅ She didn't <span class="okmark">visit</span></p><p class="note a-up d3">"didn't" already shows the past — the verb stays BASE!</p>`},
+ {ms:7500,say:"Questions. Did, subject, base verb. Did you see the film?",h:`<h2 style="color:#4ade80">Questions ❓</h2>${LINE(CH('Did','did','a-pop','d1'),CH('subject','sub','a-pop','d2'),CH('BASE verb','base','a-pop','d3'),'<b>…?</b>')}${LINE(CH('Did','did','a-up','d4'),CH('you','sub','a-up','d4'),CH('see','base','a-up','d5'),CH('the film?','obj','a-up','d5'))}`},
+ {ms:6500,say:"Short answers. Yes, I did. No, I didn't.",h:`<h2 style="color:#fde68a">Short answers</h2><div class="fc a-left d1">Did you eat? 🍕</div><div class="fc a-right d3" style="box-shadow:0 5px 0 #15803d">✅ Yes, I <b>did</b>.</div><div class="fc a-right d5" style="box-shadow:0 5px 0 #be123c">❌ No, I <b>didn't</b>.</div>`},
+ {ms:8000,say:"Wh questions. Where did you go? What did she buy? When did they arrive?",h:`<h2 style="color:#f472b6">Wh- questions</h2>${LINE(CH('Where','wh','a-up','d1'),CH('did','did','a-up','d1'),CH('you','sub','a-up','d1'),CH('go?','base','a-up','d1'))}${LINE(CH('What','wh','a-up','d3'),CH('did','did','a-up','d3'),CH('she','sub','a-up','d3'),CH('buy?','base','a-up','d3'))}${LINE(CH('When','wh','a-up','d5'),CH('did','did','a-up','d5'),CH('they','sub','a-up','d5'),CH('arrive?','base','a-up','d5'))}`},
+ {ms:5500,say:"Remember. Did and didn't, then base verb.",h:`<h2 class="a-pop" style="color:#fde68a">Remember</h2><p class="a-up d1">I <b style="color:#22d3ee">didn't</b> play.</p><p class="a-up d2"><b style="color:#22d3ee">Did</b> you play?</p><p class="a-up d3">Yes, I <b style="color:#22d3ee">did</b>.</p>`}
+]};
+
+CLIPS[5]={title:'Time Words',scenes:[
+ {ms:4500,say:"Time words. Clues for the Past Simple!",h:`<div class="big a-pop">📅</div><h2 class="a-up d1" style="color:#4ade80">TIME WORDS</h2><p class="a-up d2">Clues for the Past Simple</p>`},
+ {ms:7000,say:"Yesterday. Last night. Last week. Last year.",h:`<h2 style="color:#fbbf24">yesterday &amp; last …</h2>${LINE(CH('yesterday','time','a-pop','d1'),CH('yesterday morning','time','a-pop','d2'))}${LINE(CH('last night','time','a-pop','d3'),CH('last week','time','a-pop','d4'),CH('last year','time','a-pop','d5'))}`},
+ {ms:7000,say:"In 2019. In May. On Monday. At seven o'clock.",h:`<h2 style="color:#22d3ee">in · on · at</h2>${LINE(CH('in 2019','time','a-pop','d1'),CH('in May','time','a-pop','d2'))}${LINE(CH('on Monday','time','a-pop','d3'),CH('at 7 o\'clock','time','a-pop','d4'))}${TIP('with a finished action in the past')}`},
+ {ms:7500,say:"For stories. First. Then. After that. Finally. And, when I was little.",h:`<h2 style="color:#f472b6">Story words 📖</h2>${LINE(CH('First,','did','a-pop','d1'),CH('Then,','did','a-pop','d2'),CH('After that,','did','a-pop','d3'),CH('Finally,','did','a-pop','d4'))}${LINE(CH('When I was little,','time','a-up','d5'))}`},
+ {ms:5500,say:"A special time word is ago. Two days ago. An hour ago. We have a special station for it!",h:`<div class="big a-zoom">⏪</div><h2 class="a-up d1" style="color:#fb7185">AGO</h2><p class="a-up d2">two days ago · an hour ago</p><p class="note a-up d3">Special station coming up!</p>`},
+ {ms:6000,say:"These words are not past. Tomorrow, next week, every day, now. Use other tenses.",h:`<h2 style="color:#fb7185">NOT Past Simple ❌</h2>${LINE(CH('tomorrow','ago','a-pop','d1'),CH('next week','ago','a-pop','d2'),CH('every day','ago','a-pop','d3'),CH('now','ago','a-pop','d4'))}${TIP('Use other tenses with these words')}`}
+]};
+
+CLIPS[6]={title:'AGO!',scenes:[
+ {ms:5500,say:"Ago. Ago means back from now.",h:`<div class="clockface a-zoom"><span class="hand h"></span><span class="hand m"></span></div><h2 class="a-up d1" style="color:#fb7185">AGO ⏪</h2><p class="a-up d2">Ago means: BACK from NOW</p>`},
+ {ms:8500,say:"Ago counts back from now. One day, two days, three days ago.",h:`<h2 style="color:#fbbf24">Count back from NOW</h2><div class="tl-ago"><div class="tk ev a-pop d1"><i>🎉</i>3 days<br>ago</div><div class="tk a-pop d2">2</div><div class="tk a-pop d3">1</div><div class="tk nw a-pop d4"><i>📍</i>NOW</div></div>${LINE(CH('three days ago','ago','a-zoom','d5'))}`},
+ {ms:9000,say:"The pattern. Number, time unit, ago. Five minutes ago. Two hours ago. Three days ago. Four weeks ago. Six months ago. Ten years ago.",h:`<h2 style="color:#fde68a">number + time + AGO</h2>${LINE(CH('5','time','a-pop','d1'),CH('minutes','time','a-pop','d1'),CH('ago','ago','a-pop','d1'))}<div class="sentence-line" style="font-size:1.1rem">${CH('2 hours ago','time','a-up','d2')}${CH('3 days ago','time','a-up','d3')}${CH('4 weeks ago','time','a-up','d4')}${CH('6 months ago','time','a-up','d5')}${CH('10 years ago','time','a-up','d6')}</div>`},
+ {ms:8000,say:"Ago comes after the time. Two years ago. Not ago two years. I met him two years ago. Or, two years ago, I met him.",h:`<h2 style="color:#22d3ee">Where does ago go?</h2><p class="a-up d1"><span class="okmark">✔ two years ago</span> &nbsp; <span class="xmark">ago two years</span></p><div class="fc a-left d3">I met him <b>two years ago</b>.</div><div class="fc a-right d5"><b>Two years ago</b>, I met him.</div>`},
+ {ms:8000,say:"Use ago with the Past Simple. She went home ten minutes ago. Not goes. Not will go.",h:`<h2 style="color:#f472b6">ago + Past Simple</h2><div class="fc a-left d1" style="box-shadow:0 5px 0 #15803d">✅ She <b>went</b> home ten minutes ago.</div><div class="fc a-right d3" style="box-shadow:0 5px 0 #be123c">❌ She <span class="xmark">goes</span> home ten minutes ago.</div><div class="fc a-left d5" style="box-shadow:0 5px 0 #be123c">❌ She <span class="xmark">will go</span> home ten minutes ago.</div>`},
+ {ms:7000,say:"Use ago or last. Not both. Last week. Or, a week ago.",h:`<h2 style="color:#a78bfa">ago OR last — not both!</h2><p class="a-up d1"><span class="okmark">✔ last week</span></p><p class="a-up d2"><span class="okmark">✔ a week ago</span></p><p class="a-up d3"><span class="xmark">last week ago</span> ✖</p>`},
+ {ms:9000,say:"For tells us how long. I lived in Rome for three years. Ago tells us when. I left Rome three years ago.",h:`<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center"><div class="a-left d1" style="background:#0e7490;border-radius:18px;padding:12px 16px;max-width:300px"><div class="big" style="font-size:2.4rem">⏳</div><b>FOR = how long</b><p>I lived in Rome <b style="color:#67e8f9">for</b> three years.</p></div><div class="a-right d3" style="background:#9f1239;border-radius:18px;padding:12px 16px;max-width:300px"><div class="big" style="font-size:2.4rem">⏪</div><b>AGO = when</b><p>I left Rome three years <b style="color:#fda4af">ago</b>.</p></div></div>`},
+ {ms:6500,say:"Ago checklist. Number and unit. Ago after the time. Past Simple verb. Not with last.",h:`<h2 class="a-pop" style="color:#fde68a">AGO checklist</h2><p class="a-up d1">✔ number + time unit + ago</p><p class="a-up d2">✔ ago comes AFTER the time</p><p class="a-up d3">✔ Past Simple verb</p><p class="a-up d4">✔ never "last … ago"</p>`}
+]};
+
+CLIPS[7]={title:'Build It: 4 Steps',scenes:[
+ {ms:4500,say:"Let's build Past Simple sentences in four steps!",h:`<div class="big a-pop">🧱</div><h2 class="a-up d1" style="color:#fde68a">BUILD IT!</h2><p class="a-up d2">4 steps to a perfect sentence</p>`},
+ {ms:6500,say:"Step one. Find the time clue.",h:`<h2 style="color:#4ade80">① Find the time clue ⏰</h2>${LINE(CH('Tom','sub'),CH('visit','base'),CH('his grandma','obj'),CH('two days ago','ago','a-zoom','d2'))}${TIP('ago, yesterday, last … = PAST!')}`},
+ {ms:6500,say:"Step two. Choose the type. Regular, irregular, or did and didn't.",h:`<h2 style="color:#fbbf24">② Choose the type 🧩</h2>${LINE(CH('regular +ed','past','a-pop','d1'),CH('irregular','pp','a-pop','d2'),CH("did / didn't",'did','a-pop','d3'))}`},
+ {ms:6500,say:"Step three. Make the verb. Visit, visited. Go, went. After did, use the base verb.",h:`<h2 style="color:#f472b6">③ Make the verb ✨</h2>${EQ('visit','+ed','visited',1)}${EQ('go','change','went',2)}<p class="note a-up d4">After did / didn't ➜ base verb</p>`},
+ {ms:7000,say:"Step four. Build the sentence! Tom visited his grandma two days ago.",h:`<h2 style="color:#22d3ee">④ Build the sentence 🧱</h2>${LINE(CH('Tom','sub','a-up','d1'),CH('visited','past','a-up','d2'),CH('his grandma','obj','a-up','d3'),CH('two days ago.','ago','a-up','d4'))}${TIP('Levels 3 and 4 use did / didn\'t too!')}`}
+]};
+
+CLIPS[8]={title:'PP – Past Participle',scenes:[
+ {ms:5000,say:"P P. The past participle. The third form of the verb.",h:`<div class="big a-zoom" style="font-family:Bungee">V3</div><h2 class="a-up d1" style="color:#fb923c">PP = PAST PARTICIPLE</h2><p class="a-up d2">The 3rd form of the verb</p>`},
+ {ms:8500,say:"Every verb has three forms. Base, past simple, and past participle. Play, played, played. Go, went, gone. Eat, ate, eaten.",h:`<h2 style="color:#fde68a">3 forms of every verb</h2><table class="ftab"><tr><th style="background:#a21caf">V1 BASE</th><th style="background:#b45309">V2 PAST</th><th style="background:#c2410c">V3 PP</th></tr><tr><td style="animation-delay:.4s">play</td><td style="animation-delay:.6s">played</td><td style="animation-delay:.8s">played</td></tr><tr><td style="animation-delay:1.8s">go</td><td style="animation-delay:2s">went</td><td style="animation-delay:2.2s;color:#fb923c">gone</td></tr><tr><td style="animation-delay:3.2s">eat</td><td style="animation-delay:3.4s">ate</td><td style="animation-delay:3.6s;color:#fb923c">eaten</td></tr></table>`},
+ {ms:7000,say:"Regular verbs are easy. V two and V three are the same. Just add E D.",h:`<h2 style="color:#4ade80">Regular verbs: V2 = V3 🎉</h2><table class="ftab"><tr><td style="animation-delay:.4s">walk</td><td style="animation-delay:.6s">walked</td><td style="animation-delay:.8s;color:#fb923c">walked</td></tr><tr><td style="animation-delay:1.6s">clean</td><td style="animation-delay:1.8s">cleaned</td><td style="animation-delay:2s;color:#fb923c">cleaned</td></tr><tr><td style="animation-delay:2.8s">visit</td><td style="animation-delay:3s">visited</td><td style="animation-delay:3.2s;color:#fb923c">visited</td></tr></table>${TIP('No extra work!')}`},
+ {ms:10000,say:"Irregular verbs make patterns. Cut, cut, cut. Buy, bought, bought. See, saw, seen. Come, came, come.",h:`<h2 style="color:#fb923c">Irregular patterns</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:96%"><div class="fc a-pop d1" style="font-size:1rem"><small>A-A-A</small>cut · cut · cut</div><div class="fc a-pop d3" style="font-size:1rem"><small>A-B-B</small>buy · bought · bought</div><div class="fc a-pop d5" style="font-size:1rem"><small>A-B-C</small>see · saw · <b>seen</b></div><div class="fc a-pop d6" style="font-size:1rem"><small>A-B-A</small>come · came · come</div></div>`},
+ {ms:7000,say:"The past simple alone uses V two. Yesterday I saw a lion. No helper!",h:`<h2 style="color:#fbbf24">V2 → Past Simple (alone)</h2>${LINE(CH('I','sub','a-pop','d1'),CH('saw','past','a-pop','d2'),CH('a lion','obj','a-pop','d3'),CH('yesterday.','time','a-pop','d4'))}${TIP('No helper word before the verb')}`},
+ {ms:10000,say:"V three always needs a helper. Have seen. Was seen. Had eaten.",h:`<h2 style="color:#fb923c">V3 → needs a helper!</h2><div class="fc a-left d1">I <b style="background:#22d3ee;color:#022c36;padding:0 6px;border-radius:7px">have</b> <b>seen</b> a lion.</div><div class="fc a-right d3">The lion <b style="background:#a78bfa;color:#fff;padding:0 6px;border-radius:7px">was</b> <b>seen</b> by the kids.</div><div class="fc a-left d5">She <b style="background:#22d3ee;color:#022c36;padding:0 6px;border-radius:7px">had</b> <b>eaten</b> before we came.</div>`},
+ {ms:7500,say:"Saw can stand alone. Seen cannot! I saw it. I have seen it. But never, I seen it.",h:`<h2 style="color:#fde68a">saw vs seen</h2><p class="a-up d1"><span class="okmark">✔ I saw it.</span></p><p class="a-up d2"><span class="okmark">✔ I have seen it.</span></p><p class="a-up d3"><span class="xmark">I seen it.</span> ✖</p>`},
+ {ms:8000,say:"The P P is the key to passive voice. Is, are, was, were, plus P P. The kids ate the cake. The cake was eaten by the kids.",h:`<h2 style="color:#a78bfa">PP = key to PASSIVE 🚀</h2>${LINE(CH('is / are / was / were','did','a-pop','d1'),'<b>+</b>',CH('PP','pp','a-pop','d2'))}<div class="fc a-left d3">Kids <b>ate</b> the cake.</div><div class="fc a-right d5">The cake <b>was eaten</b> by the kids.</div>`},
+ {ms:5000,say:"Remember. V one, V two, V three. Now explore lots of examples!",h:`<h2 class="a-pop" style="color:#fde68a">PP checklist</h2><p class="a-up d1">✔ 3 forms: V1 – V2 – V3</p><p class="a-up d2">✔ regular: V2 = V3</p><p class="a-up d3">✔ V3 needs a helper</p>`}
+]};
+
+/* ============================================================
+   PRACTICE DATA
+   ============================================================ */
+const B={}; // banks (used by Boss too)
+
+/* 1A  Now or Then?  (sort) */
+const PAST_B='⏪ Past', PRES_B='▶️ Present';
+B.s1a=[
+ ['I played football yesterday.',PAST_B],['She plays the piano every day.',PRES_B],['We visited Cairo last summer.',PAST_B],
+ ['He is eating lunch now.',PRES_B],['They watched a film last night.',PAST_B],['My dad drinks tea every morning.',PRES_B],
+ ['I cleaned my room two hours ago.',PAST_B],['Our teacher helps us at school.',PRES_B],['Mona ate pizza on Saturday.',PAST_B],
+ ['The baby sleeps in the afternoon.',PRES_B],['We went to the zoo yesterday.',PAST_B],['I like pizza.',PRES_B]
+].map(([q,a])=>({q,a,why:a===PAST_B?'Finished action + past time clue = Past Simple.':'This is happening now or every day — Present.'}));
+
+/* 1B  Which one is Past Simple? */
+const WHY1='Past Simple = a finished action in the past.';
+B.s1b=[
+ [['I walked to school.','I walk to school.','I am walking to school.']],
+ [['She watched TV.','She watches TV.','She will watch TV.']],
+ [['We played outside.','We play outside.','We are playing outside.']],
+ [['He lived in Giza.','He lives in Giza.','He is living in Giza.']],
+ [['They cooked dinner.','They cook dinner.','They are cooking dinner.']],
+ [['I went to bed early.','I go to bed early.','I will go to bed early.']],
+ [['She helped her mum.','She helps her mum.','She is helping her mum.']],
+ [['We ate pizza.','We eat pizza.','We are eating pizza.']]
+].map(([o])=>({q:'Choose the <b>Past Simple</b> sentence.',o,a:o[0],why:WHY1}));
+
+/* 2A  Spelling Lab */
+const R1='Most verbs: just add -ed.',R2='Ends in -e: add only -d.',R3='Consonant + y: change y to -ied.',R4='One vowel + one consonant: double the last letter.',R5='Vowel + y: just add -ed.',R6='Two vowels: do NOT double the letter.';
+B.s2a=[
+ ['walk',['walked','walkd','walkt'],R1],['like',['liked','likeed','liket'],R2],['study',['studied','studyed','studdied'],R3],
+ ['stop',['stopped','stoped','stopted'],R4],['play',['played','plaied','playd'],R5],['cry',['cried','cryed','criyed'],R3],
+ ['dance',['danced','danceed','dancied'],R2],['plan',['planned','planed','plannd'],R4],['enjoy',['enjoyed','enjoied','enjoid'],R5],
+ ['clean',['cleaned','cleanned','cleand'],R6],['try',['tried','tryed','triyed'],R3],['hug',['hugged','huged','hugd'],R4]
+].map(([v,o,why])=>({q:`Past of <b>${v}</b> ?`,o,a:o[0],why:`${why}  ${v} ➜ ${o[0]}`}));
+
+/* 2B  Type it – regular */
+B.s2b=[['jump','jumped'],['help','helped'],['open','opened'],['smile','smiled'],['carry','carried'],['drop','dropped'],
+ ['wash','washed'],['love','loved'],['copy','copied'],['shop','shopped'],['wait','waited'],['tidy','tidied']]
+ .map(([v,p])=>({q:`<small>Write the Past Simple of</small><b>${v}</b>`,a:[p],show:p}));
+
+/* 2C  Sound sorter */
+const T_B='/t/',D_B='/d/',ID_B='/ɪd/';
+B.s2c=[['walked',T_B],['helped',T_B],['washed',T_B],['jumped',T_B],['asked',T_B],['played',D_B],['cleaned',D_B],['opened',D_B],['called',D_B],
+ ['loved',D_B],['wanted',ID_B],['needed',ID_B],['visited',ID_B],['painted',ID_B],['waited',ID_B],['started',ID_B]]
+ .map(([q,a])=>({q:`<span style="font-size:1.4em">${q}</span>`,a,say:q,why:a===ID_B?'After t or d → say /ɪd/ (an extra syllable).':a===T_B?'After p, k, s, sh, ch → say /t/.':'After other sounds → say /d/.'}));
+
+/* 3A  Memory match rounds */
+B.s3a=[
+ [['go','went'],['eat','ate'],['see','saw'],['have','had'],['make','made'],['buy','bought']],
+ [['take','took'],['write','wrote'],['drink','drank'],['swim','swam'],['run','ran'],['come','came']],
+ [['give','gave'],['sit','sat'],['get','got'],['find','found'],['know','knew'],['speak','spoke']]
+];
+
+/* 3B  Irregular rocket */
+B.s3b=[
+ ['go',['went','goed','gone']],['eat',['ate','eated','eaten']],['see',['saw','seed','seen']],['have',['had','haved','has']],
+ ['make',['made','maked','make']],['buy',['bought','buyed','brought']],['take',['took','taked','taken']],['write',['wrote','writed','written']],
+ ['drink',['drank','drinked','drunk']],['swim',['swam','swimmed','swum']],['run',['ran','runned','run']],['come',['came','comed','come']]
+].map(([v,o])=>({q:`Past Simple of <b>${v}</b> ?`,o,a:o[0],why:`${v} ➜ ${o[0]}  (irregular — learn it!)`}));
+
+/* 3C  Type it – irregular */
+B.s3c=[['sing','sang'],['give','gave'],['sit','sat'],['get','got'],['find','found'],['know','knew'],['tell','told'],['say','said'],
+ ['speak','spoke'],['bring','brought'],['sleep','slept'],['cut','cut']]
+ .map(([v,p])=>({q:`<small>Write the Past Simple of</small><b>${v}</b>`,a:[p],show:p}));
+
+/* 4A  Sentence builder – did / didn't */
+B.s4a=[
+ {w:['She',"didn't",'visit','her uncle','yesterday.'],c:['sub','did','base','obj','time'],pic:'👨‍👧'},
+ {w:['Did','you','see','Mona','yesterday?'],c:['did','sub','base','obj','time'],pic:'👭'},
+ {w:['We',"didn't",'go','to school','last Saturday.'],c:['sub','did','base','obj','time'],pic:'🏫'},
+ {w:['Did','they','play','football','last night?'],c:['did','sub','base','obj','time'],pic:'⚽'},
+ {w:['He',"didn't",'buy','a new bag.'],c:['sub','did','base','obj'],pic:'🎒'},
+ {w:['Where','did','you','go','last summer?'],c:['wh','did','sub','base','time'],pic:'🏖️'},
+ {w:['What','did','she','eat','for lunch?'],c:['wh','did','sub','base','obj'],pic:'🍱'},
+ {w:['They',"didn't",'clean','the kitchen','yesterday.'],c:['sub','did','base','obj','time'],pic:'🧽'},
+ {w:['Did','Omar','finish','his homework','last night?'],c:['did','sub','base','obj','time'],pic:'📚'},
+ {w:['When','did','they','arrive','at the hotel?'],c:['wh','did','sub','base','obj'],pic:'🏨'}
+].map(x=>({...x,hint:"Start with the question word or the subject. After did/didn't, use the BASE verb."}));
+
+/* 4B  Did / Didn't doctor */
+const WHY4='After did / didn\'t → use the BASE verb.';
+B.s4b=[
+ ['She didn\'t ___ to school yesterday.',['go','went','goes'],WHY4],
+ ['___ you watch TV last night?',['Did','Do','Does'],'Past question → start with Did.'],
+ ['We didn\'t ___ pizza yesterday.',['eat','ate','eaten'],WHY4],
+ ['Did he ___ his homework?',['finish','finished','finishes'],WHY4],
+ ['I ___ see the film yesterday.',['didn\'t','don\'t','doesn\'t'],'Past negative → didn\'t.'],
+ ['Where ___ she go last week?',['did','does','do'],'Past question → did.'],
+ ['They didn\'t ___ me last night.',['call','called','calls'],WHY4],
+ ['Did your sister ___ the cake?',['make','made','makes'],WHY4],
+ ['Did you clean your room? — Yes, I ___.',['did','do','cleaned'],'Short answer: Yes, I did.'],
+ ['Did Ali play? — No, he ___.',['didn\'t','doesn\'t','wasn\'t'],'Short answer: No, he didn\'t.'],
+ ['What ___ you buy yesterday?',['did','do','were'],'Past Wh- question → did.'],
+ ['He didn\'t ___ the soup.',['like','liked','likes'],WHY4]
+].map(([q,o,why])=>({q,o,a:o[0],why}));
+
+/* 4C  Spot the mistake – did */
+B.s4c=[
+ {w:['She',"didn't",'visited','her','uncle.'],bad:[2],fix:"She didn't visit her uncle.",why:"After didn't → base verb (visit)."},
+ {w:['Did','you','saw','the','film?'],bad:[2],fix:'Did you see the film?',why:'After Did → base verb (see).'},
+ {w:['We',"didn't",'went','to','the','park.'],bad:[2],fix:"We didn't go to the park.",why:"After didn't → base verb (go)."},
+ {w:['Do','they','play','football','yesterday?'],bad:[0],fix:'Did they play football yesterday?',why:'Yesterday = past → Did.'},
+ {w:['He','not','eat','breakfast','yesterday.'],bad:[1],fix:"He didn't eat breakfast yesterday.",why:"Past negative = didn't + base verb."},
+ {w:['Where','did','she','went','yesterday?'],bad:[3],fix:'Where did she go yesterday?',why:'After did → base verb (go).'},
+ {w:['I',"didn't",'bought','a','bag.'],bad:[2],fix:"I didn't buy a bag.",why:"After didn't → base verb (buy)."},
+ {w:['Did','he','finished','his','work?'],bad:[2],fix:'Did he finish his work?',why:'After Did → base verb (finish).'}
+];
+
+/* 5A  Time word sorter */
+const PT_B='⏪ Past time word',NP_B='❌ Not past';
+B.s5a=[['yesterday',PT_B],['tomorrow',NP_B],['last week',PT_B],['next year',NP_B],['every day',NP_B],['two years ago',PT_B],['in 2010',PT_B],['now',NP_B],
+ ['last night',PT_B],['at the moment',NP_B],['when I was little',PT_B],['usually',NP_B],['last summer',PT_B],['soon',NP_B]]
+ .map(([q,a])=>({q:`<span style="font-size:1.3em">${q}</span>`,a,why:a===PT_B?`"${q}" tells us it is finished — use Past Simple.`:`"${q}" is not a past time word.`}));
+
+/* 5B  Choose the time word */
+B.s5b=[
+ ['I watched a movie ___.',['last night','tomorrow','every day']],
+ ['She was born ___ 2015.',['in','on','at']],
+ ['We played tennis ___.',['yesterday','next week','tomorrow']],
+ ['He called me ten minutes ___.',['ago','last','next']],
+ ['They moved here ___ year.',['last','ago','next']],
+ ['___ I was little, I lived in Alexandria.',['When','Tomorrow','Always']],
+ ['I met her ___ Monday.',['on','in','at']],
+ ['First I woke up. ___ I ate breakfast.',['Then','Tomorrow','Never']],
+ ['We ate pizza two weeks ___.',['ago','last','yesterday']],
+ ['I didn\'t see him ___ night.',['last','ago','tomorrow']]
+].map(([q,o])=>({q,o,a:o[0],why:'These words fit a finished action in the past.'}));
+
+/* 6A  AGO calculator  – timeline picture */
+const TKL=(n,unit)=>{let h='<div class="tl-ago">';const m=Math.min(n,6);
+  h+=`<div class="tk ev"><i>🎉</i>then</div>`;for(let i=1;i<m;i++)h+=`<div class="tk">${n>6&&i===2?'···':''}</div>`;
+  h+=`<div class="tk nw"><i>📍</i>NOW</div></div><div style="text-align:center;font-weight:800;color:#6366f1;margin-bottom:6px">⏪ ${n} ${unit}${n>1?'s':''} back</div>`;return h};
+B.s6a=[
+ ['It\'s Friday. Mia\'s party was on Monday.',4,'day',['four days ago','two days ago','in four days']],
+ ['It\'s 10:00 now. Ali left at 7:00.',3,'hour',['three hours ago','three hours later','in three hours']],
+ ['It\'s June. Dina travelled in March.',3,'month',['three months ago','six months ago','in three months']],
+ ['It\'s 2:30. The bell rang at 2:25.',5,'minute',['five minutes ago','ten minutes ago','in five minutes']],
+ ['It\'s the 20th of May. The test was on the 6th of May.',2,'week',['two weeks ago','two days ago','in two weeks']],
+ ['Today is Thursday. The trip was on Tuesday.',2,'day',['two days ago','three days ago','in two days']],
+ ['It\'s 2026. The school was built in 2016.',10,'year',['ten years ago','six years ago','in ten years']],
+ ['It\'s 9:00 p.m. Dad cooked dinner at 6:00 p.m.',3,'hour',['three hours ago','three hours later','in three hours']],
+ ['It\'s July. Sara\'s birthday was in January.',6,'month',['six months ago','four months ago','in six months']],
+ ['It\'s 11:15. The film started at 11:00.',15,'minute',['fifteen minutes ago','five minutes ago','in fifteen minutes']]
+].map(([s,n,u,o])=>({q:`<small>${s}</small>${TKL(n,u)}When did it happen?`,o,a:o[0],why:`Count back ${n} ${u}${n>1?'s':''} from NOW ➜ ${o[0]}.`}));
+
+/* 6B  Ago builder */
+B.s6b=[
+ {w:['I','visited','my grandma','two days ago.'],c:['sub','past','obj','ago'],pic:'👵'},
+ {w:['She','called','me','ten minutes ago.'],c:['sub','past','obj','ago'],pic:'📞'},
+ {w:['We','moved','to Cairo','three years ago.'],c:['sub','past','obj','ago'],pic:'🏙️'},
+ {w:['Two weeks ago,','they','went','to the beach.'],c:['ago','sub','past','obj'],pic:'🏖️'},
+ {w:['He','bought','this bag','a month ago.'],c:['sub','past','obj','ago'],pic:'🎒'},
+ {w:['The film','started','five minutes ago.'],c:['sub','past','ago'],pic:'🎬'},
+ {w:['I','saw','Hana','an hour ago.'],c:['sub','past','obj','ago'],pic:'👭'},
+ {w:['Our teacher','gave','us homework','two days ago.'],c:['sub','past','obj','ago'],pic:'📝'},
+ {w:['A long time ago,','a king','lived','in this castle.'],c:['ago','sub','past','obj'],pic:'🏰'},
+ {w:['Mum','made','a cake','three hours ago.'],c:['sub','past','obj','ago'],pic:'🎂'}
+].map(x=>({...x,hint:'Remember: number + time unit + AGO. Ago comes after the time.'}));
+
+/* 6C  Ago or For? */
+const WA='FOR = how long.  AGO = when (back from now).';
+B.s6c=[
+ ['I lived in Rome ___ three years.',['for','ago','last'],WA],
+ ['I left Rome three years ___.',['ago','for','last'],WA],
+ ['She studied English ___ five years.',['for','ago','last'],WA],
+ ['They arrived ten minutes ___.',['ago','for','last'],WA],
+ ['We stayed at the hotel ___ two nights.',['for','ago','last'],WA],
+ ['He called me an hour ___.',['ago','for','last'],WA],
+ ['Which is correct?',['Two days ago, I saw him.','Ago two days, I saw him.','I saw him ago two days.'],'Ago comes AFTER the time: two days ago.'],
+ ['Which is correct?',['She went home ten minutes ago.','She goes home ten minutes ago.','She will go home ten minutes ago.'],'Ago + Past Simple verb.'],
+ ['Which is correct?',['I met him a week ago.','I met him last week ago.','I met him ago a week.'],'Use ago OR last — not both.'],
+ ['We waited ___ an hour.',['for','ago','last'],WA]
+].map(([q,o,why])=>({q,o,a:o[0],why}));
+
+/* 6D  Fix the AGO mistakes */
+B.s6d=[
+ {w:['I','met','him','ago','two','days.'],bad:[3],fix:'I met him two days ago.',why:'Ago comes AFTER the time.'},
+ {w:['She','goes','home','ten','minutes','ago.'],bad:[1],fix:'She went home ten minutes ago.',why:'Ago + Past Simple verb (went).'},
+ {w:['We','visited','Rome','last','week','ago.'],bad:[3,5],fix:'We visited Rome last week.  (or: a week ago)',why:'Use last OR ago — not both!'},
+ {w:['He','will','call','me','an','hour','ago.'],bad:[1,2],fix:'He called me an hour ago.',why:'Ago needs a Past Simple verb.'},
+ {w:['They','lived','here','for','three','years','ago.'],bad:[3],fix:'They lived here three years ago.',why:'FOR = how long. AGO = when. Don\'t mix them.'},
+ {w:['I',"didn't",'saw','her','five','minutes','ago.'],bad:[2],fix:"I didn't see her five minutes ago.",why:"After didn't → base verb (see)."},
+ {w:['Ago','three','hours,','we','ate','lunch.'],bad:[0],fix:'Three hours ago, we ate lunch.',why:'Ago goes after the time: three hours ago.'},
+ {w:['She','is','born','ten','years','ago.'],bad:[1,2],fix:'She was born ten years ago.',why:'Ago + Past Simple (was born).'}
+];
+
+/* 7  QUEST items – Past Simple builder */
+const Q=(sub,base,past,obj,time,type,pic,cls='ago')=>({sub,base,past,obj,time,type,pic,cls});
+B.quest={
+ 1:[Q('Mia','walk','walked','to school','yesterday','+','🚶‍♀️','time'),Q('We','play','played','football','last Friday','+','⚽','time'),
+    Q('Dad','cook','cooked','dinner','an hour ago','+','🍳'),Q('Sara','study','studied','English','last night','+','📖','time'),
+    Q('The kids','watch','watched','a movie','yesterday evening','+','🎬','time'),Q('The driver','stop','stopped','the bus','a minute ago','+','🚌'),
+    Q('They','visit','visited','the museum','last week','+','🏛️','time'),Q('Ali','clean','cleaned','his room','two hours ago','+','🧹')],
+ 2:[Q('Ben','go','went','to the park','yesterday','+','🌳','time'),Q('Lily','eat','ate','pizza','two hours ago','+','🍕'),
+    Q('We','see','saw','a rainbow','last Sunday','+','🌈','time'),Q('Mum','buy','bought','a new bag','three days ago','+','👜'),
+    Q('I','make','made','a cake','yesterday','+','🎂','time'),Q('The boys','swim','swam','in the sea','last summer','+','🏊','time'),
+    Q('Nour','write','wrote','a letter','last week','+','✉️','time'),Q('They','take','took','photos at the zoo','yesterday','+','📸','time')],
+ 3:[Q('Omar','play','played','tennis','yesterday','-','🎾','time'),Q('Hana','see','saw','the doctor','last week','?','👩‍⚕️','time'),
+    Q('We','go','went','to school','last Saturday','-','🏫','time'),Q('they','clean','cleaned','the kitchen','an hour ago','?','🧽'),
+    Q('She','eat','ate','breakfast','yesterday morning','-','🥞','time'),Q('Karim','buy','bought','a new phone','two weeks ago','?','📱'),
+    Q('I','finish','finished','my homework','last night','-','📚','time'),Q('your parents','visit','visited','Alexandria','last summer','?','🏖️','time')],
+ 4:[Q('Hana','move','moved','to Cairo','three years ago','+','🏙️'),Q('Dad','call','called','me','ten minutes ago','-','📞'),
+    Q('We','have','had','lunch','two hours ago','+','🥗'),Q('you','see','saw','that film','a week ago','?','🍿'),
+    Q('The teacher','give','gave','us homework','two days ago','+','📝'),Q('They','arrive','arrived','at the airport','an hour ago','-','✈️'),
+    Q('Salma','break','broke','her phone','five days ago','?','📵'),Q('My grandfather','build','built','this house','fifty years ago','+','🏠')]
+};
+const QLEVELS=[
+ {n:1,name:'Yesterday Land',emoji:'🌅',a:'#34d399',b:'#15803d',sub:'Regular verbs  +ed'},
+ {n:2,name:'Irregular Island',emoji:'🏝️',a:'#60a5fa',b:'#2563eb',sub:'went · ate · saw · made'},
+ {n:3,name:'Did & Didn\'t Dojo',emoji:'🥋',a:'#a78bfa',b:'#6d28d9',sub:'Negatives & questions'},
+ {n:4,name:'Ago Galaxy',emoji:'🌌',a:'#fb923c',b:'#e11d48',sub:'Mixed + AGO'}
+];
+
+/* 8A  V2 or V3 ? */
+B.s8a=[
+ ['Yesterday I ___ a lion at the zoo.',['saw','seen','see'],'No helper → Past Simple uses V2 (saw).'],
+ ['I have ___ a lion before.',['seen','saw','see'],'have + V3 (seen).'],
+ ['She ___ her homework last night.',['wrote','written','write'],'Past Simple alone → V2 (wrote).'],
+ ['The letter was ___ by Hana.',['written','wrote','write'],'was + V3 (written).'],
+ ['We have ___ breakfast.',['eaten','ate','eat'],'have + V3 (eaten).'],
+ ['He ___ to school by bus yesterday.',['went','gone','go'],'Yesterday + no helper → V2 (went).'],
+ ['They have already ___ home.',['gone','went','go'],'have + V3 (gone).'],
+ ['The window was ___ by the ball.',['broken','broke','break'],'was + V3 (broken).'],
+ ['Dad ___ to Alexandria last week.',['drove','driven','drive'],'Past Simple alone → V2 (drove).'],
+ ['The car was ___ by my dad.',['driven','drove','drive'],'was + V3 (driven).'],
+ ['Have you ever ___ sushi?',['eaten','ate','eat'],'Have you ever + V3 (eaten).'],
+ ['She has ___ the red one.',['chosen','chose','choose'],'has + V3 (chosen).']
+].map(([q,o,why])=>({q,o,a:o[0],why}));
+
+/* 8B  Three forms table */
+B.s8b=[
+ ['take','took','taken',3],['speak','spoke','spoken',3],['write','wrote','written',2],['drink','drank','drunk',3],
+ ['break','broke','broken',2],['choose','chose','chosen',3],['begin','began','begun',3],['sing','sang','sung',2],
+ ['know','knew','known',3],['drive','drove','driven',2],['give','gave','given',3],['fly','flew','flown',3]
+].map(([a,b,c,m])=>({f:[a,b,c],m,a:[[a,b,c][m-1]]}));
+
+/* 8C  Spot the V2 / V3 mistake */
+B.s8c=[
+ {w:['I','seen','a','lion','yesterday.'],bad:[1],fix:'I saw a lion yesterday.',why:'No helper → use V2 (saw).'},
+ {w:['She','has','wrote','a','letter.'],bad:[2],fix:'She has written a letter.',why:'has + V3 (written).'},
+ {w:['The','cake','was','ate','by','the','kids.'],bad:[3],fix:'The cake was eaten by the kids.',why:'was + V3 (eaten).'},
+ {w:['We','have','went','home.'],bad:[2],fix:'We have gone home.',why:'have + V3 (gone).'},
+ {w:['He','drunk','water','yesterday.'],bad:[1],fix:'He drank water yesterday.',why:'No helper → V2 (drank).'},
+ {w:['They','have','took','photos.'],bad:[2],fix:'They have taken photos.',why:'have + V3 (taken).'},
+ {w:['The','window','was','broke','by','the','ball.'],bad:[3],fix:'The window was broken by the ball.',why:'was + V3 (broken).'},
+ {w:['I','have','saw','that','film.'],bad:[2],fix:'I have seen that film.',why:'have + V3 (seen).'}
+];
+
+/* 8D  Example explorer  v1|v2|v3|past simple|have/has + PP|passive (optional) */
+const VERBS=`play|played|played|We played football yesterday.|They have played all day.|The match was played in the rain.
+watch|watched|watched|I watched a film last night.|She has watched this cartoon twice.|The film was watched by millions.
+visit|visited|visited|Mia visited Aswan two years ago.|I have visited the Pyramids.|The museum was visited by our class.
+clean|cleaned|cleaned|Dad cleaned the car yesterday.|We have cleaned the kitchen.|The classroom was cleaned this morning.
+cook|cooked|cooked|Mum cooked rice an hour ago.|I have cooked pasta before.|Dinner was cooked by my brother.
+open|opened|opened|He opened the door.|She has opened her gift.|The shop was opened in 2020.
+finish|finished|finished|We finished the lesson ten minutes ago.|I have finished my homework.|The work was finished on time.
+help|helped|helped|Ali helped his friend yesterday.|They have helped many people.|The kids were helped by their teacher.
+go|went|gone|We went to the beach last summer.|She has gone to school.|
+see|saw|seen|I saw a lion at the zoo.|I have seen that film.|The lion was seen by the children.
+eat|ate|eaten|He ate two sandwiches an hour ago.|We have eaten lunch.|The cake was eaten by the kids.
+make|made|made|Mum made a cake yesterday.|I have made a new friend.|This bag was made in Egypt.
+take|took|taken|She took a photo last week.|I have taken the bus.|The photos were taken by Dad.
+write|wrote|written|He wrote a letter yesterday.|She has written a story.|The book was written by a famous author.
+buy|bought|bought|I bought a new bag two days ago.|We have bought tickets.|These shoes were bought online.
+drink|drank|drunk|I drank juice at breakfast.|He has drunk all the water.|The milk was drunk by the cat.
+give|gave|given|Dad gave me a gift yesterday.|She has given me a pen.|The prize was given to Mona.
+break|broke|broken|Ali broke the window yesterday.|I have broken my pencil.|The vase was broken by the cat.
+speak|spoke|spoken|She spoke to the teacher.|I have spoken to Hana.|English is spoken in many countries.
+choose|chose|chosen|We chose the red one.|They have chosen a name.|Mona was chosen as the leader.
+know|knew|known|I knew the answer.|I have known her for years.|He is known as a great player.
+drive|drove|driven|Dad drove to Cairo last week.|He has driven for ten hours.|The bus was driven by Mr Samir.
+begin|began|begun|The film began ten minutes ago.|The lesson has begun.|
+sing|sang|sung|She sang a song at school.|We have sung this song before.|The song was sung by all the kids.
+swim|swam|swum|We swam in the sea.|I have swum in this lake.|
+run|ran|run|He ran fast yesterday.|She has run five kilometres.|
+come|came|come|They came an hour ago.|Spring has come.|
+do|did|done|I did my homework last night.|She has done her work.|The work was done by the team.
+find|found|found|I found my keys ten minutes ago.|We have found the answer.|The keys were found under the bed.
+get|got|got|She got a new phone last week.|I have got a cold.|
+have|had|had|We had lunch at one.|I have had a great day.|
+read|read|read|I read a book yesterday. (say: red)|She has read this story.|The book was read by every student.
+tell|told|told|Dad told us a story.|I have told you twice.|The story was told by Grandma.
+wear|wore|worn|She wore a red dress yesterday.|He has worn this coat for years.|The uniform is worn every day.
+win|won|won|We won the game last week.|They have won three times.|The prize was won by our team.
+sleep|slept|slept|The baby slept for two hours.|I have slept well.|
+fly|flew|flown|We flew to Paris two years ago.|She has flown many times.|
+forget|forgot|forgotten|I forgot my book yesterday.|He has forgotten his key.|The keys were forgotten at home.
+steal|stole|stolen|A thief stole the bag last night.|Someone has stolen my bike.|The bag was stolen from the shop.
+sit|sat|sat|The cat sat on the sofa.|We have sat here for an hour.|`
+ .split('\n').map(l=>{const p=l.split('|');return {v1:p[0],v2:p[1],v3:p[2],s2:p[3],s3:p[4],s4:p[5]||'',reg:p[1]===p[0]+'ed'||p[1]===p[0]+'d'||p[1]===p[0].replace(/y$/,'ied')}});
+/* ============================================================
+   STATIONS
+   ============================================================ */
+const STATIONS=[
+ {id:1,emoji:'⏰',name:'What is Past Simple?',sub:'Finished actions in the past',a:'#34d399',b:'#0f766e',clip:CLIPS[1],acts:[
+   {type:'quiz',emoji:'🎯',name:'Now or Then?',intro:'Is the sentence PAST or PRESENT? Tap the right button!',items:B.s1a,buckets:[{t:PAST_B,c:'past'},{t:PRES_B,c:'time'}]},
+   {type:'quiz',emoji:'🔍',name:'Spot the Past Simple',intro:'Find the Past Simple sentence!',items:B.s1b}]},
+ {id:2,emoji:'➕',name:'Regular Verbs +ed',sub:'Spelling rules & -ed sounds',a:'#60a5fa',b:'#1d4ed8',clip:CLIPS[2],acts:[
+   {type:'quiz',emoji:'🧪',name:'Spelling Lab',intro:'Pick the correct spelling of the past form.',items:B.s2a},
+   {type:'type',emoji:'⌨️',name:'Type It!',intro:'Type the Past Simple of each verb.',items:B.s2b},
+   {type:'quiz',emoji:'🔊',name:'Sound Sorter',intro:'How do we say the -ed ending? Listen and choose!',items:B.s2c,buckets:[{t:T_B,c:'did'},{t:D_B,c:'wh'},{t:ID_B,c:'past'}]}]},
+ {id:3,emoji:'🎭',name:'Irregular Verbs',sub:'went · ate · saw · bought',a:'#a78bfa',b:'#6d28d9',clip:CLIPS[3],acts:[
+   {type:'match',emoji:'🃏',name:'Memory Match',intro:'Flip two cards: find each verb and its Past Simple!',items:B.s3a},
+   {type:'quiz',emoji:'🚀',name:'Irregular Rocket',intro:'Choose the correct Past Simple form.',items:B.s3b},
+   {type:'type',emoji:'⌨️',name:'Type It!',intro:'Type the irregular Past Simple form.',items:B.s3c}]},
+ {id:4,emoji:'🤝',name:"Did & Didn't",sub:'Negatives, questions, answers',a:'#22d3ee',b:'#0e7490',clip:CLIPS[4],acts:[
+   {type:'build',emoji:'🧱',name:'Sentence Builder',intro:'Tap the words in the correct order!',items:B.s4a},
+   {type:'quiz',emoji:'🩺',name:"Did / Didn't Doctor",intro:'Choose the correct word to fix each sentence.',items:B.s4b},
+   {type:'error',emoji:'🕵️',name:'Spot the Mistake',intro:'There is a mistake! Tap the wrong word.',items:B.s4c}]},
+ {id:5,emoji:'📅',name:'Time Words',sub:'yesterday · last · in · when',a:'#fbbf24',b:'#b45309',clip:CLIPS[5],acts:[
+   {type:'quiz',emoji:'🗂️',name:'Time Word Sorter',intro:'Is it a PAST time word or not?',items:B.s5a,buckets:[{t:PT_B,c:'time'},{t:NP_B,c:'ago'}]},
+   {type:'quiz',emoji:'✏️',name:'Choose the Time Word',intro:'Pick the word that completes the sentence.',items:B.s5b}]},
+ {id:6,emoji:'⏪',name:'AGO Station',sub:'two days ago · an hour ago',a:'#fb7185',b:'#be123c',focus:true,clip:CLIPS[6],acts:[
+   {type:'quiz',emoji:'🧮',name:'Ago Calculator',intro:'Count back from NOW and choose the correct time with AGO.',items:B.s6a},
+   {type:'build',emoji:'🧱',name:'Ago Builder',intro:'Build the sentence. Where does AGO go?',items:B.s6b},
+   {type:'quiz',emoji:'⚖️',name:'Ago or For?',intro:'FOR = how long. AGO = when. Choose!',items:B.s6c},
+   {type:'error',emoji:'🛠️',name:'Fix the AGO Mistakes',intro:'Tap the word that is wrong.',items:B.s6d}]},
+ {id:7,emoji:'🧩',name:'Build-It Quest',sub:'4 steps · 4 levels',a:'#fb923c',b:'#c2410c',clip:CLIPS[7],acts:QLEVELS.map(l=>({type:'quest',emoji:l.emoji,name:`Level ${l.n}: ${l.name}`,intro:l.sub,level:l.n,items:B.quest[l.n]}))},
+ {id:8,emoji:'🅿️',name:'PP · Past Participle',sub:'V1 – V2 – V3 with 40 examples',a:'#f472b6',b:'#9d174d',focus:true,clip:CLIPS[8],acts:[
+   {type:'quiz',emoji:'⚖️',name:'V2 or V3?',intro:'Past Simple (V2) or Past Participle (V3)? Choose the correct form.',items:B.s8a},
+   {type:'type',emoji:'📋',name:'Three Forms Table',intro:'Type the missing form.',items:B.s8b},
+   {type:'error',emoji:'🕵️',name:'Spot the V2 / V3 Mistake',intro:'Tap the wrong verb form.',items:B.s8c},
+   {type:'explore',emoji:'🔭',name:'40 Verb Explorer',intro:'Tap a verb to see V1 · V2 · V3 and example sentences.',items:VERBS}]},
+ {id:9,emoji:'👑',name:'Boss Challenge',sub:'16 mixed questions',a:'#facc15',b:'#dc2626',acts:[
+   {type:'quiz',emoji:'👑',name:'Time Lord Boss',intro:'Final challenge! Questions from every station.',
+    gen:()=>shuffle(['s1b','s2a','s3b','s4b','s5b','s6a','s6c','s8a'].flatMap(k=>shuffle(B[k].slice()).slice(0,2)))}]}
+];
+
+/* ============================================================
+   UTILS · SOUND · STATE
+   ============================================================ */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const PRAISE=['Awesome!','Super!','Brilliant!','Perfect!','You rock!','Great job!','Time Lord!','Fantastic!'];
+const S={mute:false,view:'map',si:0,step:0,run:null};
+let PROG={};try{PROG=JSON.parse(localStorage.getItem('pastSimpleHub')||'{}')}catch(e){}
+const saveP=()=>{try{localStorage.setItem('pastSimpleHub',JSON.stringify(PROG))}catch(e){}};
+const getP=(sid,i)=>(PROG[sid]&&PROG[sid][i])||0;
+const setP=(sid,i,v)=>{PROG[sid]=PROG[sid]||{};PROG[sid][i]=Math.max(PROG[sid][i]||0,v);saveP()};
+
+let actx;
+function beep(f,d,type='sine',vol=.14,when=0){
+  if(S.mute)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+when;
+    o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d);}catch(e){}
+}
+const sfx={ok(){beep(660,.12);beep(880,.18,'sine',.14,.1)},no(){beep(170,.28,'sawtooth',.07)},
+  win(){[523,659,784,1047].forEach((f,i)=>beep(f,.22,'triangle',.15,i*.12))},tick(){beep(520,.06,'square',.05)}};
+function speak(t){
+  if(S.mute||!('speechSynthesis' in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,''));u.lang='en-US';u.rate=.88;speechSynthesis.speak(u)}catch(e){}
+}
+function confetti(n=70){
+  const cols=['#fbbf24','#fb7185','#22d3ee','#a78bfa','#34d399','#f472b6','#fff'];
+  for(let i=0;i<n;i++){const e=document.createElement('i');e.className='confetti';
+    e.style.left=Math.random()*100+'vw';e.style.background=cols[i%cols.length];
+    e.style.animationDuration=(2+Math.random()*2)+'s';e.style.animationDelay=Math.random()*.5+'s';
+    e.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(e);setTimeout(()=>e.remove(),4800);}
+}
+const stars=(n)=>'⭐'.repeat(n)+'☆'.repeat(3-n);
+
+/* ============================================================
+   MAP (home of the game)
+   ============================================================ */
+function stationStars(st){const n=(st.clip?1:0)+st.acts.length;let s=0;st.acts.forEach((a,i)=>s+=getP(st.id,i+(st.clip?1:0)));return s}
+function stationDone(st){const off=st.clip?1:0;return st.acts.every((a,i)=>getP(st.id,i+off)>0)}
+function renderMap(){
+  stopClip();S.view='map';S.run=null;
+  let tot=0,max=0;STATIONS.forEach(st=>{tot+=stationStars(st);max+=st.acts.length*3});
+  const cards=STATIONS.map((st,i)=>`<button class="st" style="--a:${st.a};--b:${st.b}" data-a="station" data-i="${i}">
+    <span class="num">${st.id}</span>${st.focus?'<span class="ribbon">FOCUS</span>':''}
+    <span class="em">${st.emoji}</span><b>${st.name}</b><small>${st.sub}</small>
+    <span class="stz">⭐ ${stationStars(st)} / ${st.acts.length*3}</span>${stationDone(st)?'<span class="tick">✅</span>':''}</button>`).join('');
+  $('#app').innerHTML=`<h1 class="title">⏰ Time Machine<br>Past Simple Adventure</h1>
+  <p class="sub">Travel back in time · 9 stations · videos, games &amp; lots of practice</p>
+  <div class="panel"><div class="formula">
+    ${CH('Subject','sub')}<span class="plus">+</span>${CH('Past verb (V2)','past')}<span class="plus">+</span>${CH('object','obj')}<span class="plus">+</span>${CH('time clue / ago','ago')}
+  </div>
+  <div style="text-align:center;margin-top:8px;font-weight:700">⭐ ${tot} / ${max} stars</div>
+  <div class="progress"><i style="width:${Math.round(tot/max*100)}%"></i></div>
+  <div style="text-align:center;font-size:.95rem;color:#475569;font-weight:600">Pick a station. Each one has a short video, then games to practise!</div></div>
+  <div class="stations">${cards}</div>`;
+  window.scrollTo(0,0);
+}
+
+/* ============================================================
+   STATION VIEW
+   ============================================================ */
+const stepsOf=st=>[...(st.clip?[{kind:'clip',emoji:'🎬',name:'Watch'}]:[]),...st.acts.map(a=>({kind:'act',emoji:a.emoji,name:a.name,act:a}))];
+function openStation(i){S.si=i;goStep(0)}
+function goStep(k){
+  stopClip();S.run=null;if('speechSynthesis' in window)try{speechSynthesis.cancel()}catch(e){}
+  const st=STATIONS[S.si],steps=stepsOf(st);S.view='station';S.step=k;
+  const stp=steps.map((s,j)=>`<button class="stp ${j===k?'on':''} ${getP(st.id,j)>0&&j!==k?'done':''}" data-a="step" data-i="${j}" title="${s.name}">${s.emoji}${j===k?' '+(s.kind==='clip'?'Watch':s.name):''}</button>`).join('');
+  $('#app').innerHTML=`<div class="topbar"><button class="btn violet" data-a="map">🗺️ Map</button><div class="stname">${st.emoji} ${st.id}. ${st.name}</div><span class="pill">⭐ ${stationStars(st)}/${st.acts.length*3}</span></div>
+   <div class="stepper">${stp}</div><div id="stage"></div>`;
+  window.scrollTo(0,0);
+  if(k>=steps.length)return renderStationEnd();
+  const s=steps[k];
+  if(s.kind==='clip')startClip(st.clip,st);else startAct(s.act);
+}
+function nextStep(){goStep(S.step+1)}
+function renderStationEnd(){
+  const st=STATIONS[S.si],mx=st.acts.length*3,sc=stationStars(st),last=S.si>=STATIONS.length-1;
+  const ok=sc/mx>=.7;
+  $('#stage').innerHTML=`<div class="panel"><div class="trophy">${ok?'🏆':'🌱'}</div>
+   <h2 style="text-align:center;margin:0">${ok?'Station complete!':'Good try! Practise more to get more stars.'}</h2>
+   <p class="big-score">⭐ ${sc} / ${mx} stars</p>
+   <div class="rowc"><button class="btn gray" data-a="step" data-i="0">🔁 Replay station</button>${last?'':`<button class="btn go" data-a="station" data-i="${S.si+1}">Next station ▶</button>`}<button class="btn violet" data-a="map">🗺️ Map</button></div></div>`;
+  if(ok){sfx.win();confetti()}
+}
+
+/* ============================================================
+   CLIP PLAYER  (animated mini-videos)
+   ============================================================ */
+let CP=null;
+function stopClip(){if(CP){clearTimeout(CP.timer);CP=null}}
+function startClip(clip,st){
+  CP={clip,st,i:0,paused:false,timer:null,ended:false};
+  const segs=clip.scenes.map((s,i)=>`<div class="seg" id="seg${i}" style="--ms:${s.ms}ms"><i></i></div>`).join('');
+  $('#stage').innerHTML=`<div class="panel dark clip" id="clipbox"><div class="screen" id="scr"></div><div class="segs">${segs}</div>
+   <div class="ctrl"><button class="cbtn" data-c="prev">⏮</button><button class="cbtn" data-c="pp" id="ppbtn">⏸</button><button class="cbtn" data-c="next">⏭</button><button class="cbtn" data-c="replay">⟲</button>
+   <span class="cap" id="ccap"></span><button class="btn go" data-c="skip">Practice ▶</button></div></div>
+   <div style="text-align:center;color:#c7d2fe;font-weight:600">🎬 ${clip.title} · ${clip.scenes.length} scenes · tap ⏸ to pause</div>`;
+  playScene(0);
+}
+function playScene(i){
+  if(!CP)return;clearTimeout(CP.timer);
+  const sc=CP.clip.scenes;if(i<0)i=0;
+  if(i>=sc.length)return endClip();
+  CP.i=i;CP.ended=false;
+  const scr=$('#scr');scr.innerHTML=`<div class="scene">${sc[i].h}</div>`;
+  sc.forEach((s,j)=>{const g=$('#seg'+j);g.className='seg'+(j<i?' dn':j===i?' cur':'')});
+  $('#clipbox').classList.toggle('paused',CP.paused);
+  $('#ccap').textContent=`${i+1} / ${sc.length}`;
+  if(sc[i].say)speak(sc[i].say);
+  if(!CP.paused)CP.timer=setTimeout(()=>playScene(i+1),sc[i].ms);
+}
+function endClip(){
+  if(!CP)return;CP.ended=true;
+  const st=CP.st;setP(st.id,0,1);
+  $('#scr').innerHTML+=`<div class="endclip"><div class="big" style="font-size:3.4rem">🎉</div><h2 style="font-family:Bungee;font-weight:400;margin:0;color:#fde68a">Video complete!</h2>
+   <div class="rowc"><button class="btn gray" data-c="replay">⟲ Watch again</button><button class="btn go" data-c="skip">Start practice ▶</button></div></div>`;
+  document.querySelectorAll('.seg').forEach(g=>g.className='seg dn');
+  sfx.ok();
+}
+function clipCtl(c){
+  if(!CP)return;
+  if(c==='pp'){
+    if(CP.ended)return;
+    CP.paused=!CP.paused;$('#ppbtn').textContent=CP.paused?'▶️':'⏸';
+    $('#clipbox').classList.toggle('paused',CP.paused);
+    if(CP.paused){clearTimeout(CP.timer);try{speechSynthesis.cancel()}catch(e){}}
+    else playScene(CP.i);
+  }
+  else if(c==='next')playScene(CP.i+1);
+  else if(c==='prev')playScene(CP.i-1);
+  else if(c==='replay'){CP.paused=false;$('#ppbtn').textContent='⏸';playScene(0)}
+  else if(c==='skip'){setP(CP.st.id,0,1);nextStep()}
+}
+
+/* ============================================================
+   ACTIVITY HARNESS
+   ============================================================ */
+function startAct(act){
+  const st=STATIONS[S.si];
+  let items=act.gen?act.gen():(act.type==='match'||act.type==='quest'||act.type==='explore')?act.items.slice():shuffle(act.items.slice());
+  const R={act,items,i:0,stars:0,total:0,msg:act.intro,tone:'',done:false,tries:0};
+  S.run=R;
+  ({quiz:quizLoad,type:typeLoad,match:matchLoad,build:buildLoad,error:errLoad,quest:questLoad,explore:exploreLoad})[act.type](R);
+}
+function frame(R,inner,foot=''){
+  const n=R.items.length,a=R.act,lab=a.type==='match'?'Round':a.type==='explore'?'Verbs':'Q';
+  const prog=a.type==='explore'?Math.min(R.seen.size/8,1)*100:(R.i+(R.done?1:0))/n*100;
+  $('#stage').innerHTML=`<div class="hud"><span class="pill">${a.emoji} ${a.name}</span>${a.type==='explore'?`<span class="pill">👀 ${R.seen.size} seen</span>`:`<span class="pill">${lab} ${Math.min(R.i+1,n)}/${n}</span>`}<span class="pill">⭐ ${R.stars}</span><div class="bar"><i style="width:${prog}%"></i></div></div>
+  <div class="owlrow"><div class="owl">🤖</div><div class="bubble ${R.tone}" id="bub">${R.msg}</div></div>
+  <div class="panel">${inner}</div>${foot}`;
+}
+function setBubble(R,msg,tone=''){R.msg=msg;R.tone=tone;const b=$('#bub');if(b){b.className='bubble '+tone;b.innerHTML=msg}}
+const nextBtn=(R)=>`<div class="nextrow"><button class="btn go" data-a="nextq">${R.i+1>=R.items.length?'Finish 🏁':'Next ▶'}</button></div>`;
+function award(R,tries){const s=tries===0?3:tries===1?2:tries===2?1:0;R.stars+=s;R.total+=3;return s}
+function nextQ(){
+  const R=S.run;R.i++;
+  if(R.i>=R.items.length)return endAct(R);
+  R.msg=['Next one!','Keep going!','You can do it!','Here we go!'][R.i%4];R.tone='';
+  ({quiz:quizLoad,type:typeLoad,match:matchLoad,build:buildLoad,error:errLoad,quest:questLoad})[R.act.type](R);
+}
+function endAct(R){
+  const st=STATIONS[S.si],steps=stepsOf(st),idx=steps.findIndex(s=>s.act===R.act);
+  const pct=R.total?R.stars/R.total:1,s3=pct>=.85?3:pct>=.6?2:1;
+  setP(st.id,idx,s3);
+  const [em,msg]=s3===3?['🏆','Time Lord! Perfect!']:s3===2?['🥇','Excellent work!']:['🌱','Good try! Play again for more stars.'];
+  const last=idx>=steps.length-1;
+  $('#stage').innerHTML=`<div class="panel"><div class="trophy">${em}</div><h2 style="text-align:center;margin:0">${msg}</h2>
+   <p class="big-score">${stars(s3)}<br>⭐ ${R.stars} / ${R.total} points</p>
+   <div class="rowc"><button class="btn fire" data-a="again">🔁 Play again</button><button class="btn go" data-a="step" data-i="${idx+1}">${last?'Finish station 🏁':'Next step ▶'}</button><button class="btn violet" data-a="map">🗺️ Map</button></div></div>`;
+  sfx.win();confetti(s3===3?110:60);
+}
+
+/* ---------- QUIZ / SORT ---------- */
+function quizLoad(R){
+  const it=R.items[R.i];R.it=it;R.tries=0;R.done=false;R.wrong=new Set();
+  R.opts=R.act.buckets?R.act.buckets.map(b=>b.t):shuffle(it.o.slice());
+  quizDraw(R);if(it.say)setTimeout(()=>speak(it.say),250);
+}
+function quizDraw(R,shakeIdx=-1){
+  const it=R.it,bk=R.act.buckets;
+  const o=R.opts.map((t,i)=>{
+    const cls=(bk?`bucket r-${bk[i].c} `:'')+(R.done&&t===it.a?'right ':'')+(R.wrong.has(t)?'wrong ':'')+(i===shakeIdx?'shake ':'');
+    return `<button class="opt ${cls}" data-a="opt" data-i="${i}" ${(R.done||R.wrong.has(t))?'disabled':''}>${t}</button>`}).join('');
+  frame(R,`<div class="qcard">${it.pic?`<span class="pic">${it.pic}</span>`:''}${it.q}${it.say?` <button class="say" data-a="say">🔊</button>`:''}</div><div class="opts">${o}</div>${R.done?nextBtn(R):''}`);
+}
+function quizPick(i){
+  const R=S.run,it=R.it;if(R.done)return;const v=R.opts[i];
+  if(v===it.a){award(R,R.tries);R.done=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} ${it.why||''}`;R.tone='good';quizDraw(R);
+    if(R.tries===0&&R.i%4===3)confetti(25)}
+  else{R.tries++;R.wrong.add(v);sfx.no();
+    if(R.tries>=R.opts.length-1){R.total+=3;R.done=true;R.msg=`The answer is <b>${it.a}</b>. ${it.why||''}`;R.tone='bad'}
+    else{R.msg=R.tries===1?'Not quite — try again! 🤔':`Hint 💡 ${it.why||'Think about the time clue.'}`;R.tone='bad'}
+    quizDraw(R,i);}
+}
+
+/* ---------- TYPE ---------- */
+function typeLoad(R){
+  const it=R.items[R.i];R.it=it;R.tries=0;R.done=false;
+  typeDraw(R);
+}
+function typeDraw(R,val=''){
+  const it=R.it;let q;
+  if(it.f){q=`<small>Fill in the missing form</small><div class="ftable">${[['V1','base','sub'],['V2','past','past'],['V3','PP','pp']].map((x,k)=>{
+    const miss=(k+1)===it.m;return `<div class="fcell r-${x[2]} ${miss?'blank':''}"><small>${x[0]} · ${x[1]}</small><b>${miss?(R.done?it.a[0]:'_ _ _'):it.f[k]}</b></div>`}).join('')}</div>`}
+  else q=it.q;
+  frame(R,`<div class="qcard">${q}</div><div class="trow"><input class="tin ${R.done?'ok':''}" id="tin" value="${val}" ${R.done?'disabled':''} autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type here…"><button class="btn go" data-a="chk" ${R.done?'hidden':''}>Check ✔</button></div>${R.done?nextBtn(R):''}`);
+  if(!R.done)setTimeout(()=>{const t=$('#tin');if(t)t.focus()},50);
+}
+function typeCheck(){
+  const R=S.run,it=R.it;if(R.done)return;const inp=$('#tin');const v=(inp.value||'').trim().toLowerCase();if(!v)return;
+  if(it.a.includes(v)){award(R,R.tries);R.done=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} <b>${it.a[0]}</b> ✔`;R.tone='good';typeDraw(R,v);speak(it.a[0])}
+  else{R.tries++;sfx.no();
+    if(R.tries>=3){R.total+=3;R.done=true;R.msg=`The answer is <b>${it.a[0]}</b>. Say it: ${it.a[0]}!`;R.tone='bad';typeDraw(R,v);speak(it.a[0])}
+    else{R.msg=R.tries===1?'Not quite — try again! 💪':`Hint 💡 It starts with "<b>${it.a[0][0]}</b>" and has ${it.a[0].length} letters.`;R.tone='bad';typeDraw(R,'');
+      const t=$('#tin');if(t){t.classList.add('shake')}}}
+}
+
+/* ---------- MATCH (memory) ---------- */
+function matchLoad(R){
+  const pairs=R.items[R.i];R.done=false;R.sel=[];R.hits=0;R.mist=0;R.lock=false;
+  R.cards=shuffle(pairs.flatMap(([a,b],k)=>[{t:a,k,v1:true},{t:b,k,v1:false}]));
+  matchDraw(R);
+}
+function matchDraw(R){
+  const g=R.cards.map((c,i)=>`<button class="mc ${c.v1?'v1':''} ${c.hit?'hit':''}" data-a="mc" data-i="${i}">${c.hit?c.t:'❓'}</button>`).join('');
+  frame(R,`<div class="qcard" style="font-size:1.2rem">Find the pairs: <b>verb</b> + its <b>Past Simple</b><small>Cards with a blue line are the base verbs.</small></div><div class="mgrid">${g}</div>${R.done?nextBtn(R):''}`);
+}
+function matchFlip(i){
+  const R=S.run;if(R.lock||R.done)return;const c=R.cards[i];if(c.hit||R.sel.includes(i))return;
+  const el=document.querySelectorAll('.mc')[i];el.classList.add('up');el.textContent=c.t;sfx.tick();R.sel.push(i);
+  if(R.sel.length===2){
+    const [a,b]=R.sel.map(x=>R.cards[x]);R.lock=true;
+    if(a.k===b.k&&a!==b){
+      setTimeout(()=>{a.hit=b.hit=true;R.hits++;sfx.ok();R.sel=[];R.lock=false;
+        if(R.hits===6){const s=R.mist<=3?3:R.mist<=6?2:1;R.stars+=s;R.total+=3;R.done=true;R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} Round complete!`;R.tone='good';matchDraw(R);confetti(40)}
+        else{setBubble(R,`Great pair! <b>${a.v1?a.t:b.t}</b> ➜ <b>${a.v1?b.t:a.t}</b>`,'good');matchDraw(R)}},350);
+    }else{
+      R.mist++;setTimeout(()=>{const els=document.querySelectorAll('.mc');R.sel.forEach(x=>{els[x].classList.remove('up');els[x].textContent='❓'});R.sel=[];R.lock=false;sfx.no()},800);
+    }
+  }
+}
+
+/* ---------- BUILDER (shared) ---------- */
+function bInit(it){const w=it.w.map((t,k)=>({t,k,c:it.c?it.c[k]:null,used:false}));let p;let tries=0;
+  do{p=shuffle(w.slice());tries++}while(p.every((x,i)=>x.k===i)&&tries<10);return {pool:p,ans:[],bad:[]}}
+function bHTML(b,it,done){
+  const ans=b.ans.length?b.ans.map((x,j)=>`<button class="wd ${done&&x.c?'col r-'+x.c:''} ${b.bad.includes(j)?'bad':''}" data-a="unpick" data-i="${j}" ${done?'disabled':''}>${x.t}</button>`).join(''):'<span class="ph">Tap the words below…</span>';
+  const pool=b.pool.map((x,j)=>`<button class="wd ${x.used?'gone':''}" data-a="pick" data-i="${j}" ${x.used||done?'disabled':''}>${x.t}</button>`).join('');
+  return `${it.pic?`<div class="qpic">${it.pic}</div>`:''}<div class="ansline">${ans}</div><div class="pool">${pool}</div>
+   ${done?'':`<div class="nextrow"><button class="btn blue" data-a="bchk" ${b.ans.length===b.pool.length?'':'disabled'}>Check ✔</button><button class="btn gray" style="margin-left:8px" data-a="bclr">Clear</button></div>`}`;
+}
+function bPick(b,j){const x=b.pool[j];if(x.used)return;x.used=true;b.ans.push(x);b.bad=[];sfx.tick()}
+function bUnpick(b,j){const x=b.ans[j];if(!x)return;x.used=false;b.ans.splice(j,1);b.bad=[]}
+function bClear(b){b.ans.forEach(x=>x.used=false);b.ans=[];b.bad=[]}
+function bCheck(b){const bad=[];b.ans.forEach((x,j)=>{if(x.k!==j)bad.push(j)});b.bad=bad;return bad.length===0}
+
+function buildLoad(R){const it=R.items[R.i];R.it=it;R.tries=0;R.done=false;R.b=bInit(it);buildDraw(R)}
+function buildDraw(R){frame(R,`<div class="qcard" style="margin-bottom:6px">Build the sentence!</div>${bHTML(R.b,R.it,R.done)}${R.done?nextBtn(R):''}`)}
+function buildCheck(){
+  const R=S.run;if(R.done)return;
+  if(bCheck(R.b)){award(R,R.tries);R.done=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} ${R.it.w.join(' ')}`;R.tone='good';buildDraw(R);speak(R.it.w.join(' '));}
+  else{R.tries++;sfx.no();R.msg=R.tries===1?'Not quite — the red words are in the wrong place. Try again!':`Hint 💡 ${R.it.hint}`;R.tone='bad';
+    if(R.tries>=4){R.total+=3;R.b.ans=R.it.w.map((t,k)=>({t,k,c:R.it.c?R.it.c[k]:null}));R.b.bad=[];R.done=true;R.msg=`Here is the answer: <b>${R.it.w.join(' ')}</b>`}
+    buildDraw(R)}
+}
+
+/* ---------- ERROR HUNT ---------- */
+function errLoad(R){const it=R.items[R.i];R.it=it;R.tries=0;R.done=false;R.hit=-1;errDraw(R)}
+function errDraw(R,sh=-1){
+  const it=R.it;
+  const w=it.w.map((t,i)=>`<button class="wd ${R.done&&it.bad.includes(i)?'mark':''} ${i===sh?'bad':''}" data-a="ew" data-i="${i}" ${R.done?'disabled':''}>${t}</button>`).join('');
+  frame(R,`<div class="qcard" style="margin-bottom:8px">🕵️ Tap the wrong word!</div><div class="pool" style="margin-bottom:8px">${w}</div>${R.done?`<div class="qcard" style="font-size:1.2rem;color:#15803d">✅ ${it.fix}</div>`:''}${R.done?nextBtn(R):''}`);
+}
+function errPick(i){
+  const R=S.run,it=R.it;if(R.done)return;
+  if(it.bad.includes(i)){award(R,R.tries);R.done=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} ${it.why}`;R.tone='good';errDraw(R);speak(it.fix.split('(')[0])}
+  else{R.tries++;sfx.no();
+    if(R.tries>=3){R.total+=3;R.done=true;R.msg=`Look: <b>${it.fix}</b> — ${it.why}`;R.tone='bad';errDraw(R)}
+    else{R.msg=R.tries===1?'That word is OK. Try another one! 🔎':`Hint 💡 ${it.why}`;R.tone='bad';errDraw(R,i)}}
+}
+
+/* ---------- QUEST (4 steps, like Passive Voice Quest) ---------- */
+const thirdS=b=>/(s|sh|ch|x|o)$/.test(b)?b+'es':/[^aeiou]y$/.test(b)?b.slice(0,-1)+'ies':b+'s';
+const isReg=(b,p)=>p===b+'ed'||p===b+'d'||(/y$/.test(b)&&p===b.slice(0,-1)+'ied')||p===b+b.slice(-1)+'ed';
+const SOK={'+':'Write it in the PAST ✅','-':'Make it NEGATIVE ❌','?':'Make it a QUESTION ❓'};
+function questLoad(R){
+  const it=R.items[R.i];R.it=it;R.q={step:1,mist:0,flash:false,wrong:new Set(),b:null};
+  R.msg=R.i===0?`Level ${R.act.level} · ${R.act.intro}. Step 1: find the time clue!`:'Step 1: find the time clue ⏰';R.tone='';
+  R.done=false;questDraw(R);
+}
+function qTokens(it){
+  const S0=cap(it.sub),tc=it.cls||'ago';
+  if(it.type==='+')return {w:[S0,it.past,it.obj,it.time+'.'],c:['sub','past','obj',tc]};
+  if(it.type==='-')return {w:[S0,"didn't",it.base,it.obj,it.time+'.'],c:['sub','did','base','obj',tc]};
+  return {w:['Did',it.sub,it.base,it.obj,it.time+'?'],c:['did','sub','base','obj',tc]};
+}
+function questDraw(R,shk=-1){
+  const it=R.it,q=R.q,t=it.type,tc=it.cls||'ago';
+  const hdr=`<div class="steps4">${['① Time clue','② Type','③ Verb','④ Build'].map((s,j)=>`<span class="${j+1===q.step?'on':j+1<q.step?'dn':''}">${s}</span>`).join('')}</div>`;
+  const task=`<div style="text-align:center;margin-bottom:4px"><span class="chip r-did" style="font-size:1.05rem">${SOK[t]}</span></div><div class="qpic">${it.pic}</div>`;
+  const base=[['Subject',cap(it.sub),'sub'],['Verb',it.base,'base'],['Object',it.obj,'obj'],['Time',it.time,tc]];
+  let body='';
+  if(q.step===1){
+    const chunks=base.map((c,i)=>`<div class="qchunk"><div class="lab">&nbsp;</div><button class="wd ${q.flash&&i===3?'col r-'+tc:''} ${i===shk?'bad':''}" data-a="q1" data-i="${i}" ${q.flash?'disabled':''}>${c[1]}</button></div>`).join('');
+    body=`<div class="qcard" style="margin:6px 0">Which part is the <b>time clue</b>?</div><div class="qsent">${chunks}</div>`;
+  }else{
+    const shown=base.map((c,i)=>`<div class="qchunk"><div class="lab on r-${c[2]}">${c[0]}</div><span class="chip r-${c[2]}">${c[1]}</span></div>`).join('');
+    body=`<div class="qsent">${shown}</div>`;
+    if(q.step===2){
+      const isReg0=isReg(it.base,it.past);
+      let qq,o,a;
+      if(t==='+'){qq=`Is the verb <b>${it.base}</b> regular or irregular?`;o=['Regular (+ed)','Irregular (changes)'];a=isReg0?o[0]:o[1]}
+      else if(t==='-'){qq='Which helper makes the sentence <b>negative</b> in the past?';o=shuffle(["didn't","don't","doesn't"]);a="didn't"}
+      else{qq='Which helper starts a <b>past question</b>?';o=shuffle(['Did','Do','Does']);a='Did'}
+      q.o=o;q.a=a;
+      body+=`<div class="qcard" style="margin:6px 0">${qq}</div><div class="opts">${o.map((x,i)=>`<button class="opt ${q.wrong.has(x)?'wrong':''} ${q.flash&&x===a?'right':''}" data-a="q2" data-i="${i}" ${q.flash||q.wrong.has(x)?'disabled':''}>${x}</button>`).join('')}</div>`;
+    }
+    if(q.step===3){
+      let qq,o,a;
+      if(t==='+'){qq=`Make the past form of <b>${it.base}</b>.`;a=it.past;
+        const naive=it.base.endsWith('e')?it.base+'d':it.base+'ed';
+        const s=[a];if(naive!==a)s.push(naive);s.push(it.base);if(s.length<3)s.push(it.base+'ing');o=shuffle([...new Set(s)].slice(0,3))}
+      else{qq=`After <b>${t==='-'?"didn't":'Did'}</b>, which verb form do we use?`;a=it.base;o=shuffle([it.base,it.past,thirdS(it.base)])}
+      q.o=o;q.a=a;
+      body+=`<div class="qcard" style="margin:6px 0">${qq}</div><div class="opts">${o.map((x,i)=>`<button class="opt ${q.wrong.has(x)?'wrong':''} ${q.flash&&x===a?'right':''}" data-a="q2" data-i="${i}" ${q.flash||q.wrong.has(x)?'disabled':''}>${x}</button>`).join('')}</div>`;
+    }
+    if(q.step===4){
+      if(!q.b){const tk=qTokens(it);q.tk=tk;q.b=bInit({w:tk.w,c:tk.c})}
+      body+=`<div class="qcard" style="margin:6px 0">Now build the sentence!</div>${bHTML(q.b,{},q.flash)}`;
+    }
+  }
+  frame(R,`${hdr}${task}${body}${q.flash?`<div class="nextrow"><button class="btn go" data-a="qnext">${q.step===4?(R.i+1>=R.items.length?'Finish 🏁':'Next sentence ▶'):'Next step ▶'}</button></div>`:''}`);
+}
+function questAdvance(){
+  const R=S.run,q=R.q;q.flash=false;q.wrong=new Set();
+  if(q.step===4){const s=q.mist===0?3:q.mist===1?2:q.mist===2?1:0;R.stars+=s;R.total+=3;return nextQ()}
+  q.step++;
+  const msgs={2:()=>R.it.type==='+'?'Step 2: what kind of verb is it?':'Step 2: choose the helper word.',3:()=>'Step 3: make the verb!',4:()=>'Step 4: build the sentence!'};
+  setBubbleThenDraw(R,msgs[q.step](),'');
+}
+function setBubbleThenDraw(R,m,tone){R.msg=m;R.tone=tone;questDraw(R)}
+function questPick(step,i){
+  const R=S.run,q=R.q,it=R.it;if(q.flash)return;
+  if(step===1){
+    if(i===3){q.flash=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} <b>${it.time}</b> is the time clue ⏰ — so we need the <b>Past Simple</b>!`;R.tone='good';questDraw(R);return}
+    q.mist++;sfx.no();R.msg='Not that one. Look for the word that tells us WHEN: yesterday, last…, ago… 🔎';R.tone='bad';questDraw(R,i);return;
+  }
+  const v=q.o[i];
+  if(v===q.a){q.flash=true;sfx.ok();
+    const hints={2:it.type==='+'?(isReg(it.base,it.past)?`Yes! <b>${it.base}</b> is regular: +ed ➜ <b>${it.past}</b>`:`Yes! <b>${it.base}</b> is irregular — it changes to <b>${it.past}</b>`):(it.type==='-'?"Yes! didn't = the past negative helper.":'Yes! Did starts a past question.'),
+      3:it.type==='+'?`Yes! ${it.base} ➜ <b>${it.past}</b>`:`Yes! After ${it.type==='-'?"didn't":'did'} the verb stays <b>${it.base}</b> — did already shows the past.`};
+    R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} ${hints[q.step]}`;R.tone='good';
+  }else{q.mist++;q.wrong.add(v);sfx.no();R.msg=q.step===3&&it.type!=='+'?`Hint 💡 After did / didn't → BASE verb.`:'Not quite — try again! 🤔';R.tone='bad'}
+  questDraw(R);
+}
+function questBuild(kind,j){
+  const R=S.run,q=R.q;if(q.flash)return;
+  if(kind==='pick')bPick(q.b,j);else if(kind==='unpick')bUnpick(q.b,j);else if(kind==='bclr')bClear(q.b);
+  else if(kind==='bchk'){
+    if(bCheck(q.b)){q.flash=true;sfx.ok();R.msg=`${PRAISE[Math.floor(Math.random()*PRAISE.length)]} <b>${q.tk.w.join(' ')}</b>`;R.tone='good';questDraw(R);speak(q.tk.w.join(' '));return}
+    q.mist++;sfx.no();R.msg='The red words are in the wrong place. Try again!';R.tone='bad';
+  }
+  questDraw(R);
+}
+
+/* ---------- EXPLORER ---------- */
+function exploreLoad(R){R.seen=new Set();R.cur=-1;R.done=false;exploreDraw(R)}
+function exploreDraw(R){
+  const v=R.items[R.cur];
+  let card='';
+  if(v){
+    const hl=(s,w)=>s.replace(new RegExp('\\b'+w+'\\b','i'),m=>`<b>${m}</b>`);
+    card=`<div class="vcard"><div class="vrow"><div class="fcell r-base"><small>V1 · base</small><b>${v.v1}</b></div><div class="fcell r-past" style="color:#3b2300"><small>V2 · past simple</small><b>${v.v2}</b></div><div class="fcell r-pp"><small>V3 · PP</small><b>${v.v3}</b></div></div>
+     <div class="ex r-past" style="--t:#3b2300"><small>Past Simple (V2)</small>${hl(v.s2,v.v2)}</div>
+     <div class="ex r-pp"><small>have / has + PP (V3)</small>${hl(v.s3,v.v3)}</div>
+     ${v.s4?`<div class="ex r-obj" style="--t:#2e1065"><small>Passive: be + PP (V3)</small>${hl(v.s4,v.v3)}</div>`:''}
+     <div style="text-align:center"><button class="say" data-a="xsay">🔊 Listen</button> <button class="say" data-a="xprev">◀</button> <button class="say" data-a="xnext">▶</button></div></div>`;
+  }
+  const tiles=R.items.map((x,i)=>`<button class="vt ${x.reg?'reg':''} ${R.seen.has(i)?'seen':''} ${i===R.cur?'cur':''}" data-a="xv" data-i="${i}">${x.v1}</button>`).join('');
+  frame(R,`${card}<div class="qcard" style="font-size:1.1rem;margin-bottom:8px">${v?'':'Tap any verb 👇 '}<small>Green = regular (V2 = V3) · Blue = irregular</small></div><div class="vgrid">${tiles}</div>
+   ${R.seen.size>=8?`<div class="nextrow"><button class="btn go" data-a="xdone">I explored enough ✔</button></div>`:`<p style="text-align:center;font-weight:700;color:#64748b">Explore 8 verbs to finish this step (${R.seen.size}/8)</p>`}`);
+}
+function exploreOpen(i){const R=S.run;R.cur=(i+R.items.length)%R.items.length;R.seen.add(R.cur);const v=R.items[R.cur];
+  R.msg=`<b>${v.v1} – ${v.v2} – ${v.v3}</b>`;R.tone='';exploreDraw(R);speak(`${v.v1}, ${v.v2}, ${v.v3}. ${v.s2}. ${v.s3}`);}
+function exploreDone(){const R=S.run;R.stars=3;R.total=3;endAct(R)}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-c]');if(c){clipCtl(c.dataset.c);return}
+  const t=e.target.closest('[data-a]');if(!t)return;
+  const a=t.dataset.a,i=+t.dataset.i,R=S.run;
+  switch(a){
+    case 'map':return renderMap();
+    case 'station':return openStation(i);
+    case 'step':return goStep(i);
+    case 'again':return startAct(R.act);
+    case 'nextq':return nextQ();
+    case 'opt':return quizPick(i);
+    case 'say':return speak(R.it.say);
+    case 'chk':return typeCheck();
+    case 'mc':return matchFlip(i);
+    case 'pick':if(R.act.type==='quest')return questBuild('pick',i);bPick(R.b,i);return buildDraw(R);
+    case 'unpick':if(R.act.type==='quest')return questBuild('unpick',i);bUnpick(R.b,i);return buildDraw(R);
+    case 'bclr':if(R.act.type==='quest')return questBuild('bclr');bClear(R.b);return buildDraw(R);
+    case 'bchk':if(R.act.type==='quest')return questBuild('bchk');return buildCheck();
+    case 'ew':return errPick(i);
+    case 'q1':return questPick(1,i);
+    case 'q2':return questPick(R.q.step,i);
+    case 'qnext':return questAdvance();
+    case 'xv':return exploreOpen(i);
+    case 'xnext':return exploreOpen(R.cur+1);
+    case 'xprev':return exploreOpen(R.cur-1);
+    case 'xsay':{const v=R.items[R.cur];return speak(`${v.v1}, ${v.v2}, ${v.v3}. ${v.s2}. ${v.s3}`)}
+    case 'xdone':return exploreDone();
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.id==='tin'){e.preventDefault();typeCheck()}
+});
+$('#mutebtn').addEventListener('click',()=>{
+  S.mute=!S.mute;$('#mutebtn').textContent=S.mute?'🔇 Sound off':'🔊 Sound on';
+  if(S.mute&&'speechSynthesis' in window)try{speechSynthesis.cancel()}catch(e){}
+});
+
+/* stars background */
+(function(){const el=$('#stars');for(let i=0;i<70;i++){const s=document.createElement('i');
+  s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*3)+'s';
+  s.style.opacity=.4+Math.random()*.6;el.appendChild(s)}})();
+renderMap();
+
+</script>
+</body>
+</html>

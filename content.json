@@ -136,6 +136,13 @@
             "Grammar",
             "Passive voice"
           ]
+        },
+        {
+          "title": "Time Machine: Past Simple Adventure",
+          "icon": "⏰",
+          "url": "games/past-simple-game.html",
+          "description": "9 stations with short animated videos and lots of practice: what Past Simple is, regular & irregular verbs, did/didn't, time words, a special AGO station, the past participle (PP) with 40 examples, a build-it quest and a final boss.",
+          "tags": ["Grammar", "Past simple", "Videos + games"]
         }
       ]
     },
