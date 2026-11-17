@@ -101,7 +101,7 @@ const PPL={
  bedwin:{skin:'#f3d4b6',hair:'#e0e0e4',hs:'mob',coat:'#7b5f78',dress:1,apron:'#f1eee4',collar:1,w:1.15,name:'Mrs. Bedwin'},
  grimwig:{skin:'#e8c4a0',hair:'#cfcfcf',hs:'slick',coat:'#2f4a38',vest:'#d0b070',pants:'#8a7a58',top:'#3a3a40',cravat:1,name:'Mr. Grimwig'},
  nancy:{skin:'#f1cfb0',hair:'#a2522e',hs:'long',coat:'#a1473a',dress:1,shawl:'#d6a860',collar:1,name:'Nancy'},
- sykes:{skin:'#dcb894',hair:'#2e2420',hs:'slick',coat:'#5a4636',vest:'#7a2f3a',pants:'#44382e',beard:'#b8957a',w:1.2,s:1.05,name:'Bill Sykes'},
+ sykes:{skin:'#dcb894',hair:'#2e2420',hs:'slick',coat:'#5a4636',vest:'#7a2f3a',pants:'#44382e',beard:'#b8957a',w:1.2,s:1.05,name:'Bill Sikes'},
  charley:{skin:'#f3d0b0',hair:'#6b4a30',hs:'cap',coat:'#3f6a5a',vest:'#b4423a',pants:'#6a5a48',cap:'#46607a',s:.9,name:'Charley Bates'},
  toby:{skin:'#e8c4a4',hair:'#c2552a',hs:'scruff',coat:'#8a3a30',vest:'#d0a840',pants:'#5a4a3a',name:'Toby Crackit'}
 };
@@ -168,7 +168,7 @@ function confetti(n){const c=['#ffb53d','#ffd98a','#2fbf71','#5cc8d8','#fff'];fo
 const LAMP=(s='happy')=>`<svg class="lamp" viewBox="0 0 120 170"><defs><radialGradient id="lg${s}"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".9"/><stop offset="1" stop-color="#ffb53d" stop-opacity="0"/></radialGradient></defs><circle class="flick" cx="60" cy="52" r="56" fill="url(#lg${s})"/><rect x="52" y="98" width="16" height="62" fill="#2b3f46"/><rect x="40" y="154" width="40" height="12" rx="4" fill="#1c2b31"/><rect x="44" y="94" width="32" height="8" rx="3" fill="#3a5560"/><path d="M34 30h52l8 62H26z" fill="#ffd36a" stroke="#2b3f46" stroke-width="5" stroke-linejoin="round"/><path d="M30 24h60l-8-14H38z" fill="#2b3f46"/><circle cx="60" cy="8" r="4" fill="#2b3f46"/><path d="M47 30v62M73 30v62" stroke="#2b3f46" stroke-width="3" opacity=".55"/><ellipse cx="46" cy="58" rx="5" ry="${s=='sad'?5:6.5}" fill="#2b2210"/><ellipse cx="74" cy="58" rx="5" ry="${s=='sad'?5:6.5}" fill="#2b2210"/><circle cx="47.6" cy="55.8" r="1.8" fill="#fff"/><circle cx="75.6" cy="55.8" r="1.8" fill="#fff"/>${s=='sad'?'<path d="M50 78q10-8 20 0" stroke="#2b2210" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M38 48l14 4M82 48l-14 4" stroke="#2b2210" stroke-width="3" stroke-linecap="round"/>':s=='wow'?'<ellipse cx="60" cy="78" rx="7" ry="8" fill="#2b2210"/>':'<path d="M46 72q14 16 28 0z" fill="#2b2210"/><path d="M50 74q10 7 20 0" fill="#e86a6a"/>'}<circle cx="36" cy="70" r="5" fill="#ff8a6a" opacity=".5"/><circle cx="84" cy="70" r="5" fill="#ff8a6a" opacity=".5"/></svg>`;
 const head=k=>`<svg viewBox="-32 -${PPL[k].top?150:128} 64 ${PPL[k].top?78:66}" preserveAspectRatio="xMidYMid meet">${fig(k,0,0,1,{d:0})}</svg>`;
 
-const WHO={bumble:'Mr. Bumble',monks:'Monks',old:'The old woman',nancy:'Nancy',rose:'Rose Maylie',servant:'The servant',sykes:'Bill Sykes',fagin:'Fagin'};
+const WHO={bumble:'Mr. Bumble',monks:'Monks',old:'The old woman',nancy:'Nancy',rose:'Rose Maylie',servant:'The servant',sykes:'Bill Sikes',fagin:'Fagin'};
 const PK={bumble:'bumble',monks:'stranger',old:'oldwoman',nancy:'nancy',rose:'rose',servant:'servant',sykes:'sykes',fagin:'fagin'};
 const LEVELS=[
 {id:'c12',title:'Chapter 12',sub:'Mr. Bumble and the Stranger',icon:()=>head('stranger'),qs:[
@@ -176,17 +176,29 @@ const LEVELS=[
  {q:'Mr. Bumble was now the master of the workhouse.',tf:1,a:true,why:'He told the stranger, “I am now master of the workhouse.”'},
  {q:'What did the stranger put on the table?',o:['Two gold coins','A letter','A hat'],a:0,why:'He gave Mr. Bumble two gold coins to begin with.'},
  {q:'Who did the stranger want to hear about?',o:['The old woman who looked after Oliver’s mother','Oliver himself','Mr. Brownlow'],a:0,why:'He wanted to hear about the old woman, not about Oliver.'},
- {q:'What name did the stranger give Mr. Bumble?',o:['Monks','Sykes','Giles'],a:0,why:'“Monks,” answered the man, and walked quickly away.'},
+ {q:'What name did the stranger give Mr. Bumble?',o:['Monks','Sikes','Giles'],a:0,why:'“Monks,” answered the man, and walked quickly away.'},
  {q:'Old Sally, the old woman who looked after Oliver’s mother, was still alive.',tf:1,a:false,why:'She died last winter. Only her friend was still alive.'},
  {q:'How much money did Monks give Mr. Bumble?',o:['Twenty-five gold coins','Two gold coins','Ten gold coins'],a:0,why:'He counted out twenty-five gold coins.'},
  {q:'What was inside the little bag?',o:['A gold ornament with hair and a wedding ring','A key and a letter','Money and a map'],a:0,why:'It held a gold ornament with two pieces of hair and a plain gold wedding ring.'},
  {q:'What name was inside the ring?',o:['Agnes','Rose','Nancy'],a:0,why:'Agnes was the name of Oliver’s mother.'},
  {q:'What did Monks do with the bag at the end?',o:['He threw it into the river','He buried it in the garden','He gave it back to the old woman'],a:0,why:'“That is the end of that,” said Monks.'}
 ]},
+{id:'c13',title:'Chapter 13',sub:'Nancy Learns a Secret',icon:()=>head('fagin'),qs:[
+ {q:'Who lay on the bed, covered by his coat?',o:['Bill Sikes','Fagin','Monks'],a:0,why:'Bill Sikes had been ill for several weeks.'},
+ {q:'How long had Bill Sikes been ill?',o:['Several weeks','One day','Ten years'],a:0,why:'He had been ill for several weeks.'},
+ {q:'How did Nancy look?',o:['White and thin','Happy and fat','Angry and loud'],a:0,why:'She looked so white and thin that it was difficult to see it was Nancy.'},
+ {q:'Who came into the room?',o:['Fagin','Mr. Bumble','Rose'],a:0,why:'The door opened and Fagin came in.'},
+ {q:'Fagin wanted Oliver back because Oliver was worth a lot of money to him.',tf:1,a:true,why:'“He’s worth a lot of money to me, Bill.”'},
+ {q:'Who was Oliver staying with?',o:['Miss Maylie and her aunt','Mr. Bumble','Bill Sikes'],a:0,why:'He was staying with Miss Maylie and her aunt.'},
+ {q:'Where were Miss Maylie and her aunt staying in London?',o:['At a hotel near Hyde Park','At the workhouse','In a cottage by the river'],a:0,why:'They had come to London from the country.'},
+ {q:'What did Sikes need?',o:['Some money','A new coat','A doctor'],a:0,why:'He told Nancy to go with Fagin and get some money.'},
+ {q:'Who was the man in the black coat at the door?',o:['Monks','Mr. Giles','Mr. Brownlow'],a:0,why:'Fagin took the candle to the door and saw Monks.'},
+ {q:'What did Nancy do when Fagin and Monks went to another room?',o:['She took off her shoes and listened quietly','She ran away','She fell asleep'],a:0,why:'She stood quietly near the door and listened to all that they said.'}
+]},
 {id:'c14',title:'Chapter 14',sub:'A Visit to Rose Maylie',icon:()=>head('nancy'),qs:[
  {q:'Who went out to buy food and drink?',o:['Nancy','Fagin','Rose'],a:0,why:'Nancy went out with the money Fagin had provided.'},
- {q:'What happened after Sykes drank a great deal?',o:['He fell into a deep, heavy sleep','He went to see Fagin','He ran away'],a:0,why:'The drink made him sleep, so Nancy could leave.'},
- {q:'Nancy was afraid that Sykes would catch her.',tf:1,a:true,why:'She looked round in fear, as if she could feel his heavy hand on her shoulder.'},
+ {q:'What happened after Sikes drank a great deal?',o:['He fell into a deep, heavy sleep','He went to see Fagin','He ran away'],a:0,why:'The drink made him sleep, so Nancy could leave.'},
+ {q:'Nancy was afraid that Sikes would catch her.',tf:1,a:true,why:'She looked round in fear, as if she could feel his heavy hand on her shoulder.'},
  {q:'Where did Nancy go?',o:['To a quiet hotel near Hyde Park','To the workhouse','To Fagin’s den'],a:0,why:'Rose Maylie was staying at a quiet family hotel.'},
  {q:'Who did Nancy want to see?',o:['Miss Maylie','Mr. Brownlow','Mr. Bumble'],a:0,why:'She asked the servant for Miss Maylie.'},
  {q:'How did Rose speak to Nancy?',o:['Kindly, in a sweet voice','Angrily','Very loudly'],a:0,why:'Her kind voice and gentle manner made Nancy cry.'},
@@ -203,13 +215,17 @@ const LEVELS=[
  {q:'I want to see a lady who is staying here, Miss Maylie.',a:'nancy',opts:['nancy','rose','old'],why:'Nancy came in secret to warn Rose.'},
  {q:'Why don’t we tell the police?',a:'rose',opts:['rose','nancy','monks'],why:'Rose wanted to help Nancy and Oliver.'},
  {q:'I will walk on London Bridge every Sunday night.',a:'nancy',opts:['nancy','rose','servant'],why:'That is where Rose could find Nancy again.'},
- {q:'That is the end of that.',a:'monks',opts:['monks','bumble','sykes'],why:'Monks threw the bag into the river.'}
+ {q:'That is the end of that.',a:'monks',opts:['monks','bumble','sykes'],why:'Monks threw the bag into the river.'},
+ {q:'We have got to get Oliver back.',a:'fagin',opts:['fagin','sykes','monks'],why:'Fagin said Oliver was worth a lot of money to him.'},
+ {q:'How can you get him back?',a:'sykes',opts:['sykes','fagin','nancy'],why:'Bill Sikes asked Fagin how they could get Oliver.'},
+ {q:'Nothing that I know of, except sitting in this room for weeks and weeks.',a:'nancy',opts:['nancy','rose','old'],why:'Nancy had been sitting in the room for weeks.'},
+ {q:'I have been quick enough this time.',a:'monks',opts:['monks','fagin','bumble'],why:'Monks said it with a smile.'}
 ]}];
 const stars=(n)=>'<span>'+'★'.repeat(n)+'<i>'+'★'.repeat(3-n)+'</i></span>';
 const total=()=>LEVELS.reduce((a,l)=>a+(S[l.id]||0),0);
 const upd=()=>{$('#st').textContent='★ '+total()+' / '+LEVELS.length*3};
 function home(){upd();window.scrollTo(0,0);
- app.innerHTML=`<div class="hero">${LAMP('happy')}<h2>Mystery at the Old House</h2><p>A secret meeting by the river… a brave visit to a hotel… Can you remember what happened? Pick a level and win three stars!</p></div><div class="lvls">${LEVELS.map(l=>`<button class="lvl" data-id="${l.id}"><div class="ic">${l.icon()}</div><div><b>${l.title}</b><span class="d">${l.sub}</span></div><div class="stars">${stars(S[l.id]||0)}</div></button>`).join('')}</div>`;
+ app.innerHTML=`<div class="hero">${LAMP('happy')}<h2>Mystery at the Old House</h2><p>A secret meeting by the river… a secret heard at Fagin’s… a brave visit to a hotel… Can you remember what happened? Pick a level and win three stars!</p></div><div class="lvls">${LEVELS.map(l=>`<button class="lvl" data-id="${l.id}"><div class="ic">${l.icon()}</div><div><b>${l.title}</b><span class="d">${l.sub}</span></div><div class="stars">${stars(S[l.id]||0)}</div></button>`).join('')}</div>`;
  app.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>{sfx.tap();play(LEVELS.find(l=>l.id==b.dataset.id))});
 }
 function play(L){

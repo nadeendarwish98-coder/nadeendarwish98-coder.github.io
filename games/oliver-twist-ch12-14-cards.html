@@ -16,7 +16,7 @@ main{max-width:1020px;margin:0 auto;padding:18px 14px 50px}
 .tab.on{background:var(--paper);color:var(--ink)}
 .hint{text-align:center;color:#e6d4aa;margin:0 0 16px;font-size:15px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
-.card{perspective:1000px;height:420px;cursor:pointer}
+.card{perspective:1000px;height:470px;cursor:pointer}
 .in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}.card.flip .in{transform:rotateY(180deg)}
 .f,.b{position:absolute;inset:0;backface-visibility:hidden;border-radius:6px;overflow:hidden;box-shadow:0 10px 22px #000a;background:var(--paper);color:var(--ink);border:1px solid #cdbb8a}
 .f{padding:14px 14px 12px;display:flex;flex-direction:column}
@@ -29,8 +29,8 @@ main{max-width:1020px;margin:0 auto;padding:18px 14px 50px}
 .tap{margin-top:6px;text-align:center;font-size:11px;color:#8a7458}
 .b{transform:rotateY(180deg);padding:16px 16px 12px;display:flex;flex-direction:column;background:repeating-linear-gradient(#f2e7c9 0 25px,#e4d6b0 25px 26px)}
 .b h3{margin:0 0 2px;font-size:18px;text-transform:uppercase;letter-spacing:1px;color:var(--c)}.b .rl{font-size:13px;font-style:italic;color:#6a4a3a;margin-bottom:8px}
-.b ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.38}.b li{margin-bottom:5px}
-.stamp{position:absolute;right:10px;bottom:30px;border:3px solid var(--red);color:var(--red);font-weight:800;font-size:15px;padding:2px 10px;transform:rotate(-14deg);letter-spacing:2px;opacity:.55;border-radius:4px}
+.b ul{margin:0;padding-left:18px;font-size:14px;line-height:1.34}.b li{margin-bottom:5px}
+.stamp{position:absolute;right:10px;bottom:26px;border:3px solid var(--red);color:var(--red);font-weight:800;font-size:15px;padding:2px 10px;transform:rotate(-14deg);letter-spacing:2px;opacity:.55;border-radius:4px}
 .b .tap{margin-top:auto}
 .panel{max-width:640px;margin:0 auto;background:var(--paper);color:var(--ink);border-radius:8px;padding:22px 20px;border:1px solid #cdbb8a;box-shadow:0 12px 26px #000a;position:relative}
 .panel:before{content:"";position:absolute;top:-6px;left:30px;width:20px;height:54px;border:4px solid #9aa4ac;border-radius:10px;border-bottom-color:transparent;transform:rotate(6deg)}
@@ -105,7 +105,7 @@ const PPL={
  bedwin:{skin:'#f3d4b6',hair:'#e0e0e4',hs:'mob',coat:'#7b5f78',dress:1,apron:'#f1eee4',collar:1,w:1.15,name:'Mrs. Bedwin'},
  grimwig:{skin:'#e8c4a0',hair:'#cfcfcf',hs:'slick',coat:'#2f4a38',vest:'#d0b070',pants:'#8a7a58',top:'#3a3a40',cravat:1,name:'Mr. Grimwig'},
  nancy:{skin:'#f1cfb0',hair:'#a2522e',hs:'long',coat:'#a1473a',dress:1,shawl:'#d6a860',collar:1,name:'Nancy'},
- sykes:{skin:'#dcb894',hair:'#2e2420',hs:'slick',coat:'#5a4636',vest:'#7a2f3a',pants:'#44382e',beard:'#b8957a',w:1.2,s:1.05,name:'Bill Sykes'},
+ sykes:{skin:'#dcb894',hair:'#2e2420',hs:'slick',coat:'#5a4636',vest:'#7a2f3a',pants:'#44382e',beard:'#b8957a',w:1.2,s:1.05,name:'Bill Sikes'},
  charley:{skin:'#f3d0b0',hair:'#6b4a30',hs:'cap',coat:'#3f6a5a',vest:'#b4423a',pants:'#6a5a48',cap:'#46607a',s:.9,name:'Charley Bates'},
  toby:{skin:'#e8c4a4',hair:'#c2552a',hs:'scruff',coat:'#8a3a30',vest:'#d0a840',pants:'#5a4a3a',name:'Toby Crackit'}
 };
@@ -162,15 +162,15 @@ function fig(k,x,y,s=1,o={}){const p=PPL[k],w=p.w||1,sc=s*(p.s||1),e=o.e||'n',dl
 
 const CH=[
 {n:'Mr. Bumble',k:'bumble',ch:'12',c:'#5b7fb8',role:'Master of the workhouse',d:['Is now the master of the workhouse where Oliver was born.','Was drinking tea by the fire when a stranger came.','Took two gold coins from the stranger.','Asked Monks for twenty-five pounds for the secret.','Took an old woman to meet Monks by the river.']},
-{n:'Monks',k:'stranger',ch:'12 · 14',c:'#4a4560',role:'The tall, dark stranger',d:['Wears a black coat and walks very quickly.','Paid Mr. Bumble to find the old woman.','Gave twenty-five gold coins to hear her secret.','Threw the little bag with the ring into the river.','Wants Fagin to turn Oliver into a thief again.']},
+{n:'Monks',k:'stranger',ch:'12 · 13 · 14',c:'#4a4560',role:'The tall, dark stranger',d:['Paid Mr. Bumble to find the old woman.','Gave twenty-five gold coins to hear her secret.','Threw the little bag with the ring into the river.','Came to Fagin’s room with a smile and asked for a word alone.','Wants Fagin to turn Oliver into a thief again.']},
 {n:'The Old Woman',k:'oldwoman',ch:'12',c:'#8a7a6a',role:'Old Sally’s friend',d:['Was beside Old Sally on the night she died.','Heard a secret about Oliver’s mother.','Had a small bag with a gold ornament inside.','Told Monks the ring had the word “Agnes” inside it.']},
 {n:'Agnes',e:'ring',ch:'12',c:'#c9a13c',role:'Oliver’s mother',d:['Her name is written inside the gold wedding ring.','She gave something to Old Sally to keep for her child.','Old Sally kept it for herself and later sold it.','Monks threw the ring into the river.']},
-{n:'Nancy',k:'nancy',ch:'14',c:'#c05a48',role:'A brave young woman',d:['Waited until Bill Sykes was fast asleep.','Hurried through the busy London streets at night.','Visited Rose Maylie at a hotel near Hyde Park.','Told Rose about Monks and Fagin’s plan.','Will walk on London Bridge every Sunday night.']},
+{n:'Nancy',k:'nancy',ch:'13 · 14',c:'#c05a48',role:'A brave young woman',d:['Sat near the window for weeks, so white and thin.','Quietly took off her shoes and listened to Fagin and Monks.','Visited Rose Maylie at a hotel near Hyde Park.','Told Rose about Monks and Fagin’s plan.','Will walk on London Bridge every Sunday night.']},
 {n:'Rose Maylie',k:'rose',ch:'14',c:'#6f8fb8',role:'A kind young lady',d:['Was staying at a quiet family hotel.','Spoke to Nancy in a sweet, kind voice.','Wanted to tell the police.','Promised to keep Nancy’s secret.','Offered Nancy money, but Nancy said, “Not a penny.”']},
-{n:'Bill Sykes',k:'sykes',ch:'14',c:'#7a5a44',role:'A rough, dangerous thief',d:['Felt a little better the next day.','Drank a great deal and fell into a heavy sleep.','Did not know that Nancy had left the room.','Nancy was afraid of his heavy hand.']},
+{n:'Bill Sikes',k:'sykes',ch:'13 · 14',c:'#7a5a44',role:'A rough, dangerous thief',d:['Lay on his bed, covered by his coat.','Had been ill for several weeks.','Told Nancy to go with Fagin and get some money.','Drank a great deal and fell into a heavy sleep.','Did not know that Nancy had left the room.']},
 {n:'The Servant',k:'servant',ch:'14',c:'#6a5f86',role:'The hotel servant',d:['Asked Nancy, “What do you want here?”','Saw that she was white, thin and wearing old clothes.','Went upstairs to tell Miss Maylie.','Led Nancy to a small room.']},
-{n:'Fagin',k:'fagin',ch:'12 · 14',c:'#6a4a7a',role:'The leader of the thieves',d:['Gave Nancy money for food and drink.','Was seen with Monks outside Oliver’s window.','Talked with Monks about catching Oliver again.','Monks wants to pay Fagin to get Oliver back.']},
-{n:'Oliver Twist',k:'oliver',ch:'12 · 14',c:'#e08a5a',role:'The hero of the story',d:['Was born in the workhouse where Mr. Bumble works.','Is staying safe with kind friends.','Monks and Fagin are planning to catch him again.','Nancy says, “Oliver must be saved.”']}
+{n:'Fagin',k:'fagin',ch:'12 · 13 · 14',c:'#6a4a7a',role:'The leader of the thieves',d:['Said, “We have got to get Oliver back.”','Knew that Miss Maylie was at a hotel near Hyde Park.','Told Nancy not to say a word about money in front of Monks.','Gave Nancy money for food and drink.','Monks wants to pay Fagin to get Oliver back.']},
+{n:'Oliver Twist',k:'oliver',ch:'12 · 13 · 14',c:'#e08a5a',role:'The hero of the story',d:['Was born in the workhouse where Mr. Bumble works.','Is staying with Miss Maylie and her aunt.','Monks and Fagin are planning to catch him again.','Nancy says, “Oliver must be saved.”']}
 ];
 const $=s=>document.querySelector(s),v=$('#view');
 const KEY='ot_ch12_14_cards';let S={got:[],best:0};try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
