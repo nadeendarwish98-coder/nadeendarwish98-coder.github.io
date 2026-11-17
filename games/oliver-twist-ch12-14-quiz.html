@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mystery at the Old House — Oliver Twist Quiz · Nadeen's Learning Hub</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg1:#07222b;--bg2:#12424e;--amber:#ffb53d;--amber2:#ffd98a;--paper:#f4ead2;--ink:#1b2a30;--ok:#2fbf71;--no:#e85a5a;--teal:#1d6b78}
+body{margin:0;min-height:100vh;font-family:Georgia,"Times New Roman",serif;color:#f4ead2;background:radial-gradient(ellipse at 50% 0,#1b5866 0,transparent 60%),linear-gradient(#07222b,#0d333d 60%,#0a2a33);background-attachment:fixed;overflow-x:hidden}
+.fog{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 20% at 20% 90%,rgba(255,255,255,.07),transparent),radial-gradient(ellipse 50% 18% at 80% 80%,rgba(255,255,255,.06),transparent);animation:fog 16s ease-in-out infinite alternate}
+@keyframes fog{to{transform:translateX(40px)}}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(5,22,28,.92);backdrop-filter:blur(4px);border-bottom:3px solid var(--amber)}
+.home{background:var(--amber);color:#2a1a05;font:800 15px Georgia,serif;text-decoration:none;padding:8px 15px;border-radius:999px;white-space:nowrap;box-shadow:0 3px 0 #a86a10}
+.home:active{transform:translateY(2px);box-shadow:0 1px 0 #a86a10}
+.top h1{flex:1;margin:0;text-align:center;font-size:18px;letter-spacing:.5px;color:var(--amber2)}
+.top .st{font-weight:800;color:var(--amber);white-space:nowrap}
+.snd{background:transparent;border:2px solid var(--amber);color:var(--amber);border-radius:999px;width:36px;height:36px;font-size:16px;cursor:pointer}
+main{position:relative;max-width:780px;margin:0 auto;padding:18px 14px 50px}
+.hero{text-align:center;padding:6px 0 4px}
+.hero h2{font-size:34px;margin:6px 0 2px;color:var(--amber2);text-shadow:0 3px 0 #0006}
+.hero p{margin:4px auto 14px;max-width:520px;color:#cfe3e6;font-size:17px;line-height:1.45}
+.lamp{width:150px;height:auto;display:block;margin:0 auto}
+.lvls{display:grid;gap:12px;margin-top:8px}
+.lvl{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#17505d,#0f3a45);border:3px solid #2a7f8e;border-radius:18px;padding:14px 16px;color:inherit;font:inherit;text-align:left;cursor:pointer;box-shadow:0 5px 0 #06232b;transition:transform .12s}
+.lvl:hover{transform:translateY(-2px);border-color:var(--amber)}.lvl:active{transform:translateY(3px);box-shadow:0 2px 0 #06232b}
+.lvl .ic{width:62px;height:62px;border-radius:14px;background:#0a2a33;border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none}
+.lvl b{display:block;font-size:21px;color:var(--amber2)}.lvl span.d{font-size:14px;color:#b9d3d7}
+.lvl .stars{margin-left:auto;font-size:26px;color:var(--amber);letter-spacing:2px;white-space:nowrap}.lvl .stars i{color:#2d6470;font-style:normal}
+.card{background:var(--paper);color:var(--ink);border-radius:20px;border:5px solid var(--amber);padding:20px 18px;box-shadow:0 10px 24px #0007;position:relative}
+.meta{display:flex;justify-content:space-between;font:800 13px Georgia,serif;letter-spacing:1px;color:#a2551d;text-transform:uppercase;margin-bottom:6px}
+.q{font-size:24px;line-height:1.35;margin:6px 0 16px;font-weight:700}
+.quote{font-size:25px;font-style:italic;line-height:1.4;margin:6px 0 16px;padding:12px 16px;background:#fff7e0;border-left:6px solid #c9822a;border-radius:6px}
+.opts{display:grid;gap:10px}.opts.two{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:12px;font:700 19px Georgia,serif;text-align:left;color:var(--ink);background:#fff;border:3px solid #1d6b78;border-radius:14px;padding:13px 14px;cursor:pointer;box-shadow:0 4px 0 #1d6b78;transition:transform .1s}
+.opt:hover:not(.lock){background:#e7f6f8}.opt:active:not(.lock){transform:translateY(3px);box-shadow:0 1px 0 #1d6b78}
+.opt .k{width:34px;height:34px;border-radius:50%;background:#1d6b78;color:#fff;display:flex;align-items:center;justify-content:center;flex:none;font-size:16px}
+.opt.ok{background:#c6f3d9;border-color:#168a4f;box-shadow:0 4px 0 #168a4f}.opt.ok .k{background:#168a4f}
+.opt.no{background:#ffd3d3;border-color:#c24040;box-shadow:0 4px 0 #c24040;animation:shake .35s}.opt.no .k{background:#c24040}
+.opt.lock{cursor:default}.opt.dim{opacity:.55}
+.opt.who{flex-direction:column;text-align:center;padding:8px 6px 10px;font-size:16px}.opt.who svg{width:92px;height:92px;background:#e7f1f2;border-radius:12px}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{display:flex;gap:12px;align-items:center;margin-top:14px;padding:10px 12px;border-radius:14px;background:#fff7e0;border:2px dashed #c9822a;min-height:62px}
+.fb .lamp{width:46px;flex:none;margin:0}.fb p{margin:0;font-size:16px;line-height:1.4}
+.btn{display:inline-block;background:var(--amber);color:#2a1a05;border:0;border-radius:14px;padding:13px 26px;font:800 18px Georgia,serif;cursor:pointer;box-shadow:0 5px 0 #a86a10;text-decoration:none}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #a86a10}.btn.alt{background:#fff;box-shadow:0 5px 0 #8aa}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.bar{height:12px;background:#0a2a33;border:2px solid #2a7f8e;border-radius:99px;overflow:hidden;margin:0 0 14px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb53d,#ffe08a);width:0;transition:width .4s}
+.end{text-align:center;color:var(--ink)}.end h3{font-size:30px;margin:6px 0}.end .big{font-size:60px;letter-spacing:6px;color:#e89a1d;text-shadow:0 3px 0 #0003}.end .big i{color:#c9c2ad;font-style:normal}
+.end .lamp{width:110px}
+.conf{position:fixed;top:-20px;width:10px;height:14px;z-index:30;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.flick{animation:fl 1.6s ease-in-out infinite;transform-origin:50% 40%}@keyframes fl{50%{opacity:.82}}
+.bounce{animation:bn .6s}@keyframes bn{30%{transform:translateY(-12px) scale(1.06)}60%{transform:translateY(0)}}
+@media(max-width:560px){.opts.two{grid-template-columns:1fr}.q{font-size:21px}.quote{font-size:21px}.hero h2{font-size:28px}}
+</style></head><body><div class="fog"></div>
+<div class="top"><a class="home" href="../index.html">🏠 Learning Hub</a><h1>Mystery at the Old House</h1><div class="st" id="st">★ 0</div><button class="snd" id="snd" title="Sound">🔊</button></div>
+<main id="app"></main>
+<script>
+const dkc=0;
+const ICON={
+ coins:`<circle cx="17" cy="31" r="11" fill="#e0b84a" stroke="#9a7424" stroke-width="2"/><circle cx="31" cy="26" r="11" fill="#efc85a" stroke="#9a7424" stroke-width="2"/><circle cx="26" cy="15" r="11" fill="#f4d46a" stroke="#9a7424" stroke-width="2"/><text x="26" y="20" font-size="13" font-weight="bold" text-anchor="middle" fill="#9a7424">£</text>`,
+ note:`<path d="M10 8h28v32H10z" fill="#f4ecd0" stroke="#a89468" stroke-width="2"/><path d="M15 16h18M15 22h18M15 28h12" stroke="#7a6a48" stroke-width="2"/>`,
+ ring:`<circle cx="24" cy="31" r="10" fill="none" stroke="#e8c050" stroke-width="5"/><circle cx="24" cy="31" r="10" fill="none" stroke="#fff3b0" stroke-width="1.5" stroke-dasharray="6 40"/><path d="M19 16l5-8 5 8-5 6z" fill="#8ad0ff" stroke="#4a8ab0"/>`,
+ locket:`<path d="M24 6v10" stroke="#c8a040" stroke-width="3"/><path d="M24 14c-12 0-14 14-10 20 3 5 17 5 20 0 4-6 2-20-10-20z" fill="#e8c050" stroke="#9a7424" stroke-width="2"/><path d="M24 22c-2-3-7-1-5 3 1 2 5 5 5 5s4-3 5-5c2-4-3-6-5-3z" fill="#b64a4a"/>`,
+ bottle:`<rect x="19" y="6" width="10" height="10" fill="#3d7a52"/><path d="M19 16c-8 4-8 8-8 14v12h26V30c0-6 0-10-8-14z" fill="#4a9a64" stroke="#2a5a3a" stroke-width="2"/><rect x="15" y="28" width="18" height="9" fill="#f1e8c8"/>`,
+ lamp:`<path d="M24 4v6" stroke="#555" stroke-width="3"/><path d="M14 12h20l4 26H10z" fill="#ffd980" stroke="#6a5030" stroke-width="3"/><rect x="8" y="38" width="32" height="5" fill="#6a5030"/><circle cx="24" cy="26" r="6" fill="#fff3c0"/>`,
+ clock:`<circle cx="24" cy="26" r="18" fill="#f6efd8" stroke="#6a5030" stroke-width="3"/><path d="M24 26V14M24 26l8 4" stroke="#2a1d14" stroke-width="3" stroke-linecap="round"/>`,
+ tear:`<path d="M24 6c8 12 12 18 12 24a12 12 0 0 1-24 0c0-6 4-12 12-24z" fill="#8ad0ff" stroke="#4a8ab0" stroke-width="2"/>`,
+ house:`<path d="M6 24L24 8l18 16v18H6z" fill="#9a5444" stroke="#563c2a" stroke-width="2"/><rect x="20" y="28" width="9" height="14" fill="#563c2a"/>`,
+ bag:`<rect x="8" y="18" width="32" height="22" rx="4" fill="#4a3426"/><path d="M17 18v-5a7 7 0 0 1 14 0v5" stroke="#c19a4b" fill="none" stroke-width="3"/><rect x="21" y="24" width="6" height="6" fill="#c19a4b"/>`,
+ bell:`<path d="M24 6c-8 0-10 8-10 14 0 6-4 8-4 12h28c0-4-4-6-4-12 0-6-2-14-10-14z" fill="#c19a4b"/><circle cx="24" cy="38" r="4" fill="#8a6a2a"/>`,
+ candle:`<rect x="19" y="20" width="10" height="20" fill="#f2ead4"/><path d="M24 6c4 5 4 8 0 12-4-4-4-7 0-12z" fill="#f4a73a"/><rect x="13" y="40" width="22" height="4" fill="#c19a4b"/>`,
+ curtain:`<rect x="4" y="5" width="40" height="6" fill="#563c2a"/><path d="M6 11c10 0 9 24 8 32H6zM42 11c-10 0-9 24-8 32h8z" fill="#7a2f3a"/>`,
+ teapot:`<ellipse cx="22" cy="28" rx="14" ry="11" fill="#f3efe6" stroke="#8a8aa0" stroke-width="2"/><path d="M34 24l9-6" stroke="#8a8aa0" stroke-width="4"/><path d="M10 24c-6 0-6 10 0 10" stroke="#8a8aa0" stroke-width="3" fill="none"/><rect x="15" y="14" width="14" height="5" rx="2" fill="#d8d4c8"/>`,
+ flower:`<path d="M24 26v18" stroke="#4b6b4a" stroke-width="3"/>${[0,1,2,3,4].map(i=>`<ellipse cx="24" cy="12" rx="5" ry="8" fill="#d9677a" transform="rotate(${i*72} 24 22)"/>`).join('')}<circle cx="24" cy="22" r="5" fill="#f2cf6a"/>`,
+ book:`<rect x="8" y="9" width="32" height="30" rx="3" fill="#7a2f3a"/><rect x="12" y="12" width="26" height="24" fill="#f4ecd6"/><path d="M14 18h20M14 24h20M14 30h14" stroke="#9a8a6a" stroke-width="2"/>`,
+ piano:`<rect x="4" y="14" width="40" height="24" rx="3" fill="#2b1c18"/><rect x="7" y="22" width="34" height="14" fill="#f4ecd6"/>${[0,1,2,3,4,5].map(i=>`<rect x="${10+i*5.4}" y="22" width="3" height="8" fill="#222"/>`).join('')}`,
+ bird:`<ellipse cx="22" cy="28" rx="14" ry="10" fill="#d6a23c"/><circle cx="34" cy="20" r="8" fill="#d6a23c"/><path d="M41 20l6 2-6 3z" fill="#c26a2a"/><circle cx="36" cy="18" r="1.8" fill="#222"/><path d="M12 26q8-10 16 2z" fill="#b8832a"/><path d="M8 32l-6 4" stroke="#8a6a2a" stroke-width="3"/>`,
+ cup:`<path d="M10 16h24v10a12 12 0 0 1-24 0z" fill="#f3efe6" stroke="#6a7aa6" stroke-width="2"/><path d="M34 19c8 0 8 9 0 9" fill="none" stroke="#6a7aa6" stroke-width="2.4"/><ellipse cx="22" cy="42" rx="18" ry="3.4" fill="#f3efe6" stroke="#6a7aa6" stroke-width="1.6"/>`,
+ shoe:`<path d="M6 14h12l3 12c8 2 18 4 21 8v6H6z" fill="#4a3426"/><rect x="6" y="38" width="36" height="5" fill="#2a1d14"/>`,
+ hat:`<rect x="14" y="6" width="20" height="28" fill="#38302c"/><rect x="6" y="32" width="36" height="6" rx="3" fill="#38302c"/><rect x="14" y="26" width="20" height="5" fill="#7a2f3a"/><path d="M26 10l6 3-2 6z" fill="#8a7a5a"/>`,
+ letter:`<rect x="6" y="12" width="36" height="26" rx="2" fill="#f6efd8" stroke="#a89468" stroke-width="2"/><path d="M6 12l18 15 18-15" fill="none" stroke="#a89468" stroke-width="2"/><circle cx="24" cy="27" r="4" fill="#7a2f3a"/>`,
+ foot:`<ellipse cx="17" cy="22" rx="6" ry="10" fill="#5a4636"/><ellipse cx="31" cy="30" rx="6" ry="10" fill="#5a4636"/><circle cx="14" cy="9" r="2.4" fill="#5a4636"/><circle cx="20" cy="9" r="2.4" fill="#5a4636"/><circle cx="28" cy="17" r="2.4" fill="#5a4636"/><circle cx="34" cy="17" r="2.4" fill="#5a4636"/>`,
+ button:`<circle cx="24" cy="24" r="14" fill="#c19a4b" stroke="#8a6a2a" stroke-width="2"/><circle cx="19" cy="20" r="2" fill="#5b3a29"/><circle cx="29" cy="20" r="2" fill="#5b3a29"/><circle cx="19" cy="29" r="2" fill="#5b3a29"/><circle cx="29" cy="29" r="2" fill="#5b3a29"/>`,
+ walk:`<path d="M6 14h12l3 12c8 2 18 4 21 8v6H6z" fill="#6a5242"/><rect x="6" y="38" width="36" height="5" fill="#2a1d14"/>`
+};
+
+/* ---------- people ---------- */
+const PPL={
+ oliver:{skin:'#efcaa0',hair:'#6a4a30',hs:'messy',coat:'#7d6a55',pants:'#5a4e44',patch:1,s:.86,name:'Oliver'},
+ rose:{skin:'#f3d6ba',hair:'#8c5436',hs:'long',coat:'#566f94',dress:1,collar:1,name:'Rose'},
+ maylie:{skin:'#f0d2b4',hair:'#cfcfd4',hs:'bun',coat:'#5b4560',dress:1,collar:1,lace:1,glasses:1,shawl:'#9a7f98',name:'Mrs. Maylie'},
+ losberne:{skin:'#f1c8a8',hair:'#e6e6e6',hs:'bald',coat:'#3f5a45',vest:'#c0a063',pants:'#b49c70',belly:1,cravat:1,glasses:1,w:1.25,name:'Dr. Losberne'},
+ giles:{skin:'#efd0b0',hair:'#9a9aa0',hs:'slick',coat:'#26262e',vest:'#7a7a88',pants:'#32323a',cravat:1,name:'Mr. Giles'},
+ brittles:{skin:'#f3d4b4',hair:'#d8b868',hs:'cap',coat:'#e2d6b8',vest:'#7a5a40',pants:'#625648',cap:'#5c4c3e',freck:1,s:.94,name:'Brittles'},
+ cook:{skin:'#f3d0b4',hair:'#785238',hs:'mob',coat:'#6a4c58',dress:1,apron:'#f1eee4',collar:1,w:1.2,name:'The Cook'},
+ fagin:{skin:'#e0c6a2',hair:'#9a9890',hs:'scruff',coat:'#464230',pants:'#3a362c',beard:'#a09e96',top:'#38302c',cloak:1,name:'Fagin'},
+ bumble:{skin:'#efc6a4',hair:'#8a7a6a',hs:'slick',coat:'#2c4a80',vest:'#e0c070',pants:'#5a5a64',belly:1,cravat:1,w:1.3,s:1.02,top:'#2a2a32',name:'Mr. Bumble'},
+ oldwoman:{skin:'#e6c9ad',hair:'#cfcfd2',hs:'mob',coat:'#4a4654',dress:1,shawl:'#7d6b5a',collar:1,s:.9,name:'The Old Woman'},
+ servant:{skin:'#efd0b0',hair:'#6a5a4a',hs:'slick',coat:'#3a3248',vest:'#c0a063',pants:'#2e2a38',cravat:1,name:'The Servant'},
+ stranger:{skin:'#e6d8d2',hair:'#1e1c22',hs:'slick',coat:'#1e1c28',pants:'#1c1a24',top:'#16141a',cloak:1,cravat:1,s:1.08,name:'The Stranger'}
+ ,brownlow:{skin:'#f0cfae',hair:'#d9d9dc',hs:'slick',coat:'#3a4a66',vest:'#b49a62',pants:'#4a4a58',cravat:1,glasses:1,name:'Mr. Brownlow'},
+ bedwin:{skin:'#f3d4b6',hair:'#e0e0e4',hs:'mob',coat:'#7b5f78',dress:1,apron:'#f1eee4',collar:1,w:1.15,name:'Mrs. Bedwin'},
+ grimwig:{skin:'#e8c4a0',hair:'#cfcfcf',hs:'slick',coat:'#2f4a38',vest:'#d0b070',pants:'#8a7a58',top:'#3a3a40',cravat:1,name:'Mr. Grimwig'},
+ nancy:{skin:'#f1cfb0',hair:'#a2522e',hs:'long',coat:'#a1473a',dress:1,shawl:'#d6a860',collar:1,name:'Nancy'},
+ sykes:{skin:'#dcb894',hair:'#2e2420',hs:'slick',coat:'#5a4636',vest:'#7a2f3a',pants:'#44382e',beard:'#b8957a',w:1.2,s:1.05,name:'Bill Sykes'},
+ charley:{skin:'#f3d0b0',hair:'#6b4a30',hs:'cap',coat:'#3f6a5a',vest:'#b4423a',pants:'#6a5a48',cap:'#46607a',s:.9,name:'Charley Bates'},
+ toby:{skin:'#e8c4a4',hair:'#c2552a',hs:'scruff',coat:'#8a3a30',vest:'#d0a840',pants:'#5a4a3a',name:'Toby Crackit'}
+};
+function fig(k,x,y,s=1,o={}){const p=PPL[k],w=p.w||1,sc=s*(p.s||1),e=o.e||'n',dl=o.d!=null?o.d:Math.random()*2;
+ const dk=(c,f)=>{const v=parseInt(c.slice(1),16);return '#'+[v>>16,(v>>8)&255,v&255].map(q=>Math.round(q*f).toString(16).padStart(2,'0')).join('')};
+ let b=`<ellipse cx="0" cy="1" rx="${24*w}" ry="5" fill="#000" opacity=".22"/>`;
+ if(p.cloak)b+=`<path d="M-20 -86L20 -86L${34}-6L-34 -6Z" fill="${dk(p.coat,.8)}"/>`;
+ if(p.hs=='long')b+=`<path d="M-17 -100q-4 30 -2 38h38q2-8 -2-38z" fill="${p.hair}"/>`;
+ if(p.dress){const sw=(30+8*(w-1)*3);b+=`<path d="M-15 -50L15 -50L${sw} -2Q0 6 ${-sw} -2Z" fill="${p.coat}"/><path d="M-8 -48L-${sw*.55} -3M0 -48V0M8 -48L${sw*.55} -3" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/><path d="M${-sw} -4Q0 4 ${sw} -4v4Q0 8 ${-sw} 0z" fill="${dk(p.coat,.7)}"/>`}
+ else b+=`<rect x="-12" y="-44" width="10" height="42" fill="${p.pants}"/><rect x="2" y="-44" width="10" height="42" fill="${p.pants}"/><ellipse cx="-8" cy="-1" rx="9" ry="4" fill="#2a1d14"/><ellipse cx="8" cy="-1" rx="9" ry="4" fill="#2a1d14"/>`;
+ const bw=17*w;
+ if(p.coat&&!p.dress&&p.hs!='messy'&&k!='brittles')b+=`<path d="M${-bw} -84h${2*bw}l6 40 ${-bw} -4 ${-bw} 4z" fill="${p.coat}"/>`;
+ b+=`<rect x="${-bw}" y="-86" width="${2*bw}" height="46" rx="9" fill="${p.coat}"/>`;
+ if(p.belly)b+=`<ellipse cx="0" cy="-58" rx="${bw*.95}" ry="22" fill="${p.vest}"/><path d="M0 -76v36" stroke="#000" stroke-opacity=".2"/>`;
+ else if(p.vest)b+=`<path d="M-8 -86h16l-3 42h-10z" fill="${p.vest}"/>${[-76,-66,-56].map(q=>`<circle cx="0" cy="${q}" r="1.6" fill="#d6b56a"/>`).join('')}`;
+ if(p.apron)b+=`<rect x="-12" y="-78" width="24" height="${p.dress?66:42}" rx="5" fill="${p.apron}" stroke="#c9c3b0" stroke-width="1"/>`;
+ if(p.shawl)b+=`<path d="M${-bw-2} -86h${2*bw+4}l-10 22-${bw-10} 12-${bw-10}-12z" fill="${p.shawl}"/>`;
+ if(p.patch)b+=`<rect x="-12" y="-76" width="9" height="9" fill="#a98a58" stroke="#3a2b22" stroke-dasharray="2 1.5"/><rect x="3" y="-56" width="10" height="9" fill="#5f6e7a" stroke="#3a2b22" stroke-dasharray="2 1.5"/>`;
+ const arm=(sx)=>{const a=o.arm&&o.arm[sx>0?1:0]; const ex=sx*(bw+5+(a?6:0)),ey=a?-98:-52; return `<path d="M${sx*(bw-2)} -82L${ex} ${ey}" stroke="${p.coat}" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="${ex}" cy="${ey+ (a?-3:3)}" r="5" fill="${p.skin}"/>`};
+ b+=arm(-1)+arm(1);
+ if(p.cravat)b+=`<path d="M-7 -88h14l-3 14h-8z" fill="#f6f3ea" stroke="#cfc8b4" stroke-width=".8"/>`;
+ if(p.collar)b+=`<ellipse cx="0" cy="-86" rx="12" ry="4.5" fill="#f6f3ea" stroke="#cfc8b4" stroke-width=".8"/>`;
+ // head
+ b+=`<rect x="-5" y="-92" width="10" height="8" fill="${p.skin}"/>`;
+ const hs=p.hs;
+ if(hs=='bald'){b+=`<path d="M-17 -103q-4 12 0 22h6q-2-12 0-20zM17 -103q4 12 0 22h-6q2-12 0-20z" fill="${p.hair}"/>`}
+ b+=`<ellipse cx="-16" cy="-97" rx="3.4" ry="5" fill="${p.skin}"/><ellipse cx="16" cy="-97" rx="3.4" ry="5" fill="${p.skin}"/><ellipse cx="0" cy="-98" rx="16" ry="18" fill="${p.skin}"/>`;
+ if(p.pale)b+=`<ellipse cx="0" cy="-98" rx="16" ry="18" fill="#fff" opacity=".18"/>`;
+ // hair
+ if(hs=='messy')b+=`<path d="M-17 -100q-2-20 17-20 19 0 17 20-6-8-10-7-4-6-14 0-6-3-10 7z" fill="${p.hair}"/><circle cx="-12" cy="-114" r="5" fill="${p.hair}"/><circle cx="8" cy="-117" r="5" fill="${p.hair}"/><circle cx="16" cy="-108" r="4" fill="${p.hair}"/>`;
+ if(hs=='long')b+=`<path d="M-18 -98q-3-24 18-24 21 0 18 24-4-14-18-14-14 0-18 14z" fill="${p.hair}"/>`;
+ if(hs=='bun')b+=`<circle cx="0" cy="-122" r="8" fill="${p.hair}"/><path d="M-17 -100q-2-20 17-20 19 0 17 20-6-10-17-10-11 0-17 10z" fill="${p.hair}"/>`;
+ if(hs=='slick')b+=`<path d="M-17 -100q0-20 17-20 17 0 17 20-4-8-17-10-13 2-17 10z" fill="${p.hair}"/>`;
+ if(hs=='scruff')b+=`<path d="M-18 -98q-4-8-2-16l6 4 4-8 6 6 6-8 4 8 6-2q2 8-2 16-6-8-16-8-10 0-12 8z" fill="${p.hair}"/>`;
+ if(hs=='cap'){b+=`<path d="M-17 -102q0-6 17-6 17 0 17 6z" fill="${p.hair}"/><path d="M-18 -104q0-14 18-14 18 0 18 14z" fill="${p.cap}"/><path d="M4 -106h20l4 5H4z" fill="${dk(p.cap,.8)}"/>`}
+ if(hs=='mob'){b+=`<path d="M-18 -100q-2-14 18-14 20 0 18 14-6-6-18-6-12 0-18 6z" fill="${p.hair}"/><path d="M-20 -104q-2-20 20-20 22 0 20 20-3-6-20-6-17 0-20 6z" fill="#f6f3ea" stroke="#d3cdb9"/><circle cx="-12" cy="-122" r="6" fill="#f6f3ea" stroke="#d3cdb9"/><circle cx="0" cy="-126" r="7" fill="#f6f3ea" stroke="#d3cdb9"/><circle cx="12" cy="-122" r="6" fill="#f6f3ea" stroke="#d3cdb9"/>`}
+ if(p.lace)b+=`<path d="M-19 -102q-1-12 19-12 20 0 19 12-8-4-19-4-11 0-19 4z" fill="#f8f5ec" stroke="#d3cdb9"/><circle cx="-16" cy="-98" r="4" fill="#f8f5ec" stroke="#d3cdb9"/><circle cx="16" cy="-98" r="4" fill="#f8f5ec" stroke="#d3cdb9"/>`;
+ // face
+ const eyeC=o.eye||'#3a2a20';
+ b+=`<circle cx="-6" cy="-98" r="${e=='shock'||e=='scared'?2.7:2.1}" fill="${eyeC}"/><circle cx="6" cy="-98" r="${e=='shock'||e=='scared'?2.7:2.1}" fill="${eyeC}"/><circle cx="-5.3" cy="-98.8" r=".7" fill="#fff"/><circle cx="6.7" cy="-98.8" r=".7" fill="#fff"/>`;
+ const bd=(e=='sad'||e=='scared')?[-3,-5]:(e=='angry')?[-5,-2]:[-4,-4];
+ const bcol=hs=='bald'||hs=='slick'&&k=='giles'?'#8a8a8a':dk(p.hair,.7);
+ b+=`<path d="M-10 ${-104+(bd[0]-(-4))} L-3 ${-104+(bd[1]-(-4))}M10 ${-104+(bd[0]-(-4))} L3 ${-104+(bd[1]-(-4))}" stroke="${bcol}" stroke-width="1.8" stroke-linecap="round"/>`;
+ b+=`<path d="M0 -97q2 5 -1 6" stroke="${dk(p.skin,.8)}" stroke-width="1.4" fill="none"/>`;
+ b+={n:`<path d="M-4 -90q4 2 8 0" stroke="#7a3a3a" stroke-width="1.6" fill="none"/>`,happy:`<path d="M-5 -91q5 6 10 0z" fill="#8a3a3a"/>`,sad:`<path d="M-4 -89q4-3 8 0" stroke="#7a3a3a" stroke-width="1.6" fill="none"/>`,scared:`<ellipse cx="0" cy="-89" rx="3" ry="4" fill="#6a2a2a"/>`,shock:`<ellipse cx="0" cy="-89" rx="3.4" ry="4.6" fill="#6a2a2a"/>`,angry:`<path d="M-5 -88q5-3 10 0" stroke="#7a3a3a" stroke-width="2" fill="none"/>`,talk:`<ellipse cx="0" cy="-89" rx="3.2" ry="3" fill="#6a2a2a"/><path d="M-2 -90.5h4" stroke="#f6f3ea" stroke-width="1.2"/>`,talk2:`<ellipse cx="0" cy="-89.5" rx="3" ry="1.6" fill="#6a2a2a"/>`}[o.m||e]||'';
+ b+=`<circle cx="-10" cy="-93" r="3" fill="#e88a8a" opacity=".35"/><circle cx="10" cy="-93" r="3" fill="#e88a8a" opacity=".35"/>`;
+ if(p.freck)b+=`<circle cx="-9" cy="-95" r=".8" fill="#b9805a"/><circle cx="-6" cy="-93.5" r=".8" fill="#b9805a"/><circle cx="9" cy="-95" r=".8" fill="#b9805a"/><circle cx="6" cy="-93.5" r=".8" fill="#b9805a"/>`;
+ if(p.beard)b+=`<path d="M-15 -94q0 20 15 24 15-4 15-24-4 8-15 8-11 0-15-8z" fill="${p.beard}"/><path d="M-4 -90q4 2 8 0" stroke="#7a3a3a" stroke-width="1.4" fill="none"/>`;
+ if(p.glasses)b+=`<circle cx="-6" cy="-98" r="5.4" fill="none" stroke="#6a5040" stroke-width="1.3"/><circle cx="6" cy="-98" r="5.4" fill="none" stroke="#6a5040" stroke-width="1.3"/><path d="M-0.6 -98h1.2" stroke="#6a5040"/>`;
+ if(p.top)b+=`<ellipse cx="0" cy="-113" rx="26" ry="5" fill="${p.top}"/><path d="M-15 -113l2-30h26l2 30z" fill="${p.top}"/><ellipse cx="0" cy="-143" rx="13" ry="3.5" fill="${dk(p.top,1.5)}"/><rect x="-15" y="-120" width="30" height="6" fill="${k=='fagin'?'#6a5a4a':'#3a2a3a'}"/>${k=='fagin'?`<rect x="3" y="-139" width="9" height="8" fill="#7a644a" transform="rotate(8 7 -135)"/>`:''}`;
+ const flip=o.flip?-1:1;
+ return `<g transform="translate(${x},${y}) scale(${sc*flip},${sc})"><g class="bob" style="animation-delay:-${dl.toFixed(2)}s">${b}</g></g>`}
+
+
+const $=s=>document.querySelector(s),app=$('#app');
+const KEY='ot_ch12_14_quiz';let S={};try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let muted=false,AC;
+function tone(f,d=.15,t='sine',v=.12,dl=0){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(0,AC.currentTime+dl);g.gain.linearRampToValueAtTime(v,AC.currentTime+dl+.02);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dl+d);o.connect(g).connect(AC.destination);o.start(AC.currentTime+dl);o.stop(AC.currentTime+dl+d+.05)}catch(e){}}
+const sfx={ok:()=>{tone(660,.14);tone(990,.22,'sine',.12,.1)},bad:()=>{tone(220,.25,'triangle',.12);tone(180,.3,'triangle',.1,.12)},tap:()=>tone(520,.07,'sine',.06),win:()=>[523,659,784,1046].forEach((f,i)=>tone(f,.28,'sine',.12,i*.13)),meh:()=>[440,523,587].forEach((f,i)=>tone(f,.22,'sine',.1,i*.12))};
+$('#snd').onclick=function(){muted=!muted;this.textContent=muted?'🔇':'🔊'};
+function confetti(n){const c=['#ffb53d','#ffd98a','#2fbf71','#5cc8d8','#fff'];for(let i=0;i<n;i++){const e=document.createElement('i');e.className='conf';e.style.left=Math.random()*100+'vw';e.style.background=c[i%5];e.style.animationDuration=(2+Math.random()*2)+'s';e.style.animationDelay=Math.random()*.6+'s';e.style.borderRadius=i%3?'2px':'50%';document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
+const LAMP=(s='happy')=>`<svg class="lamp" viewBox="0 0 120 170"><defs><radialGradient id="lg${s}"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".9"/><stop offset="1" stop-color="#ffb53d" stop-opacity="0"/></radialGradient></defs><circle class="flick" cx="60" cy="52" r="56" fill="url(#lg${s})"/><rect x="52" y="98" width="16" height="62" fill="#2b3f46"/><rect x="40" y="154" width="40" height="12" rx="4" fill="#1c2b31"/><rect x="44" y="94" width="32" height="8" rx="3" fill="#3a5560"/><path d="M34 30h52l8 62H26z" fill="#ffd36a" stroke="#2b3f46" stroke-width="5" stroke-linejoin="round"/><path d="M30 24h60l-8-14H38z" fill="#2b3f46"/><circle cx="60" cy="8" r="4" fill="#2b3f46"/><path d="M47 30v62M73 30v62" stroke="#2b3f46" stroke-width="3" opacity=".55"/><ellipse cx="46" cy="58" rx="5" ry="${s=='sad'?5:6.5}" fill="#2b2210"/><ellipse cx="74" cy="58" rx="5" ry="${s=='sad'?5:6.5}" fill="#2b2210"/><circle cx="47.6" cy="55.8" r="1.8" fill="#fff"/><circle cx="75.6" cy="55.8" r="1.8" fill="#fff"/>${s=='sad'?'<path d="M50 78q10-8 20 0" stroke="#2b2210" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M38 48l14 4M82 48l-14 4" stroke="#2b2210" stroke-width="3" stroke-linecap="round"/>':s=='wow'?'<ellipse cx="60" cy="78" rx="7" ry="8" fill="#2b2210"/>':'<path d="M46 72q14 16 28 0z" fill="#2b2210"/><path d="M50 74q10 7 20 0" fill="#e86a6a"/>'}<circle cx="36" cy="70" r="5" fill="#ff8a6a" opacity=".5"/><circle cx="84" cy="70" r="5" fill="#ff8a6a" opacity=".5"/></svg>`;
+const head=k=>`<svg viewBox="-32 -${PPL[k].top?150:128} 64 ${PPL[k].top?78:66}" preserveAspectRatio="xMidYMid meet">${fig(k,0,0,1,{d:0})}</svg>`;
+
+const WHO={bumble:'Mr. Bumble',monks:'Monks',old:'The old woman',nancy:'Nancy',rose:'Rose Maylie',servant:'The servant',sykes:'Bill Sykes',fagin:'Fagin'};
+const PK={bumble:'bumble',monks:'stranger',old:'oldwoman',nancy:'nancy',rose:'rose',servant:'servant',sykes:'sykes',fagin:'fagin'};
+const LEVELS=[
+{id:'c12',title:'Chapter 12',sub:'Mr. Bumble and the Stranger',icon:()=>head('stranger'),qs:[
+ {q:'Where was Mr. Bumble sitting at the start of the chapter?',o:['By the fire','In the garden','At the inn'],a:0,why:'Mr. Bumble was sitting by the fire in the workhouse.'},
+ {q:'Mr. Bumble was now the master of the workhouse.',tf:1,a:true,why:'He told the stranger, “I am now master of the workhouse.”'},
+ {q:'What did the stranger put on the table?',o:['Two gold coins','A letter','A hat'],a:0,why:'He gave Mr. Bumble two gold coins to begin with.'},
+ {q:'Who did the stranger want to hear about?',o:['The old woman who looked after Oliver’s mother','Oliver himself','Mr. Brownlow'],a:0,why:'He wanted to hear about the old woman, not about Oliver.'},
+ {q:'What name did the stranger give Mr. Bumble?',o:['Monks','Sykes','Giles'],a:0,why:'“Monks,” answered the man, and walked quickly away.'},
+ {q:'Old Sally, the old woman who looked after Oliver’s mother, was still alive.',tf:1,a:false,why:'She died last winter. Only her friend was still alive.'},
+ {q:'How much money did Monks give Mr. Bumble?',o:['Twenty-five gold coins','Two gold coins','Ten gold coins'],a:0,why:'He counted out twenty-five gold coins.'},
+ {q:'What was inside the little bag?',o:['A gold ornament with hair and a wedding ring','A key and a letter','Money and a map'],a:0,why:'It held a gold ornament with two pieces of hair and a plain gold wedding ring.'},
+ {q:'What name was inside the ring?',o:['Agnes','Rose','Nancy'],a:0,why:'Agnes was the name of Oliver’s mother.'},
+ {q:'What did Monks do with the bag at the end?',o:['He threw it into the river','He buried it in the garden','He gave it back to the old woman'],a:0,why:'“That is the end of that,” said Monks.'}
+]},
+{id:'c14',title:'Chapter 14',sub:'A Visit to Rose Maylie',icon:()=>head('nancy'),qs:[
+ {q:'Who went out to buy food and drink?',o:['Nancy','Fagin','Rose'],a:0,why:'Nancy went out with the money Fagin had provided.'},
+ {q:'What happened after Sykes drank a great deal?',o:['He fell into a deep, heavy sleep','He went to see Fagin','He ran away'],a:0,why:'The drink made him sleep, so Nancy could leave.'},
+ {q:'Nancy was afraid that Sykes would catch her.',tf:1,a:true,why:'She looked round in fear, as if she could feel his heavy hand on her shoulder.'},
+ {q:'Where did Nancy go?',o:['To a quiet hotel near Hyde Park','To the workhouse','To Fagin’s den'],a:0,why:'Rose Maylie was staying at a quiet family hotel.'},
+ {q:'Who did Nancy want to see?',o:['Miss Maylie','Mr. Brownlow','Mr. Bumble'],a:0,why:'She asked the servant for Miss Maylie.'},
+ {q:'How did Rose speak to Nancy?',o:['Kindly, in a sweet voice','Angrily','Very loudly'],a:0,why:'Her kind voice and gentle manner made Nancy cry.'},
+ {q:'What did Nancy hear Monks and Fagin planning?',o:['To catch Oliver again','To go to the sea','To leave London'],a:0,why:'They wanted to turn Oliver into a thief again.'},
+ {q:'What did Monks call Oliver?',o:['His young brother','His best friend','His servant'],a:0,why:'“That will be the end of my young brother, Oliver.”'},
+ {q:'Where will Nancy walk every Sunday night?',o:['On London Bridge','In Hyde Park','Outside the workhouse'],a:0,why:'She will walk there from eleven until the clock strikes twelve.'},
+ {q:'Nancy took the money that Rose offered.',tf:1,a:false,why:'“Not a penny,” said Nancy.'}
+]},
+{id:'who',title:'Who Said It?',sub:'Match the words to the character',icon:()=>head('bumble'),who:1,qs:[
+ {q:'I am now master of the workhouse.',a:'bumble',opts:['bumble','monks','old'],why:'Mr. Bumble said this in an important voice.'},
+ {q:'Bring her to me at this place and in secret.',a:'monks',opts:['monks','bumble','servant'],why:'Monks wanted to meet the old woman in secret.'},
+ {q:'The ring has the word Agnes inside it.',a:'old',opts:['old','nancy','rose'],why:'The old woman knew the name of Oliver’s mother.'},
+ {q:'Now, what do you want here?',a:'servant',opts:['servant','sykes','bumble'],why:'The hotel servant saw a thin woman in old clothes.'},
+ {q:'I want to see a lady who is staying here, Miss Maylie.',a:'nancy',opts:['nancy','rose','old'],why:'Nancy came in secret to warn Rose.'},
+ {q:'Why don’t we tell the police?',a:'rose',opts:['rose','nancy','monks'],why:'Rose wanted to help Nancy and Oliver.'},
+ {q:'I will walk on London Bridge every Sunday night.',a:'nancy',opts:['nancy','rose','servant'],why:'That is where Rose could find Nancy again.'},
+ {q:'That is the end of that.',a:'monks',opts:['monks','bumble','sykes'],why:'Monks threw the bag into the river.'}
+]}];
+const stars=(n)=>'<span>'+'★'.repeat(n)+'<i>'+'★'.repeat(3-n)+'</i></span>';
+const total=()=>LEVELS.reduce((a,l)=>a+(S[l.id]||0),0);
+const upd=()=>{$('#st').textContent='★ '+total()+' / '+LEVELS.length*3};
+function home(){upd();window.scrollTo(0,0);
+ app.innerHTML=`<div class="hero">${LAMP('happy')}<h2>Mystery at the Old House</h2><p>A secret meeting by the river… a brave visit to a hotel… Can you remember what happened? Pick a level and win three stars!</p></div><div class="lvls">${LEVELS.map(l=>`<button class="lvl" data-id="${l.id}"><div class="ic">${l.icon()}</div><div><b>${l.title}</b><span class="d">${l.sub}</span></div><div class="stars">${stars(S[l.id]||0)}</div></button>`).join('')}</div>`;
+ app.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>{sfx.tap();play(LEVELS.find(l=>l.id==b.dataset.id))});
+}
+function play(L){
+ const qs=shuf(L.qs).slice(0,8);let i=0,pts=0;
+ const show=()=>{
+  window.scrollTo(0,0);const q=qs[i];let body='';
+  if(L.who){const os=shuf(q.opts);body=`<div class="quote">“${q.q}”</div><div class="opts two" style="grid-template-columns:repeat(3,1fr)">${os.map(k=>`<button class="opt who" data-k="${k}">${head(PK[k])}<span>${WHO[k]}</span></button>`).join('')}</div>`}
+  else if(q.tf){body=`<div class="q">${q.q}</div><div class="opts two"><button class="opt" data-k="true"><span class="k">✓</span>True</button><button class="opt" data-k="false"><span class="k">✗</span>False</button></div>`}
+  else{const os=shuf(q.o.map((t,j)=>({t,r:j==q.a})));body=`<div class="q">${q.q}</div><div class="opts">${os.map((o,j)=>`<button class="opt" data-r="${o.r?1:0}"><span class="k">${'ABC'[j]}</span>${o.t}</button>`).join('')}</div>`}
+  app.innerHTML=`<div class="bar"><i style="width:${i/qs.length*100}%"></i></div><div class="card"><div class="meta"><span>${L.title}</span><span>Question ${i+1} of ${qs.length}</span></div>${body}<div id="fb"></div></div>`;
+  let done=false;
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(done)return;done=true;
+   const right=L.who?b.dataset.k==q.a:q.tf?(b.dataset.k=='true')==q.a:b.dataset.r=='1';
+   app.querySelectorAll('.opt').forEach(x=>{x.classList.add('lock');const r=L.who?x.dataset.k==q.a:q.tf?(x.dataset.k=='true')==q.a:x.dataset.r=='1';if(r)x.classList.add('ok');else if(x===b)x.classList.add('no');else x.classList.add('dim')});
+   if(right){pts++;sfx.ok()}else sfx.bad();
+   const msg=right?['Great job!','Well done!','Brilliant!','Yes, that’s right!'][i%4]:['Not quite — ','Almost! ','Good try — '][i%3];
+   $('#fb').innerHTML=`<div class="fb">${LAMP(right?'happy':'sad')}<p><b>${msg}</b> ${q.why}</p></div><div class="row"><button class="btn" id="nx">${i+1>=qs.length?'See my stars ★':'Next ➜'}</button></div>`;
+   $('#nx').onclick=()=>{sfx.tap();i++;if(i>=qs.length)end();else show()};$('#nx').scrollIntoView({block:'nearest'});
+  });
+ };
+ const end=()=>{
+  const p=pts/qs.length,st=p>=.85?3:p>=.6?2:1;if(st>(S[L.id]||0)){S[L.id]=st;save()}upd();
+  const t=st==3?['Superstar detective!','You remember the story so well.']:st==2?['Well done!','Play again to win all three stars.']:['Good try!','Watch the video again and play once more.'];
+  window.scrollTo(0,0);app.innerHTML=`<div class="card end"><div class="big">${'★'.repeat(st)}<i>${'★'.repeat(3-st)}</i></div>${LAMP(st>1?'happy':'wow')}<h3>${t[0]}</h3><p>${t[1]}</p><p><b>${pts} out of ${qs.length}</b></p><div class="row"><button class="btn" id="ag">Play again ↻</button>${LEVELS.indexOf(L)<LEVELS.length-1?'<button class="btn alt" id="nl">Next level ➜</button>':''}<button class="btn alt" id="hm">All levels</button></div></div>`;
+  st==3?sfx.win():sfx.meh();confetti(st*28);
+  $('#ag').onclick=()=>{sfx.tap();play(L)};$('#hm').onclick=()=>{sfx.tap();home()};const nl=$('#nl');if(nl)nl.onclick=()=>{sfx.tap();play(LEVELS[LEVELS.indexOf(L)+1])};
+ };
+ show();
+}
+home();
+</script></body></html>

@@ -88,6 +88,28 @@
           ]
         },
         {
+          "title": "Mystery at the Old House — Quiz",
+          "icon": "🏮",
+          "url": "games/oliver-twist-ch12-14-quiz.html",
+          "description": "Answer easy questions about Mr. Bumble, Monks and Nancy's secret visit. Win three stars on every level!",
+          "tags": [
+            "Story",
+            "Quiz",
+            "Chapters 12, 14"
+          ]
+        },
+        {
+          "title": "Secret Case Files — Character Cards",
+          "icon": "🗂️",
+          "url": "games/oliver-twist-ch12-14-cards.html",
+          "description": "Open a secret file for every new character, then test yourself with Who Am I?",
+          "tags": [
+            "Story",
+            "Cards",
+            "Chapters 12, 14"
+          ]
+        },
+        {
           "title": "5 Seconds Challenge",
           "icon": "⏰",
           "url": "games/5-seconds-challenge.html",
@@ -142,7 +164,11 @@
           "icon": "⏰",
           "url": "games/past-simple-game.html",
           "description": "9 stations with short animated videos and lots of practice: what Past Simple is, regular & irregular verbs, did/didn't, time words, a special AGO station, the past participle (PP) with 40 examples, a build-it quest and a final boss.",
-          "tags": ["Grammar", "Past simple", "Videos + games"]
+          "tags": [
+            "Grammar",
+            "Past simple",
+            "Videos + games"
+          ]
         }
       ]
     },
