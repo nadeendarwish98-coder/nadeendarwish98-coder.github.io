@@ -618,6 +618,134 @@
           "answer": false
         }
       ]
+    },
+    {
+      "title": "Chapter 12",
+      "youtube": "qPiOnkQVCyA",
+      "games": [
+        {
+          "title": "🏮 Play the Mystery at the Old House Quiz",
+          "url": "games/oliver-twist-ch12-14-quiz.html"
+        },
+        {
+          "title": "🗂️ Play the Secret Case Files Cards",
+          "url": "games/oliver-twist-ch12-14-cards.html"
+        }
+      ],
+      "vocab": [
+        {
+          "word": "stranger",
+          "emoji": "🧍",
+          "meaning": "a person you do not know"
+        },
+        {
+          "word": "workhouse",
+          "emoji": "🏚️",
+          "meaning": "a place where poor people lived and worked"
+        },
+        {
+          "word": "coin",
+          "emoji": "🪙",
+          "meaning": "a small round piece of metal money"
+        },
+        {
+          "word": "secret",
+          "emoji": "🤫",
+          "meaning": "something you do not tell other people"
+        },
+        {
+          "word": "river",
+          "emoji": "🌊",
+          "meaning": "a long stream of water that flows to the sea"
+        },
+        {
+          "word": "lamp",
+          "emoji": "🏮",
+          "meaning": "a light you carry or put on a table"
+        },
+        {
+          "word": "bag",
+          "emoji": "👜",
+          "meaning": "a soft container for carrying things"
+        },
+        {
+          "word": "ring",
+          "emoji": "💍",
+          "meaning": "a small gold circle you wear on your finger"
+        },
+        {
+          "word": "paper",
+          "emoji": "📄",
+          "meaning": "thin material you write on"
+        },
+        {
+          "word": "pocket",
+          "emoji": "👖",
+          "meaning": "a small bag sewn into your clothes"
+        }
+      ],
+      "questions": [
+        {
+          "type": "mcq",
+          "q": "What did the stranger put on the table?",
+          "options": [
+            "Two gold coins",
+            "A letter",
+            "A hat",
+            "A key"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "What name did the stranger give Mr. Bumble?",
+          "options": [
+            "Monks",
+            "Sikes",
+            "Giles",
+            "Brownlow"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "tf",
+          "q": "Old Sally, who looked after Oliver’s mother, was still alive.",
+          "answer": false
+        },
+        {
+          "type": "mcq",
+          "q": "What name was inside the gold ring?",
+          "options": [
+            "Agnes",
+            "Rose",
+            "Nancy",
+            "Sally"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "Where did Mr. Bumble meet Monks and the old woman?",
+          "options": [
+            "In an old empty house by the river",
+            "At the inn",
+            "In the church",
+            "At the market"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "What did Monks do with the little bag at the end?",
+          "options": [
+            "He threw it into the river",
+            "He buried it",
+            "He gave it to Mr. Bumble",
+            "He sold it"
+          ],
+          "answer": 0
+        }
+      ]
     }
   ]
 }
