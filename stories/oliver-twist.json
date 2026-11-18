@@ -746,6 +746,134 @@
           "answer": 0
         }
       ]
+    },
+    {
+      "title": "Chapter 13",
+      "youtube": "ELX4573oBxM",
+      "games": [
+        {
+          "title": "🏮 Play the Mystery at the Old House Quiz",
+          "url": "games/oliver-twist-ch12-14-quiz.html"
+        },
+        {
+          "title": "🗂️ Play the Secret Case Files Cards",
+          "url": "games/oliver-twist-ch12-14-cards.html"
+        }
+      ],
+      "vocab": [
+        {
+          "word": "bed",
+          "emoji": "🛏️",
+          "meaning": "a piece of furniture you sleep on"
+        },
+        {
+          "word": "ill",
+          "emoji": "🤒",
+          "meaning": "not well; sick"
+        },
+        {
+          "word": "window",
+          "emoji": "🪟",
+          "meaning": "a glass opening in a wall"
+        },
+        {
+          "word": "thin",
+          "emoji": "🦴",
+          "meaning": "not fat; with little flesh on the body"
+        },
+        {
+          "word": "hotel",
+          "emoji": "🏨",
+          "meaning": "a building where people pay to stay"
+        },
+        {
+          "word": "candle",
+          "emoji": "🕯️",
+          "meaning": "a stick of wax that burns to give light"
+        },
+        {
+          "word": "stairs",
+          "emoji": "🪜",
+          "meaning": "steps that go up or down in a building"
+        },
+        {
+          "word": "shoes",
+          "emoji": "👞",
+          "meaning": "things you wear on your feet"
+        },
+        {
+          "word": "listen",
+          "emoji": "👂",
+          "meaning": "to pay attention to a sound"
+        },
+        {
+          "word": "smile",
+          "emoji": "😊",
+          "meaning": "a happy look on your face"
+        }
+      ],
+      "questions": [
+        {
+          "type": "mcq",
+          "q": "Who lay on the bed, covered by his coat?",
+          "options": [
+            "Bill Sikes",
+            "Fagin",
+            "Monks",
+            "Oliver"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "How did Nancy look?",
+          "options": [
+            "White and thin",
+            "Happy and fat",
+            "Angry and loud",
+            "Tall and strong"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "tf",
+          "q": "Fagin wanted Oliver back because he was worth a lot of money.",
+          "answer": true
+        },
+        {
+          "type": "mcq",
+          "q": "Where were Miss Maylie and her aunt staying in London?",
+          "options": [
+            "At a hotel near Hyde Park",
+            "At the workhouse",
+            "At the inn by the river",
+            "In Fagin’s house"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "Who was the man in the black coat at the door?",
+          "options": [
+            "Monks",
+            "Mr. Giles",
+            "Mr. Bumble",
+            "Dr. Losberne"
+          ],
+          "answer": 0
+        },
+        {
+          "type": "mcq",
+          "q": "What did Nancy do when Fagin and Monks went to another room?",
+          "options": [
+            "She took off her shoes and listened",
+            "She ran away",
+            "She fell asleep",
+            "She called Sikes"
+          ],
+          "answer": 0
+        }
+      ]
     }
   ]
 }
